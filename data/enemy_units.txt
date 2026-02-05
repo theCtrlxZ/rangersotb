@@ -1,0 +1,519 @@
+#---------------------------
+# GOBLINS
+#---------------------------
+
+G001|Goblin Grunt|description=A rank-and-file scrawny goblin grunt who fights dirty up close and presses any advantage without mercy.|stat=Move7,Fight+0,Shoot+0,Armor9,Will+0,Health6|xp=2|threat=goblins|rarity=common|gear=roll:weapons:tag=hand|tag=martial|tier=minion
+# skills: 
+G002|Goblin Underboss|description=A hardened goblin lieutenant who keeps the mob in line with threats, bribes, and sudden violence.|stat=Move7,Fight+1,Shoot+0,Armor10,Will+1,Health8|xp=2|threat=goblins|rarity=uncommon|gear=roll:weapons:tag=hand|tag=martial|tier=elite
+# skills: Leadership+5
+G003|Orc|description=A brutal goblinoid bruiser that hits harder than a common goblin and bullies the front line into breaking.|stat=Move7,Fight+2,Shoot+0,Armor11,Will+1,Health12|xp=3|threat=goblins|rarity=common|gear=roll:weapons:tag=hand|tag=martial|tier=elite
+# skills: 
+G004|Worg Rider|description=A hardened goblin outrider who harasses flanks from the saddle and escapes before the counterattack.|stat=Move8,Fight+1,Shoot+0,Armor10,Will+1,Health8|xp=2|threat=goblins|rarity=uncommon|gear=roll:weapons:tag=hand|tag=martial,mounted|tier=elite
+# skills: Mounted, Mounted Charge
+G005|Goblin Warboss|description=A ruthless goblin warboss who turns cowardly rabble into a deadly swarm through sheer intimidation and cunning.|stat=Move7,Fight+2,Shoot+0,Armor11,Will+2,Health12|xp=3|threat=goblins|rarity=common|gear=roll:weapons:tag=hand|tag=martial|tier=leader
+# skills: Leadership+5, Command Aura
+G006|Goblin Archer|description=A rank-and-file scrawny goblin archer who punishes movement with steady shots and opportunistic volleys.|stat=Move7,Fight+0,Shoot+1,Armor9,Will+0,Health6|xp=2|threat=goblins|rarity=common|gear=Bow|tag=ranged|tier=minion
+# skills: Aimed Shot, Volley
+G007|Goblin Bomber|description=A hardened goblin bombardier who lobs crude explosives and turns tight spaces into chaos.|stat=Move7,Fight+0,Shoot+2,Armor10,Will+1,Health8|xp=3|threat=goblins|rarity=rare|gear=roll:weapons:tag=hand|tag=ranged|tier=elite
+# skills: Aimed Shot, Volley
+G008|Goblin Shaman|description=A rank-and-file scrawny goblin shaman who twists reality with rites, curses, or raw elemental force.|stat=Move7,Fight+0,Shoot+0,Armor8,Will+3,Health4|xp=2|threat=goblins|rarity=uncommon|gear=roll:weapons:tag=hand|tag=magic|tier=minion
+# skills: Ancient Lore+5, Read Runes+5, Spellcaster, Hex
+G009|Goblin Engineer|description=A rank-and-file scrawny goblin engineer who bolsters allies and undermines enemies with signals, tricks, or wards.|stat=Move7,Fight+0,Shoot+0,Armor8,Will+2,Health4|xp=2|threat=goblins|rarity=common|gear=roll:weapons:tag=hand|tag=support|tier=minion
+# skills: Rally, Mark Prey
+G010|Goblin Mage|description=A rank-and-file scrawny goblin mage who twists reality with rites, curses, or raw elemental force.|stat=Move7,Fight+0,Shoot+0,Armor8,Will+3,Health4|xp=2|threat=goblins|rarity=uncommon|gear=Staff|tag=magic|tier=minion
+# skills: Ancient Lore+5, Read Runes+5, Spellcaster, Hex
+G011|Goblin Bombardier|description=A hardened goblin bombardier who lobs crude explosives and turns tight spaces into chaos.|stat=Move7,Fight+0,Shoot+3,Armor10,Will+1,Health8|xp=3|threat=goblins|rarity=rare|gear=Bomb Satchel|tag=ranged|tier=elite
+# skills: Bomb Lob; Smoke Bomb; Scatter Shot; Misfire (optional)
+G012|Goblin Cutpurse|description=A rank-and-file goblin infiltrator who strikes from hiding, steals openings, and slips away before retaliation.|stat=Move10,Fight+0,Shoot+0,Armor9,Will+0,Health6|xp=2|threat=goblins|rarity=common|gear=Dagger|tag=martial,fast|tier=minion
+# skills: Sneak+8; Backstab; Disengage; Pickpocket
+G013|Goblin War Drummer|description=A rank-and-file goblin war-drummer whose relentless rhythm steels allies and rattles the nerves of foes.|stat=Move7,Fight+0,Shoot+0,Armor8,Will+1,Health4|xp=2|threat=goblins|rarity=uncommon|gear=Drum, Dagger|tag=support|tier=minion
+# skills: War Drum (ally buff); Rally; Panic Beat (enemy debuff)
+
+#---------------------------
+# THIEVES/BANDITS
+#---------------------------
+
+T001|Brigand|description=A rank-and-file cutthroat bandit brigand who fights dirty up close and presses any advantage without mercy.|stat=Move7,Fight+3,Shoot+0,Armor9,Will+0,Health7|xp=3|threat=bandits|rarity=common|gear=roll:weapons:tag=hand, Light Armor|tag=martial|tier=minion
+# skills: 
+T002|Thief|description=A rank-and-file bandit infiltrator who strikes from hiding, steals openings, and slips away before retaliation.|stat=Move10,Fight+3,Shoot+0,Armor9,Will+0,Health7|xp=3|threat=bandits|rarity=common|gear=roll:weapons:tag=hand, Light Armor|tag=martial,fast|tier=minion
+# skills: Sneak+10, Traps+5, Pick Lock+5
+T003|Assassin|description=A hardened bandit infiltrator who strikes from hiding, steals openings, and slips away before retaliation.|stat=Move7,Fight+4,Shoot+0,Armor10,Will+1,Health11|xp=4|threat=bandits|rarity=uncommon|gear=roll:weapons:tag=hand:count=2, Light Armor|tag=martial|tier=elite
+# skills: Sneak+10, Traps+5, Pick Lock+5, Ambush
+T004|Ninja|description=A hardened bandit infiltrator who strikes from hiding, steals openings, and slips away before retaliation.|stat=Move10,Fight+2,Shoot+0,Armor10,Will+5,Health11|xp=3|threat=bandits|rarity=uncommon|gear=roll:weapons:tag=hand, Light Armor|tag=magic,martial,fast|tier=elite
+# skills: Sneak+10, Traps+5, Pick Lock+5, Spellcaster, Hex
+T005|Thief King|description=A commanding bandit infiltrator who strikes from hiding, steals openings, and slips away before retaliation.|stat=Move10,Fight+5,Shoot+0,Armor11,Will+3,Health15|xp=5|threat=bandits|rarity=rare|gear=roll:weapons:tag=hand:count=2, Light Armor|tag=martial,fast|tier=leader
+# skills: Sneak+10, Traps+5, Pick Lock+5, Command Aura
+T006|Bandit Archer|description=A rank-and-file cutthroat bandit archer who punishes movement with steady shots and opportunistic volleys.|stat=Move7,Fight+1,Shoot+3,Armor9,Will+0,Health7|xp=3|threat=bandits|rarity=common|gear=Bow, Dagger, Light Armor, Quiver|tag=ranged|tier=minion
+# skills: Aimed Shot, Volley
+T007|Bandit Mob Doctor|description=A rank-and-file bandit field medic who keeps allies fighting with rough stitching, bitter tonics, and zero sympathy.|stat=Move7,Fight+1,Shoot+0,Armor8,Will+1,Health5|xp=2|threat=bandits|rarity=uncommon|gear=Knife, Med Kit, Light Armor|tag=support|tier=minion
+# skills: Patch Up; Stabilize; Smoke Flask; Field Dressing
+T008|Crossbow Sniper|description=A hardened cutthroat bandit crossbow sniper who punishes movement with steady shots and opportunistic volleys.|stat=Move7,Fight+1,Shoot+5,Armor10,Will+1,Health11|xp=5|threat=bandits|rarity=rare|gear=Crossbow, Dagger, Quiver, Light Armor|tag=ranged|tier=elite
+# skills: Overwatch; Aimed Shot; Crippling Bolt; Headshot (optional)
+T009|Saboteur|description=A hardened bandit saboteur who uses smoke, fire, and dirty tricks to ruin plans and break formations.|stat=Move7,Fight+2,Shoot+0,Armor9,Will+2,Health7|xp=2|threat=bandits|rarity=uncommon|gear=Tools, Charges, Light Armor|tag=support|tier=elite
+# skills: Sabotage; Set Charge; Smoke Bomb; Trap
+T010|Night Stalker|description=A hardened bandit infiltrator who strikes from hiding, steals openings, and slips away before retaliation.|stat=Move10,Fight+4,Shoot+0,Armor10,Will+1,Health11|xp=4|threat=bandits|rarity=rare|gear=roll:weapons:tag=hand, Light Armor|tag=martial,fast|tier=elite
+# skills: Ambush; Drag Off; Vanish; Night Vision (optional)
+T011|Bandit Outrider|description=A rank-and-file bandit outrider who harasses flanks from the saddle and escapes before the counterattack.|stat=Move10,Fight+3,Shoot+0,Armor9,Will+0,Health7|xp=3|threat=bandits|rarity=common|gear=Horse, Spear, Light Armor|tag=martial,fast,mounted|tier=minion
+# skills: Mounted; Ride-By Strike; Skirmish; Disengage
+T012|Bandit Cavalry Bowman|description=A rank-and-file bandit outrider who harasses flanks from the saddle and escapes before the counterattack.|stat=Move10,Fight+1,Shoot+3,Armor9,Will+0,Health7|xp=3|threat=bandits|rarity=common|gear=Horse, Bow, Dagger, Light Armor|tag=ranged,fast,mounted|tier=minion
+# skills: Mounted; Mobile Shot; Mark Target; Withdraw
+
+#---------------------------
+# CULTISTS
+#---------------------------
+
+C001|Fanatic|description=A rank-and-file fanatical cultist fanatic who fights dirty up close and presses any advantage without mercy.|stat=Move6,Fight+0,Shoot+0,Armor7,Will+3,Health5|xp=2|threat=cultists|rarity=common|tag=martial,fast|tier=minion
+# skills: 
+C002|Zealot|description=A rank-and-file fanatical cultist zealot who fights dirty up close and presses any advantage without mercy.|stat=Move6,Fight+0,Shoot+0,Armor7,Will+3,Health5|xp=2|threat=cultists|rarity=common|tag=martial,fast|tier=minion
+# skills: 
+C003|Mystagogue|description=A hardened fanatical cultist mystagogue who fights dirty up close and presses any advantage without mercy.|stat=Move5,Fight+2,Shoot+0,Armor9,Will+10,Health11|xp=4|threat=cultists|rarity=uncommon|tag=martial|tier=elite
+# skills: 
+C004|Devoted|description=A rank-and-file fanatical cultist devoted who punishes movement with steady shots and opportunistic volleys.|stat=Move5,Fight+0,Shoot+0,Armor6,Will+10,Health3|xp=2|threat=cultists|rarity=uncommon|tag=ranged,support|tier=minion
+# skills: Rally, Mark Prey
+C005|Unholy Heirophant|description=A commanding fanatical cultist unholy heirophant who twists reality with rites, curses, or raw elemental force.|stat=Move5,Fight+1,Shoot+0,Armor10,Will+10,Health13|xp=4|threat=cultists|rarity=rare|tag=magic|tier=leader
+# skills: Spellcaster, Hex, Command Aura
+C006|Doom Priest|description=A rank-and-file fanatical cultist doom priest who bolsters allies and undermines enemies with signals, tricks, or wards.|stat=Move5,Fight+0,Shoot+0,Armor6,Will+10,Health3|xp=2|threat=cultists|rarity=common|tag=support|tier=minion
+# skills: Spellcaster, Hex
+C007|Cult Leader|description=A commanding fanatical cultist cult leader who bolsters allies and undermines enemies with signals, tricks, or wards.|stat=Move5,Fight+2,Shoot+0,Armor10,Will+10,Health15|xp=4|threat=cultists|rarity=uncommon|tag=support|tier=leader
+# skills: Rally, Mark Prey, Command Aura
+C008|Hexbreaker|description=A hardened cultist hexbreaker who unravels curses and turns enemy magic back on itself.|stat=Move5,Fight+0,Shoot+0,Armor8,Will+8,Health9|xp=2|threat=cultists|rarity=uncommon|gear=Ritual Tools, Dagger|tag=magic,support|tier=elite
+# skills: Dispel; Break Hex; Ward; Silence (optional)
+C009|Circle Warden|description=A hardened cultist warden who seals ground with wards and punishes anyone who crosses the line.|stat=Move5,Fight+0,Shoot+0,Armor9,Will+10,Health11|xp=3|threat=cultists|rarity=rare|gear=Staff, Ritual Sigils|tag=magic|tier=elite
+# skills: Ritual Circle (zone); Bind; Silence Field; Warded Ground
+C010|Void Artist|description=A hardened cultist void-worker who tears open rifts to reposition allies and strand enemies.|stat=Move7,Fight+0,Shoot+0,Armor7,Will+9,Health9|xp=2|threat=cultists|rarity=rare|gear=Void Sigils, Ritual Blade|tag=magic,support,fast|tier=elite
+# skills: Teleport; Portal; Rift Step; Void Snare (optional); Summon Through Portal (optional); Escape Artist
+
+#---------------------------
+# DEMONS
+#---------------------------
+
+D001|Bloodletter|description=A rank-and-file fiendish demon bloodletter who fights dirty up close and presses any advantage without mercy.|stat=Move7,Fight+4,Shoot+0,Armor10,Will+0,Health8|xp=3|threat=demons|rarity=uncommon|tag=martial|tier=minion
+# skills: 
+D002|Demon Brute|description=A rank-and-file fiendish demon brute who fights dirty up close and presses any advantage without mercy.|stat=Move7,Fight+4,Shoot+0,Armor10,Will+0,Health8|xp=3|threat=demons|rarity=common|tag=martial|tier=minion
+# skills: 
+D003|Death Knight|description=A hardened fiendish demon death knight who fights dirty up close and presses any advantage without mercy.|stat=Move7,Fight+5,Shoot+0,Armor13,Will+1,Health15|xp=5|threat=demons|rarity=uncommon|tag=martial,tank|tier=elite
+# skills: Hold the Line
+D004|Infernal Executioner|description=A hardened fiendish demon infernal executioner who fights dirty up close and presses any advantage without mercy.|stat=Move7,Fight+5,Shoot+0,Armor11,Will+1,Health11|xp=5|threat=demons|rarity=rare|tag=martial|tier=elite
+# skills: 
+D005|Reaper|description=A hardened fiendish demon reaper who fights dirty up close and presses any advantage without mercy.|stat=Move7,Fight+3,Shoot+4,Armor11,Will+1,Health11|xp=6|threat=demons|rarity=rare|tag=martial,ranged|tier=elite
+# skills: Aimed Shot, Volley
+D006|Archdevil|description=A commanding fiendish demon archdevil who fights dirty up close and presses any advantage without mercy.|stat=Move6,Fight+3,Shoot+0,Armor12,Will+8,Health14|xp=5|threat=demons|rarity=rare|tag=magic,martial|tier=leader
+# skills: Spellcaster, Hex, Command Aura
+D007|Pit Fiend|description=A commanding fiendish demon pit fiend who fights dirty up close and presses any advantage without mercy.|stat=Move6,Fight+6,Shoot+0,Armor14,Will+3,Health20|xp=7|threat=demons|rarity=uncommon|tag=martial,tank|tier=leader
+# skills: Hold the Line, Command Aura
+D008|Demon Thrower|description=A rank-and-file fiendish demon thrower who punishes movement with steady shots and opportunistic volleys.|stat=Move7,Fight+1,Shoot+3,Armor10,Will+0,Health8|xp=3|threat=demons|rarity=common|tag=ranged|tier=minion
+# skills: Aimed Shot, Volley
+D009|Incubus|description=A commanding fiendish demon incubus who twists reality with rites, curses, or raw elemental force.|stat=Move6,Fight+3,Shoot+0,Armor12,Will+8,Health14|xp=5|threat=demons|rarity=uncommon|tag=magic,support|tier=leader
+# skills: Rally, Mark Prey, Command Aura
+D010|Quasit|description=A rank-and-file fiendish demon quasit who bolsters allies and undermines enemies with signals, tricks, or wards.|stat=Move7,Fight+1,Shoot+0,Armor9,Will+5,Health6|xp=2|threat=demons|rarity=common|tag=support,fast|tier=minion
+# skills: Rally, Mark Prey
+D011|Taskmaster|description=A rank-and-file fiendish demon taskmaster who bolsters allies and undermines enemies with signals, tricks, or wards.|stat=Move7,Fight+1,Shoot+0,Armor11,Will+5,Health10|xp=3|threat=demons|rarity=uncommon|tag=support,tank|tier=minion
+# skills: Rally, Mark Prey, Hold the Line
+D012|Flesh Artificer|description=A hardened fiendish demon flesh artificer who bolsters allies and undermines enemies with signals, tricks, or wards.|stat=Move7,Fight+2,Shoot+0,Armor13,Will+6,Health15|xp=4|threat=demons|rarity=rare|tag=support,tank|tier=elite
+# skills: Rally, Mark Prey, Hold the Line
+D013|Hellhound|description=A rank-and-file fiendish demon hellhound who fights dirty up close and presses any advantage without mercy.|stat=Move7,Fight+4,Shoot+0,Armor10,Will+0,Health8|xp=3|threat=demons|rarity=common|tag=animal,martial,fast|tier=minion
+# skills: 
+D014|Rift Caller|description=A hardened demon void-worker who tears open rifts to reposition allies and strand enemies.|stat=Move7,Fight+0,Shoot+0,Armor10,Will+8,Health10|xp=3|threat=demons|rarity=rare|gear=Infernal Focus|tag=magic,support|tier=elite
+# skills: Rift Summon; Portal; Spellcaster; Escalation
+D015|Chain Binder|description=A hardened fiendish demon chain binder who fights dirty up close and presses any advantage without mercy.|stat=Move7,Fight+3,Shoot+0,Armor11,Will+4,Health11|xp=4|threat=demons|rarity=rare|gear=Chains, Hook|tag=support,martial|tier=elite
+# skills: Chain Pull; Bind; Punish Movement; Command Whip
+
+#---------------------------
+# ELVES
+#---------------------------
+
+E001|Elven Ranger|description=A rank-and-file keen-eyed elf elven ranger who fights dirty up close and presses any advantage without mercy.|stat=Move6,Fight+2,Shoot+3,Armor9,Will+1,Health13|xp=4|threat=elves|rarity=common|tag=martial,ranged|tier=minion
+# skills: Aimed Shot, Volley
+E002|Treant Sapling|description=A rank-and-file keen-eyed elf treant sapling who fights dirty up close and presses any advantage without mercy.|stat=Move6,Fight+3,Shoot+0,Armor9,Will+1,Health13|xp=3|threat=elves|rarity=uncommon|tag=martial|tier=minion
+# skills: 
+E003|Elven Blademaster|description=A hardened keen-eyed elf elven blademaster who fights dirty up close and presses any advantage without mercy.|stat=Move6,Fight+4,Shoot+0,Armor10,Will+1,Health17|xp=4|threat=elves|rarity=uncommon|tag=martial|tier=elite
+# skills: 
+E004|Elven Warlord|description=A commanding keen-eyed elf elven warlord who fights dirty up close and presses any advantage without mercy.|stat=Move6,Fight+5,Shoot+0,Armor11,Will+3,Health21|xp=6|threat=elves|rarity=uncommon|tag=martial|tier=leader
+# skills: Command Aura
+E005|Forest Guardian|description=A commanding keen-eyed elf forest guardian who fights dirty up close and presses any advantage without mercy.|stat=Move6,Fight+5,Shoot+0,Armor13,Will+3,Health27|xp=7|threat=elves|rarity=rare|tag=martial,tank|tier=leader
+# skills: Hold the Line, Command Aura
+E006|Elven Archer|description=A rank-and-file keen-eyed elf elven archer who punishes movement with steady shots and opportunistic volleys.|stat=Move6,Fight+1,Shoot+4,Armor9,Will+1,Health13|xp=4|threat=elves|rarity=rare|tag=ranged|tier=minion
+# skills: Aimed Shot, Volley
+E007|Elven Scout|description=A rank-and-file keen-eyed elf elven scout who punishes movement with steady shots and opportunistic volleys.|stat=Move6,Fight+1,Shoot+1,Armor8,Will+2,Health11|xp=2|threat=elves|rarity=common|tag=ranged,support|tier=minion
+# skills: Rally, Mark Prey
+E008|Elven Sharpshooter|description=A hardened keen-eyed elf elven sharpshooter who punishes movement with steady shots and opportunistic volleys.|stat=Move6,Fight+2,Shoot+5,Armor10,Will+1,Health17|xp=6|threat=elves|rarity=rare|tag=ranged|tier=elite
+# skills: Aimed Shot, Volley
+E009|Wisp|description=A rank-and-file keen-eyed elf wisp who twists reality with rites, curses, or raw elemental force.|stat=Move6,Fight+1,Shoot+0,Armor8,Will+3,Health11|xp=2|threat=elves|rarity=rare|tag=magic,support|tier=minion
+# skills: Rally, Mark Prey
+E010|Druid|description=A hardened keen-eyed elf druid who twists reality with rites, curses, or raw elemental force.|stat=Move6,Fight+1,Shoot+0,Armor12,Will+6,Health21|xp=4|threat=elves|rarity=uncommon|tag=magic,tank|tier=elite
+# skills: Spellcaster, Hex, Hold the Line
+E011|Fey Enchantress|description=A hardened keen-eyed elf fey enchantress who twists reality with rites, curses, or raw elemental force.|stat=Move6,Fight+1,Shoot+0,Armor10,Will+6,Health17|xp=3|threat=elves|rarity=uncommon|tag=magic|tier=elite
+# skills: Spellcaster, Hex
+E012|Forest Dryad|description=A hardened keen-eyed elf forest dryad who twists reality with rites, curses, or raw elemental force.|stat=Move6,Fight+2,Shoot+0,Armor10,Will+4,Health17|xp=4|threat=elves|rarity=rare|tag=magic,support|tier=elite
+# skills: Rally, Mark Prey
+E013|Archdruid|description=A commanding keen-eyed elf archdruid who twists reality with rites, curses, or raw elemental force.|stat=Move6,Fight+2,Shoot+0,Armor11,Will+8,Health19|xp=5|threat=elves|rarity=rare|tag=magic|tier=leader
+# skills: Spellcaster, Hex, Command Aura
+E014|Fey Lord|description=A commanding keen-eyed elf fey lord who twists reality with rites, curses, or raw elemental force.|stat=Move6,Fight+3,Shoot+0,Armor11,Will+6,Health21|xp=5|threat=elves|rarity=rare|tag=magic,support|tier=leader
+# skills: Rally, Mark Prey, Command Aura
+E015|Fairy|description=A rank-and-file keen-eyed elf fairy who bolsters allies and undermines enemies with signals, tricks, or wards.|stat=Move6,Fight+1,Shoot+0,Armor8,Will+2,Health11|xp=2|threat=elves|rarity=uncommon|tag=support|tier=minion
+# skills: Rally, Mark Prey
+E016|Owl|description=A rank-and-file keen-eyed elf owl who bolsters allies and undermines enemies with signals, tricks, or wards.|stat=Move6,Fight+1,Shoot+0,Armor8,Will+2,Health11|xp=2|threat=elves|rarity=common|tag=animal,support|tier=minion
+# skills: Rally, Mark Prey
+E017|Bear|description=A rank-and-file keen-eyed elf bear who fights dirty up close and presses any advantage without mercy.|stat=Move6,Fight+3,Shoot+0,Armor10,Will+1,Health17|xp=4|threat=elves|rarity=common|tag=animal,martial,tank|tier=minion
+# skills: Hold the Line
+E018|Treant Guardian|description=A hardened keen-eyed elf treant guardian who fights dirty up close and presses any advantage without mercy.|stat=Move6,Fight+4,Shoot+0,Armor12,Will+1,Health21|xp=5|threat=elves|rarity=rare|tag=martial,tank|tier=elite
+# skills: Hold the Line
+E019|Grove Tender|description=A hardened elf grove-tender who mends wounds and calls the wild to shelter allies.|stat=Move6,Fight+0,Shoot+0,Armor9,Will+6,Health15|xp=2|threat=elves|rarity=uncommon|gear=Herbal Satchel, Staff|tag=support,magic|tier=elite
+# skills: Healing Aura; Cleanse; Barkskin; Root Ward
+E020|Thorn Sentinel|description=A hardened elf sentinel who controls open ground with relentless volleys and ruthless discipline.|stat=Move6,Fight+1,Shoot+5,Armor10,Will+2,Health17|xp=5|threat=elves|rarity=rare|gear=Thorn Bow|tag=ranged|tier=elite
+# skills: Thorn Volley; Pinning Shot; Overwatch; Area Denial
+E021|Hawk Knight|description=A hardened elf outrider who harasses flanks from the saddle and escapes before the counterattack.|stat=Move10,Fight+4,Shoot+2,Armor10,Will+2,Health17|xp=5|threat=elves|rarity=rare|gear=Hawk Mount, Spear, Bow, Light Armor|tag=martial,ranged,fast,mounted|tier=elite
+# skills: Flying (mount); Dive Attack; Flyby; Mark Target
+
+#---------------------------
+# REPTILES
+#---------------------------
+
+R001|Crocogator|description=A rank-and-file cold-blooded scaled warrior crocogator who fights dirty up close and presses any advantage without mercy.|stat=Move6,Fight+2,Shoot+0,Armor13,Will+0,Health12|xp=3|threat=reptiles|rarity=rare|tag=animal,martial,tank|tier=minion
+# skills: Hold the Line
+R002|Drake|description=A rank-and-file cold-blooded scaled warrior drake who fights dirty up close and presses any advantage without mercy.|stat=Move6,Fight+1,Shoot+2,Armor12,Will+0,Health8|xp=3|threat=reptiles|rarity=rare|tag=martial,ranged|tier=minion
+# skills: Aimed Shot, Volley
+R003|Komodo|description=A rank-and-file cold-blooded scaled warrior komodo who fights dirty up close and presses any advantage without mercy.|stat=Move6,Fight+2,Shoot+0,Armor12,Will+0,Health8|xp=3|threat=reptiles|rarity=rare|tag=martial|tier=minion
+# skills: 
+R004|Skink Skirmisher|description=A rank-and-file cold-blooded scaled warrior skink skirmisher who fights dirty up close and presses any advantage without mercy.|stat=Move7,Fight+2,Shoot+0,Armor12,Will+0,Health8|xp=3|threat=reptiles|rarity=common|tag=martial,fast|tier=minion
+# skills: 
+R005|Lizardfolk Scaleguard|description=A hardened cold-blooded scaled warrior lizardfolk scaleguard who fights dirty up close and presses any advantage without mercy.|stat=Move6,Fight+3,Shoot+0,Armor15,Will+1,Health16|xp=5|threat=reptiles|rarity=uncommon|tag=martial,tank|tier=elite
+# skills: Hold the Line
+R006|Raptor Rider|description=A hardened scaled warrior outrider who harasses flanks from the saddle and escapes before the counterattack.|stat=Move8,Fight+3,Shoot+0,Armor13,Will+1,Health12|xp=4|threat=reptiles|rarity=uncommon|tag=martial,mounted,fast|tier=elite
+# skills: Mounted, Mounted Charge
+R007|Saurus Champion|description=A hardened cold-blooded scaled warrior saurus champion who fights dirty up close and presses any advantage without mercy.|stat=Move6,Fight+3,Shoot+0,Armor13,Will+1,Health12|xp=4|threat=reptiles|rarity=uncommon|tag=martial|tier=elite
+# skills: 
+R008|Triceratops|description=A hardened cold-blooded scaled warrior triceratops who fights dirty up close and presses any advantage without mercy.|stat=Move6,Fight+3,Shoot+0,Armor15,Will+1,Health16|xp=5|threat=reptiles|rarity=rare|tag=martial,tank|tier=elite
+# skills: Hold the Line
+R009|Alpha Saurian|description=A commanding cold-blooded scaled warrior alpha saurian who fights dirty up close and presses any advantage without mercy.|stat=Move6,Fight+4,Shoot+0,Armor15,Will+6,Health18|xp=6|threat=reptiles|rarity=uncommon|tag=martial,support|tier=leader
+# skills: Rally, Mark Prey, Command Aura
+R010|Tyranosaurus Rex|description=A commanding cold-blooded scaled warrior tyranosaurus rex who fights dirty up close and presses any advantage without mercy.|stat=Move6,Fight+5,Shoot+0,Armor17,Will+4,Health24|xp=7|threat=reptiles|rarity=rare|tag=martial,tank|tier=leader
+# skills: Hold the Line, Command Aura
+R011|Dilopo Spitter|description=A rank-and-file cold-blooded scaled warrior dilopo spitter who punishes movement with steady shots and opportunistic volleys.|stat=Move6,Fight+1,Shoot+2,Armor12,Will+0,Health8|xp=3|threat=reptiles|rarity=rare|tag=ranged|tier=minion
+# skills: Aimed Shot, Volley
+R012|Skink Slinger|description=A rank-and-file cold-blooded scaled warrior skink slinger who punishes movement with steady shots and opportunistic volleys.|stat=Move7,Fight+1,Shoot+2,Armor12,Will+0,Health8|xp=3|threat=reptiles|rarity=common|tag=ranged,fast|tier=minion
+# skills: Aimed Shot, Volley
+R013|Scale Priest|description=A rank-and-file cold-blooded scaled warrior scale priest who twists reality with rites, curses, or raw elemental force.|stat=Move6,Fight+0,Shoot+0,Armor11,Will+3,Health6|xp=2|threat=reptiles|rarity=uncommon|tag=magic,support|tier=minion
+# skills: Spellcaster, Hex
+R014|High Priest of the Sun|description=A commanding cold-blooded scaled warrior high priest of the sun who twists reality with rites, curses, or raw elemental force.|stat=Move6,Fight+3,Shoot+0,Armor15,Will+8,Health16|xp=6|threat=reptiles|rarity=uncommon|tag=magic,support|tier=leader
+# skills: Spellcaster, Hex, Command Aura
+R015|Skink Bolt Thrower|description=A hardened scaled warrior crew that operates a heavy bolt-thrower to punish armor and control open lanes.|stat=Move7,Fight+1,Shoot+4,Armor13,Will+1,Health12|xp=5|threat=reptiles|rarity=rare|gear=Bolt Thrower|tag=ranged|tier=elite
+# skills: Bolt Thrower; Reload; Piercing Shot; Suppression
+
+#---------------------------
+# UNDEAD
+#---------------------------
+
+U001|Ghoul|description=A rank-and-file reeking undead ghoul who fights dirty up close and presses any advantage without mercy.|stat=Move6,Fight+2,Shoot+0,Armor12,Will+0,Health12|xp=3|threat=undead|rarity=common|tag=martial,undead,fast|tier=minion
+# skills: 
+U002|Skeleton|description=A rank-and-file reeking undead skeleton who fights dirty up close and presses any advantage without mercy.|stat=Move5,Fight+2,Shoot+0,Armor12,Will+0,Health12|xp=3|threat=undead|rarity=common|tag=martial,undead|tier=minion
+# skills: 
+U003|Swamp Zombie|description=A rank-and-file reeking undead swamp zombie who fights dirty up close and presses any advantage without mercy.|stat=Move3,Fight+0,Shoot+0,Armor13,Will+0,Health8|xp=2|threat=undead|rarity=uncommon|tag=martial,undead|tier=minion
+# skills: Amphibious
+U004|Ghoul Fiend|description=A hardened reeking undead ghoul fiend who fights dirty up close and presses any advantage without mercy.|stat=Move6,Fight+3,Shoot+0,Armor13,Will+6,Health16|xp=5|threat=undead|rarity=uncommon|tag=martial,undead,fast|tier=elite
+# skills: 
+U005|Skeleton Knight|description=A hardened reeking undead skeleton knight who fights dirty up close and presses any advantage without mercy.|stat=Move5,Fight+3,Shoot+0,Armor13,Will+1,Health16|xp=4|threat=undead|rarity=uncommon|tag=martial,undead|tier=elite
+# skills: 
+U006|Shadow Knight|description=A commanding reeking undead shadow knight who fights dirty up close and presses any advantage without mercy.|stat=Move5,Fight+4,Shoot+0,Armor14,Will+3,Health20|xp=6|threat=undead|rarity=legendary|tag=martial,undead|tier=leader
+# skills: Command Aura
+U007|Ghoul Flinger|description=A rank-and-file reeking undead ghoul flinger who punishes movement with steady shots and opportunistic volleys.|stat=Move6,Fight+1,Shoot+2,Armor12,Will+0,Health12|xp=4|threat=undead|rarity=uncommon|tag=ranged,undead,fast|tier=minion
+# skills: Aimed Shot, Volley
+U008|Revenant|description=A hardened reeking undead revenant who twists reality with rites, curses, or raw elemental force.|stat=Move4,Fight+1,Shoot+0,Armor13,Will+9,Health16|xp=4|threat=undead|rarity=legendary|tag=magic,undead|tier=elite
+# skills: Spellcaster, Hex
+U009|Lich|description=A commanding reeking undead lich who twists reality with rites, curses, or raw elemental force.|stat=Move4,Fight+2,Shoot+0,Armor14,Will+9,Health18|xp=5|threat=undead|rarity=legendary|tag=magic,undead|tier=leader
+# skills: Spellcaster, Hex, Command Aura
+U010|Ghoul Rotter|description=A rank-and-file reeking undead ghoul rotter who fights dirty up close and presses any advantage without mercy.|stat=Move6,Fight+2,Shoot+0,Armor12,Will+0,Health12|xp=3|threat=undead|rarity=uncommon|tag=disease,martial,undead,fast|tier=minion
+# skills: Disease
+U011|Abomination|description=A hardened reeking undead abomination who fights dirty up close and presses any advantage without mercy.|stat=Move4,Fight+3,Shoot+0,Armor15,Will+8,Health24|xp=6|threat=undead|rarity=legendary|tag=large,martial,tank,undead|tier=elite
+# skills: Hold the Line
+U012|Null Wraith|description=A hardened undead wraith that drains warmth and willpower, leaving the living too weak to resist.|stat=Move7,Fight+1,Shoot+0,Armor12,Will+6,Health14|xp=4|threat=undead|rarity=rare|tag=undead,magic,support,fast|tier=elite
+# skills: Ethereal; Spell Drain; Chill Aura; Fear Aura
+
+#---------------------------
+# VIKINGS
+#---------------------------
+
+V001|Shieldmaiden|description=A rank-and-file hardy raider shieldmaiden who fights dirty up close and presses any advantage without mercy.|stat=Move7,Fight+3,Shoot+0,Armor12,Will+0,Health8|xp=3|threat=vikings|rarity=uncommon|gear=roll:weapons:tag=hand|tag=martial|tier=minion
+# skills: 
+V002|Viking|description=A rank-and-file hardy raider viking who fights dirty up close and presses any advantage without mercy.|stat=Move7,Fight+3,Shoot+0,Armor12,Will+0,Health8|xp=3|threat=vikings|rarity=common|gear=roll:weapons:tag=hand|tag=martial|tier=minion
+# skills: 
+V003|Berserker|description=A hardened hardy raider berserker who fights dirty up close and presses any advantage without mercy.|stat=Move7,Fight+4,Shoot+0,Armor13,Will+1,Health12|xp=5|threat=vikings|rarity=uncommon|gear=roll:weapons:tag=hand|tag=martial|tier=elite
+# skills: 
+V004|Drengr|description=A hardened hardy raider drengr who fights dirty up close and presses any advantage without mercy.|stat=Move7,Fight+4,Shoot+0,Armor13,Will+1,Health12|xp=5|threat=vikings|rarity=uncommon|gear=roll:weapons:tag=hand|tag=martial|tier=elite
+# skills: 
+V005|Valkyrie|description=A commanding hardy raider valkyrie who fights dirty up close and presses any advantage without mercy.|stat=Move7,Fight+3,Shoot+0,Armor14,Will+7,Health14|xp=5|threat=vikings|rarity=legendary|gear=roll:weapons:tag=hand|tag=magic,martial|tier=leader
+# skills: Spellcaster, Hex, Command Aura
+V006|Viking Archer|description=A rank-and-file hardy raider viking archer who punishes movement with steady shots and opportunistic volleys.|stat=Move7,Fight+1,Shoot+2,Armor12,Will+0,Health8|xp=3|threat=vikings|rarity=common|gear=bow|tag=ranged|tier=minion
+# skills: Aimed Shot, Volley
+V007|Fylgja|description=A rank-and-file hardy raider fylgja who twists reality with rites, curses, or raw elemental force.|stat=Move7,Fight+1,Shoot+0,Armor11,Will+4,Health6|xp=2|threat=vikings|rarity=common|gear=roll:weapons:tag=hand|tag=magic|tier=minion
+# skills: Spellcaster, Hex
+V008|Skald|description=A rank-and-file raider war-drummer whose relentless rhythm steels allies and rattles the nerves of foes.|stat=Move7,Fight+1,Shoot+0,Armor11,Will+3,Health6|xp=2|threat=vikings|rarity=common|gear=roll:weapons:tag=hand|tag=support|tier=minion
+# skills: Rally, Mark Prey
+V009|Jarl|description=A commanding hardy raider jarl who bolsters allies and undermines enemies with signals, tricks, or wards.|stat=Move7,Fight+3,Shoot+0,Armor14,Will+6,Health16|xp=5|threat=vikings|rarity=common|gear=roll:weapons:tag=hand|tag=support|tier=leader
+# skills: Rally, Mark Prey, Command Aura
+V010|Shield-breaker|description=A hardened raider shield-breaker who smashes defenses and turns stalemates into routs.|stat=Move7,Fight+3,Shoot+0,Armor13,Will+1,Health12|xp=4|threat=vikings|rarity=uncommon|gear=Axe, Shield|tag=martial|tier=elite
+# skills: Shield Break; Sundering Blow; Cleave
+V011|Bearskin Bulwark|description=A hardened raider bulwark who holds the line through grit, fury, and sheer stubborn mass.|stat=Move6,Fight+3,Shoot+0,Armor14,Will+1,Health14|xp=5|threat=vikings|rarity=uncommon|gear=Heavy Club, Hide Armor|tag=martial,tank|tier=elite
+# skills: Hold the Line; Brace; Unyielding
+V012|Harpooner|description=A rank-and-file raider harpooner who drags targets out of position and sets them up for the kill.|stat=Move7,Fight+1,Shoot+2,Armor12,Will+0,Health8|xp=3|threat=vikings|rarity=common|gear=Harpoon, Knife, Light Armor|tag=ranged|tier=minion
+# skills: Harpoon Pull; Anchor; Drag
+V013|Viking Raider|description=A rank-and-file hardy raider viking raider who fights dirty up close and presses any advantage without mercy.|stat=Move9,Fight+2,Shoot+0,Armor12,Will+0,Health8|xp=3|threat=vikings|rarity=common|gear=Axe, Shield, Light Armor|tag=martial,fast|tier=minion
+# skills: Raid Momentum; Intimidate; Shield Bash (optional)
+V014|Viking Reaver|description=A hardened hardy raider viking reaver who fights dirty up close and presses any advantage without mercy.|stat=Move9,Fight+3,Shoot+0,Armor14,Will+1,Health14|xp=5|threat=vikings|rarity=uncommon|gear=Two-Hand Axe, Medium Armor|tag=martial,fast,tank|tier=elite
+# skills: Berserk; Shield-Break; Relentless
+
+#---------------------------
+# SOLDIERS
+#---------------------------
+
+S001|Guardsman|description=A rank-and-file disciplined soldier guardsman who fights dirty up close and presses any advantage without mercy.|stat=Move6,Fight+3,Shoot+0,Armor11,Will+0,Health12|xp=3|threat=soldiers|rarity=uncommon|gear=roll:weapons:tag=twohand, Light Armor|tag=martial|tier=minion
+# skills: 
+S002|Soldier Recruit|description=A rank-and-file disciplined soldier recruit who fights dirty up close and presses any advantage without mercy.|stat=Move6,Fight+2,Shoot+0,Armor11,Will+0,Health12|xp=3|threat=soldiers|rarity=common|gear=roll:weapons:tag=hand|tag=martial|tier=minion
+# skills: 
+S003|Barbarian|description=A hardened disciplined soldier barbarian who fights dirty up close and presses any advantage without mercy.|stat=Move6,Fight+4,Shoot+0,Armor17,Will+3,Health20|xp=7|threat=soldiers|rarity=uncommon|gear=roll:weapons:tag=hand, Shield|tag=martial,tank|tier=elite
+# skills: Strength+5, Hold the Line
+S004|Knight|description=A hardened disciplined soldier knight who fights dirty up close and presses any advantage without mercy.|stat=Move5,Fight+4,Shoot+0,Armor17,Will+2,Health20|xp=6|threat=soldiers|rarity=uncommon|gear=roll:weapons:tag=hand, Shield, Heavy Armor|tag=martial,tank|tier=elite
+# skills: Strength+4, Hold the Line
+S005|Man-at-Arms|description=A hardened disciplined soldier man-at-arms who fights dirty up close and presses any advantage without mercy.|stat=Move6,Fight+3,Shoot+0,Armor15,Will+2,Health16|xp=5|threat=soldiers|rarity=common|gear=roll:weapons:tag=hand, Shield, Light Armor|tag=martial|tier=elite
+# skills: 
+S006|Templar|description=A hardened disciplined soldier templar who fights dirty up close and presses any advantage without mercy.|stat=Move5,Fight+4,Shoot+0,Armor15,Will+2,Health16|xp=6|threat=soldiers|rarity=rare|gear=Heavy Armor, roll:weapons:tag=twohand|tag=martial|tier=elite
+# skills: Strength+4
+S007|Knight Captain|description=A commanding disciplined soldier knight captain who fights dirty up close and presses any advantage without mercy.|stat=Move5,Fight+4,Shoot+0,Armor18,Will+3,Health26|xp=7|threat=soldiers|rarity=uncommon|gear=roll:weapons:tag=hand, Shield, Heavy Armor|tag=martial,tank|tier=leader
+# skills: Strength+6, Inspiring, Hold the Line, Command Aura
+S008|Longbowman|description=A rank-and-file disciplined soldier longbowman who punishes movement with steady shots and opportunistic volleys.|stat=Move6,Fight+1,Shoot+2,Armor10,Will+0,Health12|xp=3|threat=soldiers|rarity=common|gear=Bow, Dagger, Light Armor, Quiver|tag=ranged|tier=minion
+# skills: Aimed Shot, Volley
+S009|Chaplain|description=A rank-and-file disciplined soldier chaplain who twists reality with rites, curses, or raw elemental force.|stat=Move6,Fight+1,Shoot+0,Armor10,Will+2,Health10|xp=2|threat=soldiers|rarity=uncommon|gear=Staff, roll:weapons:tag=hand|tag=magic,support|tier=minion|roll:spells:tag=spells
+# skills: Heal, Rally, Mark Prey
+S010|Conjuror|description=A rank-and-file disciplined soldier conjuror who twists reality with rites, curses, or raw elemental force.|stat=Move6,Fight+0,Shoot+0,Armor10,Will+2,Health10|xp=2|threat=soldiers|rarity=uncommon|gear=Staff, roll:weapons:tag=hand|tag=magic|tier=minion|roll:spells:tag=spells:count=2
+# skills: Spellcaster, Hex
+S011|Battle-Mage|description=A hardened disciplined soldier battle-mage who twists reality with rites, curses, or raw elemental force.|stat=Move6,Fight+1,Shoot+0,Armor15,Will+4,Health16|xp=4|threat=soldiers|rarity=rare|gear=Staff, roll:weapons:tag=hand|tag=magic|tier=elite|roll:spells:tag=spells:count=3
+# skills: Spellcaster, Hex
+S012|Wizard|description=A commanding disciplined soldier wizard who twists reality with rites, curses, or raw elemental force.|stat=Move6,Fight+2,Shoot+0,Armor16,Will+6,Health18|xp=5|threat=soldiers|rarity=rare|gear=Staff, roll:weapons:tag=hand|tag=magic|tier=leader|roll:spells:tag=spells:count=5
+# skills: Spellcaster, Hex, Command Aura
+S013|Bannerman|description=A rank-and-file disciplined soldier bannerman who bolsters allies and undermines enemies with signals, tricks, or wards.|stat=Move6,Fight+1,Shoot+0,Armor10,Will+1,Health10|xp=2|threat=soldiers|rarity=common|gear=Banner|tag=support|tier=minion
+# skills: Rally, Mark Prey
+S014|Strategist General|description=A commanding disciplined soldier strategist general who bolsters allies and undermines enemies with signals, tricks, or wards.|stat=Move5,Fight+3,Shoot+0,Armor16,Will+4,Health20|xp=6|threat=soldiers|rarity=uncommon|gear=roll:weapons:tag=hand|tag=support|tier=leader
+# skills: Rally, Mark Prey, Command Aura
+S015|Bloodhound|description=A rank-and-file disciplined soldier bloodhound who fights dirty up close and presses any advantage without mercy.|stat=Move9,Fight+2,Shoot+0,Armor11,Will+0,Health12|xp=3|threat=soldiers|rarity=rare|tag=animal,martial,fast|tier=minion
+# skills: Tracking+5, Bloodhound, Cannot Carry, Limited Rolls
+S016|Raptor|description=A rank-and-file disciplined soldier raptor who fights dirty up close and presses any advantage without mercy.|stat=Move6,Fight+2,Shoot+0,Armor11,Will+0,Health12|xp=3|threat=soldiers|rarity=rare|tag=animal,martial|tier=minion|rp=10
+# skills: Flying
+S017|Warhound|description=A rank-and-file disciplined soldier warhound who fights dirty up close and presses any advantage without mercy.|stat=Move9,Fight+2,Shoot+0,Armor11,Will+0,Health12|xp=3|threat=soldiers|rarity=rare|tag=animal,martial,fast|tier=minion
+# skills: Cannot Carry, Limited Rolls
+S018|Magebreaker|description=A hardened soldier magebreaker trained to disrupt spellcasters and pin them down under pressure.|stat=Move6,Fight+3,Shoot+0,Armor15,Will+2,Health16|xp=5|threat=soldiers|rarity=rare|gear=roll:weapons:tag=hand, Medium Armor|tag=martial,support|tier=elite
+# skills: Interrupt; Pin; Mage Sense; Spell Ward (lite)
+S019|Cavalry Trooper|description=A hardened soldier outrider who harasses flanks from the saddle and escapes before the counterattack.|stat=Move10,Fight+3,Shoot+0,Armor16,Will+1,Health18|xp=5|threat=soldiers|rarity=uncommon|gear=Horse, Lance, Shield, Medium Armor|tag=martial,tank,mounted,fast|tier=elite
+# skills: Mounted; Charge; Formation Drill; Trample (optional)
+S020|Cavalry Bowman|description=A hardened soldier outrider who harasses flanks from the saddle and escapes before the counterattack.|stat=Move10,Fight+2,Shoot+3,Armor15,Will+1,Health14|xp=6|threat=soldiers|rarity=uncommon|gear=Horse, Bow, Saber, Light Armor|tag=ranged,mounted,fast|tier=elite
+# skills: Mounted; Mobile Shot; Volley (optional); Screen
+
+#---------------------------
+# BEASTS
+#---------------------------
+
+B001|Beastman|description=A rank-and-file feral beastfolk beastman who fights dirty up close and presses any advantage without mercy.|stat=Move6,Fight+3,Shoot+0,Armor12,Will+0,Health12|xp=4|threat=beasts|rarity=common|gear=roll:weapons:tag=hand|tag=martial|tier=minion
+# skills: 
+B002|Gnoll|description=A rank-and-file feral beastfolk gnoll who fights dirty up close and presses any advantage without mercy.|stat=Move6,Fight+2,Shoot+2,Armor12,Will+0,Health12|xp=4|threat=beasts|rarity=common|gear=roll:weapons:tag=hand, Bow|tag=martial,ranged|tier=minion
+# skills: Aimed Shot, Volley
+B003|Gnoll Fighter|description=A rank-and-file feral beastfolk gnoll fighter who fights dirty up close and presses any advantage without mercy.|stat=Move6,Fight+2,Shoot+0,Armor11,Will+0,Health10|xp=3|threat=beasts|rarity=common|gear=roll:weapons:tag=hand, Light Armor|tag=martial|tier=minion
+# skills: 
+B004|Beast Barbarian|description=A hardened feral beastfolk beast barbarian who fights dirty up close and presses any advantage without mercy.|stat=Move6,Fight+5,Shoot+0,Armor12,Will+3,Health16|xp=5|threat=beasts|rarity=uncommon|gear=roll:weapons:tag=hand, Shield|tag=martial|tier=elite
+# skills: Strength+5
+B005|Gnoll Sergeant|description=A hardened feral beastfolk gnoll sergeant who fights dirty up close and presses any advantage without mercy.|stat=Move6,Fight+4,Shoot+0,Armor12,Will+1,Health16|xp=5|threat=beasts|rarity=uncommon|gear=roll:weapons:tag=twohand, Light Armor|tag=martial|tier=elite
+# skills: 
+B006|Ogre|description=A hardened feral beastfolk ogre who fights dirty up close and presses any advantage without mercy.|stat=Move6,Fight+3,Shoot+0,Armor13,Will+0,Health18|xp=4|threat=beasts|rarity=uncommon|gear=roll:weapons:tag=twohand|tag=large,martial,tank|tier=elite
+# skills: Hold the Line
+B007|Werebeast Brute|description=A hardened feral beastfolk werebeast brute who fights dirty up close and presses any advantage without mercy.|stat=Move6,Fight+4,Shoot+0,Armor12,Will+8,Health16|xp=6|threat=beasts|rarity=uncommon|tag=martial|tier=elite
+# skills: 
+B008|Beastman Warchief|description=A commanding feral beastfolk beastman warchief who fights dirty up close and presses any advantage without mercy.|stat=Move6,Fight+5,Shoot+0,Armor13,Will+8,Health20|xp=7|threat=beasts|rarity=uncommon|tag=martial,support|tier=leader
+# skills: Rally, Mark Prey, Command Aura
+B009|Minotaur|description=A commanding feral beastfolk minotaur who fights dirty up close and presses any advantage without mercy.|stat=Move6,Fight+5,Shoot+0,Armor15,Will+8,Health24|xp=7|threat=beasts|rarity=uncommon|tag=martial,tank|tier=leader
+# skills: Hold the Line, Command Aura
+B010|Gnoll Archer|description=A rank-and-file feral beastfolk gnoll archer who punishes movement with steady shots and opportunistic volleys.|stat=Move6,Fight+1,Shoot+2,Armor11,Will+0,Health10|xp=3|threat=beasts|rarity=common|gear=Dagger, Bow, Quiver, Light Armor|tag=ranged|tier=minion
+# skills: Aimed Shot, Volley
+B011|Beast Conjuror|description=A hardened feral beastfolk beast conjuror who twists reality with rites, curses, or raw elemental force.|stat=Move6,Fight+4,Shoot+0,Armor12,Will+4,Health16|xp=5|threat=beasts|rarity=uncommon|gear=Staff, roll:weapons:tag=hand|tag=magic|tier=elite|roll:spells:tag=spells:count=3
+# skills: Spellcaster, Hex
+B012|Gnoll Shaman|description=A hardened feral beastfolk gnoll shaman who twists reality with rites, curses, or raw elemental force.|stat=Move6,Fight+4,Shoot+0,Armor12,Will+4,Health16|xp=5|threat=beasts|rarity=uncommon|gear=roll:weapons:tag=hand, Poison|tag=magic,support|tier=elite
+# skills: Inspiring, Spellcaster, Hex
+B013|Bone Witch|description=A commanding feral beastfolk bone witch who twists reality with rites, curses, or raw elemental force.|stat=Move6,Fight+5,Shoot+0,Armor13,Will+7,Health20|xp=7|threat=beasts|rarity=rare|tag=magic,support|tier=leader
+# skills: Rally, Mark Prey, Command Aura
+B014|Centaur Pathfinder|description=A hardened beastfolk outrider who harasses flanks from the saddle and escapes before the counterattack.|stat=Move10,Fight+2,Shoot+0,Armor11,Will+3,Health14|xp=4|threat=beasts|rarity=uncommon|tag=fast,mounted,ranged,support|tier=elite
+# skills: Mounted, Rally, Mark Prey, Mounted Charge
+# skills: Pathfinder; Mark Prey; Sure-Footed; Skirmish
+B015|Bugbear|description=A hardened feral beastfolk bugbear who fights dirty up close and presses any advantage without mercy.|stat=Move8,Fight+4,Shoot+0,Armor11,Will+1,Health14|xp=4|threat=beasts|rarity=uncommon|gear=roll:weapons:tag=hand, Light Armor|tag=martial,stalker,tank|tier=elite
+# skills: Hold the Line, Ambush
+# skills: Ambush; Long Reach; Grapple/Carry-Off; Brutal Strike
+B016|Satyr|description=A rank-and-file feral beastfolk satyr who twists reality with rites, curses, or raw elemental force.|stat=Move9,Fight+1,Shoot+0,Armor10,Will+2,Health8|xp=2|threat=beasts|rarity=uncommon|tag=fast,magic,support|tier=minion
+# skills: Rally, Mark Prey
+# skills: Panic Pipes; Taunt; Rally; Dazzle
+B017|Griffin (Large)|description=A hardened feral beastfolk griffin (large) who fights dirty up close and presses any advantage without mercy.|stat=Move10,Fight+4,Shoot+0,Armor11,Will+1,Health14|xp=4|threat=beasts,monsters|rarity=rare|tag=fast,large,martial|tier=elite
+# skills: 
+# skills: Dive Attack; Grab; Terrifying Screech; Aerial Hunter
+B018|WereBear|description=A hardened feral beastfolk werebear who fights dirty up close and presses any advantage without mercy.|stat=Move6,Fight+5,Shoot+0,Armor14,Will+2,Health18|xp=6|threat=beasts|rarity=rare|tag=martial,tank,werebeast|tier=elite
+# skills: Hold the Line
+# skills: Regenerate; Rage; Crushing Hug; Fearless
+B019|Beastcaller|description=A hardened feral beastfolk beastcaller who twists reality with rites, curses, or raw elemental force.|stat=Move6,Fight+4,Shoot+0,Armor12,Will+3,Health16|xp=5|threat=beasts|rarity=rare|gear=Totem, Horn|tag=support,magic|tier=elite
+# skills: Call Pack; Beast Command; Rally; Howl
+
+#---------------------------
+# MONSTERS
+#---------------------------
+
+M001|Burrow Worm|description=A rank-and-file hulking monster burrow worm who fights dirty up close and presses any advantage without mercy.|stat=Move5,Fight+3,Shoot+0,Armor11,Will+0,Health10|xp=3|threat=monsters|rarity=uncommon|tag=burrowing,martial,monsters|tier=minion
+# skills: 
+M002|Darkroot Vine|description=A rank-and-file hulking monster darkroot vine who fights dirty up close and presses any advantage without mercy.|stat=Move6,Fight+2,Shoot+0,Armor11,Will+0,Health10|xp=3|threat=monsters|rarity=rare|tag=martial,monsters|tier=minion
+# skills: 
+M003|Troll|description=A hardened hulking monster troll who fights dirty up close and presses any advantage without mercy.|stat=Move4,Fight+4,Shoot+0,Armor14,Will+2,Health18|xp=5|threat=monsters|rarity=rare|gear=roll:weapons:tag=twohand|tag=large,martial,monsters|tier=elite
+# skills: 
+M004|Giant Fly|description=A rank-and-file hulking monster giant fly who fights dirty up close and presses any advantage without mercy.|stat=Move6,Fight+0,Shoot+0,Armor6,Will+0,Health5|xp=2|threat=monsters|rarity=common|tag=martial,monsters|tier=minion
+# skills: Flying, Disease
+M005|Giant Rat|description=A rank-and-file hulking monster giant rat who fights dirty up close and presses any advantage without mercy.|stat=Move6,Fight+0,Shoot+0,Armor6,Will+0,Health1|xp=2|threat=monsters|rarity=common|tag=animal,disease,martial,monsters|tier=minion
+# skills: Disease
+M006|Giant Spider|description=A rank-and-file hulking monster giant spider who fights dirty up close and presses any advantage without mercy.|stat=Move6,Fight+0,Shoot+0,Armor8,Will+0,Health4|xp=2|threat=monsters|rarity=common|tag=animal,martial,venomous,monsters|tier=minion
+# skills: Venomous
+M007|Darkroot|description=A hardened hulking monster darkroot who fights dirty up close and presses any advantage without mercy.|stat=Move6,Fight+3,Shoot+0,Armor12,Will+1,Health14|xp=4|threat=monsters|rarity=rare|tag=martial,monsters|tier=elite
+# skills: Missile Maximum
+M008|Flesh Golem|description=A hardened hulking monster flesh golem who fights dirty up close and presses any advantage without mercy.|stat=Move5,Fight+4,Shoot+0,Armor12,Will+1,Health14|xp=5|threat=monsters|rarity=uncommon|tag=martial,undead,monsters|tier=elite
+# skills: horrific
+M009|Spell-Eater|description=A hardened monster spell-eater that feeds on enchantment and leaves casters hollow and afraid.|stat=Move6,Fight+2,Shoot+0,Armor12,Will+4,Health14|xp=4|threat=monsters|rarity=rare|tag=magic,support,aberration,monsters|tier=elite
+# skills: Spell Eat; Dispel; Magic Resistance; Backlash
+M010|Acid Spitter|description=A rank-and-file monster acid-spitter that melts armor and flushes defenders from cover.|stat=Move6,Fight+0,Shoot+2,Armor9,Will+0,Health6|xp=2|threat=monsters|rarity=common|tag=ranged,monsters|tier=minion
+# skills: Acid Spit; Corrosive; Spray (cone optional)
+M011|Hydra|description=A many-headed terror that regrows what you cut away and overwhelms defenders in a storm of snapping jaws.|stat=Move5,Fight+5,Shoot+0,Armor15,Will+3,Health30|xp=7|threat=monsters|rarity=rare|tag=large,martial,tank,monsters|tier=leader
+# skills: Regenerate, Multihead, Hold the Line, Command Aura
+M012|Gorgon|description=A metal-skinned bull-beast whose petrifying breath turns a battlefield into a graveyard of stone.|stat=Move5,Fight+4,Shoot+0,Armor15,Will+3,Health30|xp=7|threat=monsters|rarity=rare|tag=large,martial,tank,monsters|tier=leader
+# skills: Petrifying Gaze, Charge, Hold the Line, Command Aura
+M013|Basilisk|description=A vicious reptilian predator whose gaze can stiffen flesh and leave hunters frozen mid-step.|stat=Move6,Fight+3,Shoot+0,Armor12,Will+2,Health14|xp=4|threat=monsters|rarity=uncommon|tag=martial,venomous,monsters|tier=elite
+# skills: Petrifying Gaze, Venomous
+M014|ArachneQueen|description=A cunning spider-brood queen that snares intruders in living webs and commands her nest like a court.|stat=Move6,Fight+3,Shoot+0,Armor13,Will+5,Health18|xp=5|threat=monsters|rarity=rare|tag=magic,support,venomous,monsters|tier=leader
+# skills: Web, Command Spiders, Venomous, Rally, Mark Prey, Command Aura
+M015|Giant Scorpion|description=A hulking desert hunter that crushes with its claws and ends fights with a venom-laced sting.|stat=Move7,Fight+4,Shoot+0,Armor14,Will+1,Health18|xp=5|threat=monsters|rarity=uncommon|tag=martial,tank,venomous,monsters|tier=elite
+# skills: Grab, Venomous, Hold the Line
+M016|Owlbear|description=A rage-filled forest predator that charges without fear and tears through lines with beak and claw.|stat=Move6,Fight+4,Shoot+0,Armor14,Will+1,Health18|xp=5|threat=monsters|rarity=uncommon|tag=animal,martial,tank,monsters|tier=elite
+# skills: Rend, Hold the Line
+M017|Gelatinous Cube|description=A nearly invisible dungeon ooze that engulfs prey whole and dissolves anything left inside.|stat=Move4,Fight+3,Shoot+0,Armor14,Will+1,Health18|xp=5|threat=monsters|rarity=uncommon|tag=martial,ooze,tank,monsters|tier=elite
+# skills: Engulf, Corrosive, Hold the Line
+M018|Manticore|description=A winged apex hunter that peppers foes with spikes before swooping in to maul the stragglers.|stat=Move7,Fight+2,Shoot+4,Armor12,Will+2,Health18|xp=6|threat=monsters|rarity=uncommon|tag=large,martial,ranged,monsters|tier=elite
+# skills: Spike Volley, Aimed Shot, Volley
+M019|Chimera|description=A three-headed nightmare that brings tooth, claw, and burning breath to every close-quarters fight.|stat=Move7,Fight+4,Shoot+0,Armor13,Will+3,Health24|xp=6|threat=monsters|rarity=rare|tag=large,martial,monsters|tier=leader
+# skills: Breath Weapon, Command Aura
+M020|Giant|description=A towering brute that smashes fortifications, hurls boulders, and treats smaller foes as toys.|stat=Move5,Fight+5,Shoot+0,Armor15,Will+3,Health30|xp=7|threat=monsters|rarity=rare|tag=large,martial,tank,monsters|tier=leader
+# skills: Crushing Blow, Hold the Line, Command Aura
+M021|Cyclops|description=A one-eyed giant hunter whose brutal strength and boulder-throws punish anyone caught in the open.|stat=Move5,Fight+2,Shoot+3,Armor12,Will+2,Health18|xp=5|threat=monsters|rarity=rare|tag=large,martial,ranged,monsters|tier=elite
+# skills: Boulder Throw, Aimed Shot, Volley
+M022|Mind Flayer|description=A psionic horror that shatters minds, bends willpower, and feeds on thought as easily as flesh.|stat=Move6,Fight+3,Shoot+0,Armor13,Will+7,Health18|xp=5|threat=monsters|rarity=legendary|tag=aberration,magic,psionic,support,monsters|tier=leader
+# skills: Mind Blast, Psionics, Rally, Mark Prey, Command Aura
+M023|Gargoyle|description=A winged stone predator that waits motionless in ruins before dropping on prey with savage precision.|stat=Move6,Fight+2,Shoot+0,Armor11,Will+0,Health10|xp=3|threat=monsters|rarity=common|tag=construct,martial,monsters|tier=minion
+# skills: Stone Hide
+M024|Cockatrice|description=A spiteful little beast whose bite carries a creeping petrification that can end a fight fast.|stat=Move8,Fight+2,Shoot+0,Armor11,Will+0,Health10|xp=3|threat=monsters|rarity=common|tag=animal,fast,martial,monsters|tier=minion
+# skills: Petrifying Bite
+M025|Giant Leeches|description=Bloated parasites that latch on in fetid water and drain victims until they collapse.|stat=Move5,Fight+2,Shoot+0,Armor11,Will+0,Health10|xp=3|threat=monsters|rarity=common|tag=martial,monsters|tier=minion
+# skills: Blood Drain
+M026|Ettercap|description=A cruel web-herder that lays traps, tends spiders, and drags victims into the canopy to be wrapped.|stat=Move6,Fight+2,Shoot+0,Armor12,Will+3,Health14|xp=4|threat=monsters|rarity=uncommon|tag=martial,support,venomous,monsters|tier=elite
+# skills: Web, Command Spiders, Venomous, Rally, Mark Prey
+M027|Phase Spider|description=A spider that blinks through reality to strike from impossible angles and vanish before retaliation.|stat=Move8,Fight+1,Shoot+0,Armor12,Will+5,Health14|xp=4|threat=monsters|rarity=rare|tag=fast,magic,martial,venomous,monsters|tier=elite
+# skills: Phase Step, Web, Venomous, Spellcaster, Hex
+M028|Sandworm|description=A colossal burrower that erupts beneath its prey and swallows whole anything that can’t escape.|stat=Move6,Fight+6,Shoot+0,Armor15,Will+3,Health30|xp=8|threat=monsters|rarity=legendary|tag=burrowing,large,martial,tank,monsters|tier=leader
+# skills: Burrow, Swallow, Hold the Line, Command Aura
+M029|Harpy|description=A winged scavenger whose haunting song lures the unwary into cliffs, talons, and worse.|stat=Move7,Fight+2,Shoot+0,Armor12,Will+3,Health14|xp=4|threat=monsters|rarity=uncommon|tag=ranged,support,monsters|tier=elite
+# skills: Luring Song, Rally, Mark Prey
+M030|Ooze Slime|description=A corrosive slime that oozes through cracks, dissolving gear and turning corridors into deathtraps.|stat=Move4,Fight+2,Shoot+0,Armor11,Will+0,Health10|xp=3|threat=monsters|rarity=common|tag=martial,ooze,monsters|tier=minion
+# skills: Corrosive
+M031|Rat Swarm|description=A churning carpet of vermin that overwhelms the fallen and spreads filth wherever it pours.|stat=Move7,Fight+2,Shoot+0,Armor10,Will+0,Health8|xp=2|threat=monsters|rarity=common|tag=animal,disease,martial,swarm,monsters|tier=minion
+# skills: Swarm, Disease
+M032|Dire Wolf|description=A huge pack hunter that runs down prey with relentless speed and crippling bites.|stat=Move9,Fight+2,Shoot+0,Armor11,Will+0,Health10|xp=3|threat=monsters|rarity=common|tag=animal,fast,martial,monsters|tier=minion
+# skills: Pack Tactics, Trip
+M033|Dire Bear|description=An enormous bruiser-beast that soaks punishment and mauls anything that stands its ground.|stat=Move6,Fight+4,Shoot+0,Armor14,Will+1,Health18|xp=5|threat=monsters|rarity=uncommon|tag=animal,martial,tank,monsters|tier=elite
+# skills: Maul, Hold the Line
+M034|Giant Crab|description=A crushing, armored shore-monster that grapples prey and drags it into the surf.|stat=Move5,Fight+3,Shoot+0,Armor14,Will+1,Health18|xp=5|threat=monsters|rarity=uncommon|tag=amphibious,martial,tank,monsters|tier=elite
+# skills: Grab, Amphibious, Hold the Line
+M035|Mimic|description=A predatory shapeshifter that masquerades as treasure or doors until victims are close enough to stick.|stat=Move5,Fight+2,Shoot+0,Armor12,Will+3,Health14|xp=4|threat=monsters|rarity=uncommon|tag=support,monsters|tier=elite
+# skills: Ambush, Adhesive, Rally, Mark Prey
+M036|Grell|description=A floating tentacled terror that paralyzes prey and drifts away to feed in silence.|stat=Move6,Fight+1,Shoot+0,Armor12,Will+5,Health14|xp=4|threat=monsters|rarity=rare|tag=aberration,magic,monsters|tier=elite
+# skills: Paralyzing Tentacles, Spellcaster, Hex
+M037|Intellect Devourer|description=A small psionic predator that hunts thoughts first, then steals bodies when opportunity strikes.|stat=Move6,Fight+2,Shoot+0,Armor12,Will+6,Health14|xp=4|threat=monsters|rarity=rare|tag=aberration,magic,psionic,support,monsters|tier=elite
+# skills: Body Snatch, Psionics, Rally, Mark Prey
+M038|Mandrake|description=A shrieking, dragon-like plant horror whose sap and scream can stiffen flesh toward stone.|stat=Move4,Fight+2,Shoot+0,Armor12,Will+4,Health14|xp=4|threat=monsters|rarity=rare|tag=magic,petrify,plant,support,monsters|tier=elite
+# skills: Shriek, Petrifying Sap, Rooted, Rally, Mark Prey
+M039|Phoenix|description=A blazing immortal bird that burns the battlefield clean and rises again from its own ashes.|stat=Move9,Fight+2,Shoot+0,Armor13,Will+7,Health22|xp=5|threat=monsters|rarity=legendary|tag=fast,large,magic,martial,monsters|tier=leader
+# skills: Firestorm, Rebirth, Burning Trail, Spellcaster, Hex, Command Aura
+M040|Unicorn|description=A radiant horned guardian that heals the worthy, purges corruption, and charges like a living lance.|stat=Move9,Fight+2,Shoot+0,Armor12,Will+5,Health14|xp=4|threat=monsters|rarity=rare|tag=animal,fast,magic,support,monsters|tier=elite
+# skills: Healing Aura, Purify, Horn Charge, Rally, Mark Prey
+M041|Vampire|description=An immortal predator that charms the weak-willed and drinks life to mend its own wounds.|stat=Move8,Fight+3,Shoot+0,Armor13,Will+6,Health18|xp=5|threat=monsters|rarity=legendary|tag=fast,magic,martial,support,undead,monsters|tier=leader
+# skills: Charm, Mist Form, Regenerate, Rally, Mark Prey, Command Aura
+M042|Werewolf|description=A cursed, frenzied hunter that shrugs off harm and tears through isolated targets at speed.|stat=Move9,Fight+4,Shoot+0,Armor12,Will+2,Health14|xp=5|threat=monsters|rarity=uncommon|tag=animal,fast,martial,monsters|tier=elite
+# skills: Rage, Regenerate, Pack Howl
+M043|Sphinx|description=An ancient guardian-beast that tests intruders with riddles and punishes failure with crushing power.|stat=Move6,Fight+3,Shoot+0,Armor15,Will+6,Health30|xp=7|threat=monsters|rarity=legendary|tag=large,magic,support,tank,monsters|tier=leader
+# skills: Riddle Ward, Mystic Roar, Judge the Worthy, Rally, Mark Prey, Hold the Line, Command Aura
+M044|Pixies|description=A swirling knot of tiny fey that blinds, jinxes, and vanishes in glittering mischief.|stat=Move9,Fight+1,Shoot+0,Armor9,Will+4,Health6|xp=2|threat=monsters|rarity=common|tag=fast,fey,magic,support,swarm,monsters|tier=minion
+# skills: Dazzle, Vanish, Jinx, Rally, Mark Prey
+M045|Fire Elemental|description=A living blaze that ignites anything nearby and leaves burning footprints in its wake.|stat=Move6,Fight+1,Shoot+0,Armor12,Will+5,Health14|xp=4|threat=monsters|rarity=uncommon|tag=elemental,magic,monsters|tier=elite
+# skills: Burning Touch, Ignite, Spellcaster, Hex
+M046|Water Elemental|description=A crushing wave given form that engulfs foes, smothers flames, and reshapes the fight like a tide.|stat=Move6,Fight+1,Shoot+0,Armor14,Will+5,Health18|xp=4|threat=monsters|rarity=uncommon|tag=amphibious,elemental,magic,tank,monsters|tier=elite
+# skills: Engulf, Drown, Flow, Amphibious, Spellcaster, Hex, Hold the Line
+M047|Earth Elemental|description=A boulder-bodied juggernaut that grinds forward, shrugs off blows, and breaks whatever blocks its path.|stat=Move4,Fight+2,Shoot+0,Armor15,Will+7,Health22|xp=6|threat=monsters|rarity=rare|tag=elemental,magic,tank,monsters|tier=leader
+# skills: Stonefist, Tremor, Unstoppable, Spellcaster, Hex, Hold the Line, Command Aura
+M048|Lightning Elemental|description=A crackling storm-spirit that darts between targets and strikes in chaining arcs of power.|stat=Move9,Fight+1,Shoot+0,Armor12,Will+5,Health14|xp=4|threat=monsters|rarity=rare|tag=elemental,fast,magic,ranged,monsters|tier=elite
+# skills: Chain Lightning, Static Field, Spellcaster, Hex
+M049|Holy Elemental|description=A being of pure radiance that sears corruption and shelters allies in cleansing light.|stat=Move6,Fight+2,Shoot+0,Armor12,Will+6,Health14|xp=4|threat=monsters|rarity=rare|tag=elemental,magic,support,monsters|tier=elite
+# skills: Radiant Burst, Ward, Cleanse, Rally, Mark Prey
+M050|Shadow Elemental|description=A living darkness that drinks light, slips through cracks, and leaves terror in its wake.|stat=Move8,Fight+2,Shoot+0,Armor12,Will+5,Health14|xp=4|threat=monsters|rarity=rare|tag=elemental,fast,magic,support,monsters|tier=elite
+# skills: Light Drain, Shadow Step, Fear Aura, Rally, Mark Prey
+M051|Gremlin|description=A spiteful little saboteur-monster that ruins gear, steals tools, and turns order into chaos.|stat=Move8,Fight+1,Shoot+0,Armor10,Will+3,Health8|xp=2|threat=monsters|rarity=common|tag=fast,support,monsters|tier=minion
+# skills: Sabotage, Steal, Jinx, Rally, Mark Prey
+M052|Kraken|description=A colossal tentacled leviathan that drags prey under and turns waterways into its private killing ground.|stat=Move5,Fight+2,Shoot+0,Armor15,Will+7,Health28|xp=6|threat=monsters|rarity=legendary|tag=amphibious,large,magic,martial,tank,monsters|tier=leader
+# skills: Tentacle Grapple, Ink Cloud, Drag Under, Amphibious, Spellcaster, Hex, Hold the Line, Command Aura
+M053|Waterhag|description=A swamp witch-monster that curses intruders and turns still water into a drowning trap.|stat=Move6,Fight+2,Shoot+0,Armor12,Will+6,Health14|xp=4|threat=monsters|rarity=rare|tag=magic,support,monsters|tier=elite
+# skills: Curse, Drown, Illusion, Rally, Mark Prey
+M054|Lightning Salamander|description=A sleek storm-lizard that lashes with electrified strikes and leaves static in the air.|stat=Move8,Fight+1,Shoot+0,Armor12,Will+5,Health14|xp=4|threat=monsters|rarity=rare|tag=animal,fast,magic,martial,ranged,monsters|tier=elite
+# skills: Arc Lash, Static Bite, Overcharge, Spellcaster, Hex
+
+#---------------------------
+# GENERIC
+#---------------------------
+
+N001|Enemy Leader|description=A commanding dangerous enemy leader who fights dirty up close and presses any advantage without mercy.|stat=Move6,Fight+3,Shoot+0,Armor15,Will+5,Health24|xp=6|threat=generic|rarity=legendary|gear=roll:weapons:tag=hand|tag=magic,martial,support,tank|tier=leader|roll:spells:tag=spells:count=2
+# skills: Rally, Mark Prey, Hold the Line, Command Aura
+N002|Civilian|description=A rank-and-file dangerous enemy civilian who fights dirty up close and presses any advantage without mercy.|stat=Move6,Fight+2,Shoot+0,Armor11,Will+0,Health10|xp=3|threat=generic|rarity=common|gear=dagger|tag=martial|tier=minion
+# skills: 
+
+#---------------------------
+# HYBRID THREATS
+#---------------------------
+
+H001|Kobold|description=A rank-and-file feral beastfolk kobold who fights dirty up close and presses any advantage without mercy.|stat=Move6,Fight+2,Shoot+0,Armor11,Will+0,Health10|xp=3|threat=beasts,reptiles|rarity=common|gear=roll:weapons:tag=hand|tag=martial|tier=minion
+# skills: 
+H002|Cultist|description=A rank-and-file fanatical cultist who fights dirty up close and presses any advantage without mercy.|stat=Move5,Fight+1,Shoot+0,Armor10,Will+1,Health8|xp=2|threat=cultists,demons|rarity=common|tag=martial|tier=minion
+# skills: 
+H003|Hellfire Adept|description=A rank-and-file fanatical cultist hellfire adept who twists reality with rites, curses, or raw elemental force.|stat=Move5,Fight+0,Shoot+0,Armor9,Will+4,Health6|xp=2|threat=cultists,demons|rarity=uncommon|tag=magic|tier=minion
+# skills: Spellcaster, Hex
+H004|Warlock|description=A hardened fanatical cultist warlock who twists reality with rites, curses, or raw elemental force.|stat=Move5,Fight+1,Shoot+0,Armor12,Will+6,Health14|xp=4|threat=cultists,demons|rarity=uncommon|tag=magic|tier=elite
+# skills: Spellcaster, Hex
+H005|Bats|description=A rank-and-file hulking monster bats who fights dirty up close and presses any advantage without mercy.|stat=Move9,Fight+2,Shoot+0,Armor11,Will+0,Health10|xp=3|threat=monsters,demons|rarity=common|tag=animal,martial,fast|tier=minion
+# skills: Flying
+H006|Imp|description=A rank-and-file hulking monster imp who punishes movement with steady shots and opportunistic volleys.|stat=Move6,Fight+1,Shoot+2,Armor11,Will+0,Health10|xp=3|threat=monsters,demons|rarity=common|tag=ranged,fast|tier=minion
+# skills: Aimed Shot, Volley
+H007|Giant Snake|description=A rank-and-file cold-blooded scaled warrior giant snake who fights dirty up close and presses any advantage without mercy.|stat=Move5,Fight+2,Shoot+0,Armor11,Will+0,Health10|xp=3|threat=reptiles,monsters|rarity=common|tag=animal,martial|tier=minion
+# skills: Venomous, Amphibious
+H008|Dragonling Whelp|description=A rank-and-file cold-blooded scaled warrior dragonling whelp who fights dirty up close and presses any advantage without mercy.|stat=Move5,Fight+2,Shoot+0,Armor11,Will+0,Health10|xp=3|threat=reptiles,monsters|rarity=uncommon|tag=martial,monsters|tier=minion
+# skills: 
+H009|Wyvern|description=A hardened cold-blooded scaled warrior wyvern who fights dirty up close and presses any advantage without mercy.|stat=Move5,Fight+3,Shoot+0,Armor12,Will+1,Health14|xp=4|threat=reptiles,monsters|rarity=rare|tag=martial,monsters|tier=elite
+# skills: 
+H010|Ancient Dragon|description=A commanding cold-blooded scaled warrior ancient dragon who fights dirty up close and presses any advantage without mercy.|stat=Move5,Fight+2,Shoot+0,Armor13,Will+7,Health16|xp=5|threat=reptiles,monsters|rarity=rare|tag=magic,martial,monsters|tier=leader
+# skills: Spellcaster, Hex, Command Aura
+H011|Necromancer|description=A commanding reeking undead necromancer who twists reality with rites, curses, or raw elemental force.|stat=Move5,Fight+2,Shoot+0,Armor13,Will+8,Health16|xp=5|threat=undead,cultists|rarity=rare|tag=magic,undead|tier=leader
+# skills: Spellcaster, Hex, Command Aura
+H012|Tortured Soul|description=A hardened reeking undead tortured soul who fights dirty up close and presses any advantage without mercy.|stat=Move6,Fight+3,Shoot+0,Armor12,Will+1,Health14|xp=4|threat=undead|rarity=rare|tag=martial,undead|tier=elite
+# skills: Will Sap, Appeaseable
+H013|Zombie|description=A rank-and-file reeking undead zombie who fights dirty up close and presses any advantage without mercy.|stat=Move4,Fight+0,Shoot+0,Armor12,Will+0,Health6|xp=2|threat=undead,monsters|rarity=common|tag=martial,undead|tier=minion
+# skills: 
+H014|Ghoul Snake|description=A rank-and-file reeking undead ghoul snake who fights dirty up close and presses any advantage without mercy.|stat=Move5,Fight+2,Shoot+0,Armor11,Will+0,Health10|xp=3|threat=undead,monsters|rarity=rare|tag=martial,undead|tier=minion
+# skills: 
+H015|Dread Wyrm|description=A commanding reeking undead dread wyrm who fights dirty up close and presses any advantage without mercy.|stat=Move5,Fight+2,Shoot+0,Armor13,Will+7,Health16|xp=5|threat=undead,reptiles|rarity=legendary|tag=magic,martial,undead,monsters|tier=leader
+# skills: Spellcaster, Hex, Command Aura
+H016|Draugr|description=A rank-and-file hardy raider draugr who fights dirty up close and presses any advantage without mercy.|stat=Move6,Fight+3,Shoot+0,Armor11,Will+0,Health10|xp=3|threat=vikings,undead|rarity=rare|gear=roll:weapons:tag=hand|tag=martial|tier=minion
+# skills: 
+H017|Acolyte|description=A hardened reeking undead acolyte who twists reality with rites, curses, or raw elemental force.|stat=Move5,Fight+1,Shoot+0,Armor12,Will+8,Health14|xp=4|threat=undead,cultists,demons|rarity=uncommon|tag=magic|tier=elite
+# skills: Spellcaster, Hex
+H018|Wolf|description=A rank-and-file feral beastfolk wolf who fights dirty up close and presses any advantage without mercy.|stat=Move8,Fight+1,Shoot+0,Armor10,Will+0,Health6|xp=2|threat=beasts,goblins,bandits,monsters,elves|rarity=common|tag=animal,martial,fast,monsters|tier=minion
+# skills:

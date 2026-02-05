@@ -1,0 +1,10 @@
+001|Goblin Tribes|description=Small green creatures that are naturally aggressive and territorial. If enough gather together in a united cause it can wreck havoc on the countryside.|tag=goblins|camp=Goblin Tribal Warren|rarity=common
+002|Guild of Thieves|description=Criminals and murderers, compelled by a dark power.|tag=bandits|camp=Thieves' Guildhall|rarity=common
+003|Cult of the Dead|description=A sickness lies upon the land, bringing the stench of unnatural sorceries.|tag=undead,cultists|camp=Crypt Catacombs|rarity=uncommon
+004|Gnawing Horde|description=Beast-like hordes that emerge from underground to reclaim the world.|tag=beasts|camp=Bestial Lair|rarity=common
+005|Court of the Eldergrove|description=Cruel elf-kind leading the armies of the old forest.|tag=elves|camp=Forest Fortress|rarity=common
+006|Foreign Warbands|description=Ruthless warlord-driven raiders.|tag=vikings,bandits|camp=Fortified Longphort|rarity=common
+007|Oldest Kin|description=Venerable reptilian armies from another time or world.|tag=reptiles|camp=Cavernous Den|rarity=rare
+008|Cursed Warscape|description=A brutal war from long ago has left a curse upon the land.|tag=soldiers,undead|camp=Forgotten Burial Pits|rarity=uncommon
+009|Faceless Kingdom|description=An invading army, advancing under cruel beast-totems.|tag=soldiers,vikings|camp=Military Encampment|rarity=uncommon
+010|Demonic Scourge|description=Infernal powers of Hell stir to reap the souls of the surface world.|tag=demons,cultists|camp=Hellmouth|rarity=rare

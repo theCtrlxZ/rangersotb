@@ -1,0 +1,17 @@
+001|Townsfolk|description=Common people who tend to have deep pockets.|gear=10 gold marks|tag=minor|rarity=common
+002|Noble|description=At their side hangs a fine sword, passed down by their family|gear=Heirloom Blade|tag=minor,physical|rarity=common
+003|Outsider|description=They tend to be survivors, relying on their own talents over any advantages of birth.|skill=Strength+1|tag=minor,physical|rarity=common
+004|Zealot|description=They are often lucky, as if someone is watching over them.|stat_mod=Shoot+1|tag=minor,physical|rarity=common
+005|Mystic|description=Regardless of origin, they are determined, but hampered by the intense focus on magic.|stat_mod=Will+1|tag=minor,magic|rarity=common
+006|Scholar|description=Valuable in situations requiring obscure knowledge.|stat_mod=Armor+1|tag=minor,physical|rarity=common
+007|Soldier|description=They mutter old war tales in their sleep. The memories run as deep as their scars.|skill=XP+5|tag=minor,physical|rarity=common
+008|Drifter|description=Not all who wander are lost.|stat_mod=Armor+1|tag=minor,physical|rarity=common
+009|Monk|description=Devout in their discipline of the physical and spiritual world.|stat_mod=Armor+1|tag=minor,physical|rarity=common
+010|Knave|description=A local scoundrel whose unscrupulous nature gets the job done.|stat_mod=Armor+1|tag=minor,physical|rarity=common
+011|Frontier|description=Experienced in the wilderness, they tend to be resourceful and skilled.|stat_mod=Armor+1|tag=minor,physical|rarity=common
+012|Mercenary|description=The only reminder of their time as a mercenary is an old, tattered cloak|gear=Scout's Cloak|tag=minor,physical|rarity=common
+013|Cursed|description=The Fey-blood are burdened by fate to lead short, unhappy lives.|skill=Unlucky|tag=minor,physical|rarity=uncommon
+014|Blessed|description=This odd little trinket has always brought them luck.|gear=Talisman|tag=minor,physical|rarity=uncommon
+015|Fey-blood|description=The faeries and elves that make up the ice-heart court occasionally venture among humanity. Making a deal with the fey can grant wishes, but the price is often a child with an eerie ancestry.|stat_mod=Will+1|tag=minor,physical|rarity=rare
+016|Gifted|description=Born with abilities that the rest of the world doesn't understand.|roll:spells:tag=spells:count=1|tag=minor,magic|rarity=rare
+

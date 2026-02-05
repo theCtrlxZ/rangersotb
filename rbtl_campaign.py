@@ -1,0 +1,1248 @@
+# rbtl_campaign.py
+from __future__ import annotations
+
+import random
+import textwrap
+from datetime import datetime
+from typing import Any, Dict, List, Optional, Set, Tuple
+
+from rbtl_core import weighted_choice, entry_weight
+from rbtl_data import DataBundle, s_get_float, s_get_list
+
+
+# ============================================================
+# #LABEL: BALANCE KNOBS + HARD CAPS
+# What this section does: Defines difficulty tables and placement caps.
+# ============================================================
+
+MAX_PLAYERS = 8
+
+DIFFICULTY_THREATS = {
+    "easy": 1,
+    "normal": 3,
+    "hard": 3,
+    "brutal": 4,
+}
+
+THREAT_LEVELS = {
+    "easy": {"main": 5, "secondary": 4},
+    "normal": {"main": 6, "secondary": 5},
+    "hard": {"main": 7, "secondary": 6},
+    "brutal": {"main": 8, "secondary": 7},
+}
+
+MAP_BASE_SIDE = {
+    "easy": 2,
+    "normal": 4,
+    "hard": 6,
+    "brutal": 8,
+}
+
+MAX_THREAT_ATTEMPTS_PER_SLOT = 250
+MAX_SETTLEMENT_COUNT_ATTEMPTS = 100
+MAX_MAP_PLACEMENT_ATTEMPTS = 500
+
+
+# ============================================================
+# #LABEL: NORMALIZATION HELPERS
+# What this section does: Makes DataBundle entries behave like your older parser.
+# ============================================================
+
+def _norm(s: Any) -> str:
+    return str(s or "").strip().lower()
+
+
+def _csv_set(value: Any) -> Set[str]:
+    raw = str(value or "").strip()
+    if not raw:
+        return set()
+    return {x.strip().lower() for x in raw.split(",") if x.strip()}
+
+
+def _wrap_paragraphs(text: str, width: int = 92) -> List[str]:
+    """Wrap text into display-friendly lines, preserving blank lines."""
+    text = (text or "").strip()
+    if not text:
+        return []
+    out: List[str] = []
+    for para in text.split("\n"):
+        p = para.strip()
+        if not p:
+            out.append("")
+            continue
+        out.extend(textwrap.fill(p, width=width).split("\n"))
+    return out
+
+
+def pick_intro_start(intro_starts: List[Dict[str, Any]], main_threat_tags: Set[str]) -> Optional[Dict[str, Any]]:
+    """Pick a campaign intro; prefer intros tagged to the main threat."""
+    if not intro_starts:
+        return None
+
+    tagged = [i for i in intro_starts if (i.get("tags") or set()) and (set(i.get("tags") or set()) & (main_threat_tags or set()))]
+    if tagged:
+        return random.choice(tagged)
+
+    untagged = [i for i in intro_starts if not (i.get("tags") or set())]
+    if untagged:
+        return random.choice(untagged)
+
+    return random.choice(intro_starts)
+
+
+def _tags(entry: Dict[str, Any]) -> Set[str]:
+    # DataBundle loader stores tags as a set, but doesn’t lowercase.
+    return {_norm(t) for t in (entry.get("tags") or set()) if _norm(t)}
+
+
+def _not_tokens(entry: Dict[str, Any]) -> Set[str]:
+    # Campaign lists use not=... (csv). DataBundle keeps it as kv string.
+    return _csv_set(entry.get("not", ""))
+
+
+def _types(entry: Dict[str, Any]) -> Set[str]:
+    # settlement_types uses type=village,hamlet,town,any
+    return _csv_set(entry.get("type", ""))
+
+
+def _rarity(entry: Dict[str, Any]) -> str:
+    return _norm(entry.get("rarity", "common")) or "common"
+
+
+def _fmt_tags(tags: Set[str]) -> str:
+    return ", ".join(sorted(tags)) if tags else ""
+
+
+# ============================================================
+# #LABEL: CAMPAIGN INTRO (intro_start.txt)
+# What this section does: Picks a random opening blurb for the campaign.
+#
+# Design:
+#   - no tag= is treated as generic
+#   - generic vs tagged is a 50/50 bucket choice *only when both exist*
+#   - no theme/overlap bias (very weak / non-existent leaning)
+# ============================================================
+
+def _intro_text(entry: Dict[str, Any]) -> str:
+    """Intros can store text in name and/or description. Return a printable block."""
+    name = str(entry.get("name") or "").strip()
+    desc = str(entry.get("description") or "").strip()
+    if name and desc:
+        return f"{name}\n{desc}"
+    return name or desc
+
+
+def pick_campaign_intro(intros: List[Dict[str, Any]], *, context_tags: Optional[Set[str]] = None) -> str:
+    """Pick an intro from intro_start.txt.
+
+    context_tags is accepted for API stability but intentionally unused for weighting.
+    """
+    if not intros:
+        return ""
+
+    tagged: List[Dict[str, Any]] = []
+    generic: List[Dict[str, Any]] = []
+
+    for e in intros:
+        text = _intro_text(e)
+        if not text:
+            continue
+
+        tags = _tags(e)
+        # no tag= is generic; tag=generic is also generic
+        real_tags = {t for t in tags if t and t != "generic"}
+        if real_tags:
+            tagged.append(e)
+        else:
+            generic.append(e)
+
+    # Fallbacks
+    if not tagged and not generic:
+        return ""
+    if not tagged:
+        pick = random.choice(generic)
+        return _intro_text(pick).strip()
+    if not generic:
+        pick = random.choice(tagged)
+        return _intro_text(pick).strip()
+
+    # Both exist: 50/50 bucket selection (equal chance tagged vs generic)
+    bucket = tagged if random.random() < 0.5 else generic
+    pick = random.choice(bucket)
+    return _intro_text(pick).strip()
+
+
+# ============================================================
+# #LABEL: FOOTNOTES + ABORT
+# What this section does: Standardizes how rejects/warnings/aborts are recorded.
+# ============================================================
+
+def _log_reject(footnotes: List[str], label: str, entry: Dict[str, Any], reasons: List[str]) -> None:
+    reason_text = "; ".join(reasons) if reasons else "rejected"
+    footnotes.append(f"[REJECT] {label}: {entry.get('name', entry.get('id'))} → {reason_text}")
+
+
+def _warn_once(footnotes: List[str], msg: str) -> None:
+    if not any(msg in n for n in footnotes):
+        footnotes.append(msg)
+
+
+def _abort(footnotes: List[str], msg: str) -> None:
+    footnotes.append(f"[ABORT] {msg}")
+    raise SystemExit(msg)
+
+
+# ============================================================
+# #LABEL: CAMPAIGN PRESSURES (ROLE=main/sub/either)
+# What this section does: Enforces role rules and picks main + sub pressures.
+# ============================================================
+
+VALID_PRESSURE_ROLES = {"main", "sub", "either"}
+
+
+def validate_pressures_have_roles(pressures: List[Dict[str, Any]], footnotes: List[str]) -> None:
+    bad = [p for p in pressures if _norm(p.get("role")) not in VALID_PRESSURE_ROLES]
+    if not bad:
+        return
+
+    for p in bad[:20]:
+        _log_reject(footnotes, "Campaign Pressure (role validation)", p, ["missing/invalid role (main/sub/either)"])
+    _abort(footnotes, f"{len(bad)} campaign_pressures entries missing/invalid role=. Fix campaign_pressures.txt.")
+
+
+def pick_pressure_for_slot(
+    pressures: List[Dict[str, Any]],
+    slot: str,
+    used_ids: Set[str],
+    footnotes: List[str],
+) -> Dict[str, Any]:
+    """Main slot allows main/either. Sub slot allows sub/either."""
+
+    slot = _norm(slot)
+    if slot == "main":
+        allowed = {"main", "either"}
+    elif slot == "sub":
+        allowed = {"sub", "either"}
+    else:
+        _abort(footnotes, f"Internal error: unknown pressure slot '{slot}'.")
+
+    candidates = [p for p in pressures if p.get("id") not in used_ids and _norm(p.get("role")) in allowed]
+    if not candidates:
+        _abort(footnotes, f"No valid campaign pressures for slot '{slot}'. Check role= assignments.")
+
+    pick = weighted_choice(candidates)
+    if not pick:
+        _abort(footnotes, f"No valid campaign pressures for slot '{slot}'.")
+    used_ids.add(pick["id"])
+    return pick
+
+
+# ============================================================
+# #LABEL: THREAT SELECTION
+# What this section does: Finite rerolls, role restrictions, not= exclusions, and tag overlap.
+# ============================================================
+
+def threat_eligible_by_role(threat: Dict[str, Any], is_main: bool) -> bool:
+    role = _norm(threat.get("role"))
+    if is_main and role == "secondary_only":
+        return False
+    if (not is_main) and role == "main_only":
+        return False
+    return True
+
+
+def violates_not(threat: Dict[str, Any], forbidden_tokens: Set[str]) -> bool:
+    ttags = _tags(threat)
+    if ttags.intersection(forbidden_tokens):
+        return True
+    if _norm(threat.get("id")) in forbidden_tokens:
+        return True
+    if _norm(threat.get("name")) in forbidden_tokens:
+        return True
+    return False
+
+
+def has_required_overlap(threat: Dict[str, Any], context_tags: Set[str]) -> bool:
+    return len(_tags(threat).intersection(context_tags)) >= 1
+
+
+def pick_one_threat_slot(
+    threats: List[Dict[str, Any]],
+    *,
+    label: str,
+    is_main_slot: bool,
+    used_ids: Set[str],
+    context_tags: Set[str],
+    forbidden_tokens: Set[str],
+    footnotes: List[str],
+) -> Dict[str, Any]:
+    """Picks a threat for a slot with finite attempts and rejection logging."""
+
+    pool = [t for t in threats if t.get("id") not in used_ids]
+    if not pool:
+        _abort(footnotes, f"No threats available for {label} (all already used).")
+
+    require_overlap = True
+    if not context_tags:
+        require_overlap = False
+        _warn_once(
+            footnotes,
+            "[WARN] Threat theme matching skipped: context tags were empty (no tag= on rolled biome/pressures). Using role + not= only.",
+        )
+
+    for _ in range(MAX_THREAT_ATTEMPTS_PER_SLOT):
+        pick = weighted_choice(pool)
+        if not pick:
+            break
+
+        reasons: List[str] = []
+        if not threat_eligible_by_role(pick, is_main=is_main_slot):
+            reasons.append("role restriction")
+        if violates_not(pick, forbidden_tokens):
+            reasons.append("excluded by not=")
+        if require_overlap and not has_required_overlap(pick, context_tags):
+            reasons.append("no tag overlap with context")
+
+        if not reasons:
+            used_ids.add(pick["id"])
+            return pick
+
+        _log_reject(footnotes, label, pick, reasons)
+        pool = [t for t in pool if t.get("id") != pick.get("id")]
+        if not pool:
+            break
+
+    _abort(footnotes, f"No valid candidates for {label} after exclusions/role/tag rules.")
+
+
+def adjusted_threat_count(players: int, difficulty: str) -> int:
+    base = DIFFICULTY_THREATS[difficulty]
+    if players < 3:
+        return max(1, base - 1)
+    return base
+
+def _find_by_id(entries: List[Dict[str, Any]], entry_id: str, *, key: str = "id") -> Optional[Dict[str, Any]]:
+    entry_id = str(entry_id or "").strip()
+    if not entry_id:
+        return None
+    for e in entries:
+        if str(e.get(key, "")).strip() == entry_id:
+            return e
+    return None
+
+
+def roll_campaign_context(
+    *,
+    biomes: List[Dict[str, Any]],
+    pressures: List[Dict[str, Any]],
+    footnotes: List[str],
+) -> Tuple[Dict[str, Any], Dict[str, Any], Dict[str, Any], Set[str], Set[str]]:
+    """Roll biome + pressures and compute context tags + forbidden tokens.
+    Used by the main script to compute eligibility during Custom threat picking.
+    """
+    if not biomes:
+        _abort(footnotes, "Missing or empty required file: biomes.txt")
+    if not pressures:
+        _abort(footnotes, "Missing or empty required file: campaign_pressures.txt")
+
+    validate_pressures_have_roles(pressures, footnotes)
+
+    biome = weighted_choice(biomes) or biomes[0]
+
+    used_pressure_ids: Set[str] = set()
+    main_pressure = pick_pressure_for_slot(pressures, "main", used_pressure_ids, footnotes)
+    sub_pressure = pick_pressure_for_slot(pressures, "sub", used_pressure_ids, footnotes)
+
+    context_tags: Set[str] = set()
+    context_tags |= _tags(biome)
+    context_tags |= _tags(main_pressure)
+    context_tags |= _tags(sub_pressure)
+
+    forbidden_tokens: Set[str] = set()
+    forbidden_tokens |= _not_tokens(biome)
+    forbidden_tokens |= _not_tokens(main_pressure)
+    forbidden_tokens |= _not_tokens(sub_pressure)
+    forbidden_tokens = {_norm(x) for x in forbidden_tokens if _norm(x)}
+
+    return biome, main_pressure, sub_pressure, context_tags, forbidden_tokens
+
+
+def available_threat_tags_from_pool(threat_pool: List[Dict[str, Any]]) -> List[str]:
+    """Union of theme tags available in the provided threat pool (lowercased, sorted)."""
+    tags: Set[str] = set()
+    for t in threat_pool or []:
+        tags |= _tags(t)
+    # Remove tokens that are structural rather than thematic (rare, but keep safe).
+    tags = {x for x in tags if x and x not in {"main", "secondary", "any"}}
+    return sorted(tags)
+
+
+def eligible_threat_candidates(
+    threats: List[Dict[str, Any]],
+    *,
+    is_main_slot: bool,
+    used_ids: Set[str],
+    context_tags: Set[str],
+    forbidden_tokens: Set[str],
+    settings: Optional[Dict[str, str]] = None,
+    required_tag: Optional[str] = None,
+) -> List[Dict[str, Any]]:
+    """Filter threats to those eligible for the given slot + current context.
+
+    - Enforces role=main/secondary/any via threat_eligible_by_role().
+    - Enforces not= tokens via violates_not().
+    - If context_tags is non-empty, requires tag overlap via has_required_overlap().
+    - Optional required_tag hard-filter.
+    - Applies settings-enabled/disabled threat tag collections (enabled.threats / disabled.threats).
+    """
+    settings = settings or {}
+
+    enabled = {t.strip().lower() for t in (s_get_list(settings, "enabled.threats") + s_get_list(settings, "enable_threat")) if t.strip()}
+    disabled = {t.strip().lower() for t in (s_get_list(settings, "disabled.threats") + s_get_list(settings, "disable_threat")) if t.strip()}
+
+    req = _norm(required_tag)
+    if req in {"", "random", "none"}:
+        req = ""
+
+    pool: List[Dict[str, Any]] = []
+    for t in threats or []:
+        tid = str(t.get("id", "")).strip()
+        if tid and tid in used_ids:
+            continue
+
+        if not threat_eligible_by_role(t, is_main=is_main_slot):
+            continue
+        if violates_not(t, forbidden_tokens):
+            continue
+        if context_tags and not has_required_overlap(t, context_tags):
+            continue
+
+        t_tags = _tags(t)
+        if req and req not in t_tags:
+            continue
+        if disabled and (t_tags & disabled):
+            continue
+        if enabled and not (t_tags & enabled):
+            continue
+
+        pool.append(t)
+
+    return pool
+
+
+def threat_weight_with_settings(
+    threat: Dict[str, Any],
+    settings: Optional[Dict[str, str]] = None,
+    context_tags: Optional[Set[str]] = None,
+) -> float:
+    """Weight for random.choices() when selecting from an eligible threat pool.
+
+    Base: rarity weight (same as rbtl_core.weighted_choice).
+    Multipliers:
+      - threat row weight=... if present (float)
+      - max settings threat_weight.<tag> across threat tags
+      - small boost for context overlap (prefers on-theme picks without forcing)
+    """
+    settings = settings or {}
+    context_tags = context_tags or set()
+
+    w = float(max(1, entry_weight(threat)))
+
+    raw_w = str(threat.get("weight", "")).strip()
+    if raw_w:
+        try:
+            w *= float(raw_w)
+        except Exception:
+            pass
+
+    t_tags = _tags(threat)
+    if t_tags:
+        tag_mults = [s_get_float(settings, f"threat_weight.{t}", 1.0) for t in t_tags]
+        if tag_mults:
+            w *= max(tag_mults)
+
+    overlap = t_tags & set(context_tags)
+    if overlap:
+        w *= (1.0 + 0.25 * len(overlap))
+
+    # Ensure non-zero weight for random.choices
+    return max(0.0001, float(w))
+
+
+
+def pick_threats(
+    threats: List[Dict[str, Any]],
+    *,
+    players: int,
+    difficulty: str,
+    context_tags: Set[str],
+    forbidden_tokens: Set[str],
+    footnotes: List[str],
+    override_total: Optional[int] = None,
+) -> Tuple[Dict[str, Any], List[Dict[str, Any]]]:
+    """
+    Returns (main_threat, secondary_threats).
+    NOTE: Output formatting decides how threats map to pressures.
+    """
+
+    used: Set[str] = set()
+    main_threat = pick_one_threat_slot(
+        threats,
+        label="Main Threat",
+        is_main_slot=True,
+        used_ids=used,
+        context_tags=context_tags,
+        forbidden_tokens=forbidden_tokens,
+        footnotes=footnotes,
+    )
+
+    count_total = override_total if (override_total and override_total > 0) else adjusted_threat_count(players, difficulty)
+    count_total = max(1, count_total)
+
+    secondary_needed = max(0, count_total - 1)
+    secondary: List[Dict[str, Any]] = []
+    for i in range(secondary_needed):
+        secondary.append(
+            pick_one_threat_slot(
+                threats,
+                label=f"Secondary Threat #{i + 1}",
+                is_main_slot=False,
+                used_ids=used,
+                context_tags=context_tags,
+                forbidden_tokens=forbidden_tokens,
+                footnotes=footnotes,
+            )
+        )
+
+    return main_threat, secondary
+
+
+# ============================================================
+# #LABEL: SETTLEMENT GENERATION
+# What this section does: Picks a Town + 0–2 Villages + 0–2 Hamlets, and assigns variants.
+# ============================================================
+
+def choose_settlement_counts(footnotes: List[str], override_total: Optional[int] = None) -> Dict[str, int]:
+    """Returns counts dict with keys Town/Village/Hamlet."""
+
+    # Custom override: total settlements including Town.
+    if override_total and override_total > 0:
+        total = int(override_total)
+        if total < 2 or total > 5:
+            _abort(footnotes, "Settlement override must be between 2 and 5 total.")
+        remaining = total - 1
+        # Greedy split within caps.
+        ham = min(2, remaining)
+        remaining -= ham
+        vill = min(2, remaining)
+        remaining -= vill
+        if remaining != 0:
+            _abort(footnotes, "Settlement override could not be satisfied with hamlet/village caps.")
+        return {"Town": 1, "Village": vill, "Hamlet": ham}
+
+    for _ in range(MAX_SETTLEMENT_COUNT_ATTEMPTS):
+        ham = random.randint(0, 2)
+        vill = random.randint(0, 2)
+        town = 1
+        total = ham + vill + town
+        if 2 <= total <= 5:
+            return {"Town": 1, "Village": vill, "Hamlet": ham}
+
+    _abort(footnotes, f"Could not generate settlement counts within constraints after {MAX_SETTLEMENT_COUNT_ATTEMPTS} attempts.")
+
+
+def pick_settlement_types(
+    settlement_types: List[Dict[str, Any]],
+    counts: Dict[str, int],
+    footnotes: List[str],
+) -> List[Dict[str, Any]]:
+    """Picks specific settlement variants. Supports type=any and prefers exact matches."""
+
+    results: List[Dict[str, Any]] = []
+    if not settlement_types:
+        for stype, n in counts.items():
+            for _ in range(n):
+                results.append({"type": stype, "variant": None, "variant_description": "", "effect": ""})
+        return results
+
+    used_ids: Set[str] = set()
+
+    def matches(entry: Dict[str, Any], settlement_type: str) -> bool:
+        want = _norm(settlement_type)
+        types = _types(entry)
+        tags = _csv_set(entry.get("tag", "")) | _tags(entry)
+        return ("any" in types) or (want in types) or ("any" in tags) or (want in tags)
+
+    def is_exact(entry: Dict[str, Any], settlement_type: str) -> bool:
+        want = _norm(settlement_type)
+        types = _types(entry)
+        tags = _csv_set(entry.get("tag", "")) | _tags(entry)
+        return (want in types) or (want in tags)
+
+    for settlement_type, n in counts.items():
+        for _ in range(n):
+            candidates_all = [e for e in settlement_types if e.get("id") not in used_ids and matches(e, settlement_type)]
+            if not candidates_all:
+                footnotes.append(f"[WARN] No settlement variants for '{_norm(settlement_type)}' (check type=... or type=any).")
+                results.append({"type": settlement_type, "variant": None, "variant_description": "", "effect": ""})
+                continue
+
+            exact = [e for e in candidates_all if is_exact(e, settlement_type)]
+            candidates = exact if exact else candidates_all
+
+            pick = weighted_choice(candidates)
+            if not pick:
+                results.append({"type": settlement_type, "variant": None, "variant_description": "", "effect": ""})
+                continue
+
+            used_ids.add(pick["id"])
+            effect_text = (pick.get("effect") or pick.get("effects") or "").strip()
+            results.append(
+                {
+                    "type": settlement_type,
+                    "variant": pick.get("name"),
+                    "variant_description": (pick.get("description") or "").strip(),
+                    "effect": effect_text,
+                }
+            )
+
+    return results
+
+
+# ============================================================
+# #LABEL: MAP + SITE PLACEMENT
+# What this section does: Battleship-grid coordinates + spacing rules for settlements and sites.
+# ============================================================
+
+def excel_col_name(n: int) -> str:
+    """1 -> A, 26 -> Z, 27 -> AA, etc."""
+    s = ""
+    while n > 0:
+        n, rem = divmod(n - 1, 26)
+        s = chr(65 + rem) + s
+    return s
+
+
+def coord_str(x: int, y: int) -> str:
+    return f"{excel_col_name(x + 1)}{y + 1}"
+
+
+def manhattan(a: Tuple[int, int], b: Tuple[int, int]) -> int:
+    return abs(a[0] - b[0]) + abs(a[1] - b[1])
+
+
+def all_cells(side: int) -> List[Tuple[int, int]]:
+    return [(x, y) for x in range(side) for y in range(side)]
+
+
+def weighted_center_cells(side: int) -> List[Tuple[int, int]]:
+    cx = (side - 1) / 2
+    cy = (side - 1) / 2
+    out: List[Tuple[int, int]] = []
+    for (x, y) in all_cells(side):
+        d = abs(x - cx) + abs(y - cy)
+        w = int(max(1, round((side * 1.5) - d)))
+        out.extend([(x, y)] * w)
+    return out
+
+
+def ring_cells(side: int, center: Tuple[int, int], dmin: int, dmax: int, used: Set[Tuple[int, int]]) -> List[Tuple[int, int]]:
+    cx, cy = center
+    out: List[Tuple[int, int]] = []
+    for x in range(side):
+        for y in range(side):
+            if (x, y) in used:
+                continue
+            d = abs(x - cx) + abs(y - cy)
+            if dmin <= d <= dmax:
+                out.append((x, y))
+    return out
+
+
+def compute_map_side(players: int, difficulty: str, footnotes: List[str]) -> int:
+    if players < 1:
+        _abort(footnotes, "Players must be >= 1.")
+    if players > MAX_PLAYERS:
+        _abort(footnotes, f"Max players is {MAX_PLAYERS}.")
+    return MAP_BASE_SIDE[difficulty] + players
+
+
+def pick_spaced_points(
+    *,
+    candidates: List[Tuple[int, int]],
+    used: Set[Tuple[int, int]],
+    count: int,
+    min_between: int,
+    min_from: List[Tuple[Tuple[int, int], int]],
+    attempts: int = MAX_MAP_PLACEMENT_ATTEMPTS,
+) -> List[Tuple[int, int]]:
+    placed: List[Tuple[int, int]] = []
+    cand = [c for c in candidates if c not in used]
+
+    for _ in range(attempts):
+        if len(placed) >= count or not cand:
+            break
+        p = random.choice(cand)
+
+        ok = True
+        for pt, md in min_from:
+            if manhattan(p, pt) < md:
+                ok = False
+                break
+        if ok:
+            for q in placed:
+                if manhattan(p, q) < min_between:
+                    ok = False
+                    break
+
+        cand.remove(p)
+        if not ok:
+            continue
+
+        placed.append(p)
+        used.add(p)
+
+    return placed
+
+
+def generate_sites(
+    *,
+    side: int,
+    town_xy: Tuple[int, int],
+    used: Set[Tuple[int, int]],
+    settlement_coords_xy: List[Tuple[int, int]],
+    threats_ordered: List[Dict[str, Any]],
+    footnotes: List[str],
+) -> List[Dict[str, Any]]:
+    """Creates Delve, Unexplored, Camp per threat (revealed), and Hideout per threat (hidden)."""
+
+    sites: List[Dict[str, Any]] = []
+    cells = all_cells(side)
+
+    # Delve: 2–4 away from town (soften if needed)
+    delve_pool = ring_cells(side, town_xy, 2, 4, used)
+    if not delve_pool:
+        delve_pool = [c for c in cells if c not in used and manhattan(c, town_xy) >= 2]
+        footnotes.append("[WARN] Delve distance band softened due to tight map.")
+
+    delve_xy = random.choice(delve_pool)
+    used.add(delve_xy)
+    sites.append({"kind": "delve", "name": "Delve", "xy": delve_xy, "coord": coord_str(*delve_xy), "reveal_coord": True})
+
+    # Unexplored: 3+ away from town (soften if needed)
+    unexplored_pool = [c for c in cells if c not in used and manhattan(c, town_xy) >= 3]
+    if not unexplored_pool:
+        unexplored_pool = [c for c in cells if c not in used and manhattan(c, town_xy) >= 2]
+        footnotes.append("[WARN] Unexplored distance softened due to tight map.")
+
+    unexplored_xy = random.choice(unexplored_pool)
+    used.add(unexplored_xy)
+    sites.append({"kind": "unexplored", "name": "Unexplored Location", "xy": unexplored_xy, "coord": coord_str(*unexplored_xy), "reveal_coord": True})
+
+    # Camps: 1 per threat
+    camp_count = len(threats_ordered)
+    camp_min_from_town = 3 if side <= 6 else 4
+    camp_min_from_settlements = 2
+    camp_min_between = 2
+
+    camp_candidates = [c for c in cells if c not in used]
+    profiles = [
+        ("strict", camp_min_from_town, camp_min_from_settlements, camp_min_between),
+        ("soften_between", camp_min_from_town, camp_min_from_settlements, max(1, camp_min_between - 1)),
+        ("soften_town", max(2, camp_min_from_town - 1), camp_min_from_settlements, max(1, camp_min_between - 1)),
+    ]
+
+    placed_camps: Optional[List[Tuple[int, int]]] = None
+    for pname, d_town, d_set, d_between in profiles:
+        used_snapshot = set(used)
+        camps_snapshot: List[Tuple[int, int]] = []
+
+        min_from = [(town_xy, d_town)] + [(sc, d_set) for sc in settlement_coords_xy]
+        candidates = [c for c in camp_candidates if c not in used_snapshot]
+
+        for _ in range(camp_count):
+            placed = pick_spaced_points(
+                candidates=candidates,
+                used=used_snapshot,
+                count=1,
+                min_between=d_between,
+                min_from=min_from + [(cxy, d_between) for cxy in camps_snapshot],
+                attempts=MAX_MAP_PLACEMENT_ATTEMPTS,
+            )
+            if not placed:
+                break
+            camps_snapshot.append(placed[0])
+            candidates = [c for c in candidates if c not in used_snapshot]
+
+        if len(camps_snapshot) == camp_count:
+            if pname != "strict":
+                footnotes.append(f"[WARN] Camp spacing softened ({pname}).")
+            used.clear()
+            used.update(used_snapshot)
+            placed_camps = camps_snapshot
+            break
+
+    if placed_camps is None:
+        _abort(footnotes, "Map placement failed: could not place threat camps with spacing constraints.")
+
+    for th, cxy in zip(threats_ordered, placed_camps):
+        base = (th.get("name") or "Threat").strip()
+        camp_title = str(th.get("camp") or "").strip()
+        if camp_title:
+            site_name = f"{base} Camp - {camp_title}"
+        else:
+            site_name = f"{base} Camp"
+        sites.append({"kind": "camp", "name": site_name, "xy": cxy, "coord": coord_str(*cxy), "reveal_coord": True})
+
+    # Hideouts: placed but coordinates withheld
+    hideout_count = len(threats_ordered)
+    hideout_min_from_settlements = 2
+    hideout_min_between = 2
+
+    hideout_profiles = [
+        ("strict", hideout_min_from_settlements, hideout_min_between),
+        ("soften_between", hideout_min_from_settlements, 1),
+        ("soften_settlement", 1, 1),
+    ]
+
+    placed_hideouts: Optional[List[Tuple[int, int]]] = None
+    for pname, d_set, d_between in hideout_profiles:
+        used_snapshot = set(used)
+        hideouts_snapshot: List[Tuple[int, int]] = []
+
+        for _th in threats_ordered:
+            pool = [
+                c
+                for c in cells
+                if c not in used_snapshot
+                and all(manhattan(c, sc) >= d_set for sc in settlement_coords_xy)
+                and all(manhattan(c, hx) >= d_between for hx in hideouts_snapshot)
+            ]
+            if not pool:
+                break
+            pick = random.choice(pool)
+            used_snapshot.add(pick)
+            hideouts_snapshot.append(pick)
+
+        if len(hideouts_snapshot) == hideout_count:
+            if pname != "strict":
+                footnotes.append(f"[WARN] Hideout spacing softened ({pname}).")
+            used.clear()
+            used.update(used_snapshot)
+            placed_hideouts = hideouts_snapshot
+            break
+
+    if placed_hideouts is None:
+        _abort(footnotes, "Map placement failed: could not place threat hideouts.")
+
+    for th, hxy in zip(threats_ordered, placed_hideouts):
+        base = (th.get("name") or "Threat").strip()
+        sites.append({"kind": "hideout", "name": f"{base} Hideout (Hidden)", "xy": hxy, "coord": None, "reveal_coord": False})
+
+    return sites
+
+
+def generate_map_layout(
+    *,
+    players: int,
+    difficulty: str,
+    settlements: List[Dict[str, Any]],
+    threats_ordered: List[Dict[str, Any]],
+    footnotes: List[str],
+) -> Dict[str, Any]:
+    side = compute_map_side(players, difficulty, footnotes)
+    used: Set[Tuple[int, int]] = set()
+    cells = all_cells(side)
+
+    # Town coordinate (center-biased)
+    town_xy = random.choice(weighted_center_cells(side))
+    used.add(town_xy)
+
+    settlement_rows: List[Dict[str, Any]] = []
+    settlement_coords_xy: List[Tuple[int, int]] = [town_xy]
+    town_assigned = False
+
+    def near_town_pool(max_dist: int) -> List[Tuple[int, int]]:
+        return [c for c in cells if c not in used and manhattan(c, town_xy) <= max_dist]
+
+    # Place settlements with dist>=2 between settlements (no A1/B1 adjacency).
+    for s in settlements:
+        stype = _norm(s.get("type"))
+        if stype == "town" and not town_assigned:
+            coord = town_xy
+            town_assigned = True
+        else:
+            placed: Optional[Tuple[int, int]] = None
+            for dist in (2, 3, 4, 5):
+                pool = near_town_pool(dist)
+                pool = [c for c in pool if all(manhattan(c, sc) >= 2 for sc in settlement_coords_xy)]
+                if pool:
+                    placed = random.choice(pool)
+                    break
+
+            if placed is None:
+                pool = [c for c in cells if c not in used and all(manhattan(c, sc) >= 2 for sc in settlement_coords_xy)]
+                if not pool:
+                    pool = [c for c in cells if c not in used]
+                    footnotes.append("[WARN] Settlement spacing softened due to tight map.")
+                placed = random.choice(pool)
+
+            used.add(placed)
+            settlement_coords_xy.append(placed)
+            coord = placed
+
+        settlement_rows.append(
+            {
+                "type": s.get("type", ""),
+                "variant": s.get("variant"),
+                "variant_description": s.get("variant_description", ""),
+                "effect": s.get("effect", ""),
+                "coord": coord_str(coord[0], coord[1]),
+            }
+        )
+
+    if not town_assigned:
+        footnotes.append("[WARN] No Town settlement found; using first settlement as Town.")
+
+    sites = generate_sites(
+        side=side,
+        town_xy=town_xy,
+        used=used,
+        settlement_coords_xy=settlement_coords_xy,
+        threats_ordered=threats_ordered,
+        footnotes=footnotes,
+    )
+
+    return {"side": side, "settlements_with_coords": settlement_rows, "sites": sites}
+
+
+# ============================================================
+# #LABEL: OUTPUT FORMATTING
+# What this section does: Produces the final briefing text (no file IO).
+# ============================================================
+
+def format_campaign_briefing(
+    *,
+    players: int,
+    difficulty: str,
+    biome: Dict[str, Any],
+    main_pressure: Dict[str, Any],
+    sub_pressure: Dict[str, Any],
+    main_threat: Dict[str, Any],
+    secondary_threats: List[Dict[str, Any]],
+    layout: Dict[str, Any],
+    intro_start: Optional[Dict[str, Any]] = None,
+    footnotes: List[str],
+) -> str:
+    lines: List[str] = []
+
+    lines.append("RANGERS AT THE BORDERLANDS — CAMPAIGN BRIEFING")
+    lines.append("=" * 60)
+    lines.append("")
+    # Intro (optional)
+    if intro_start:
+        lines.append("Intro")
+        lines.append("-" * 60)
+        intro_title = str(intro_start.get("name") or "").strip()
+        if intro_title:
+            lines.append(intro_title)
+        intro_desc = str(intro_start.get("description") or "").strip()
+        if intro_desc:
+            intro_desc = intro_desc.replace("[threat1]", str(main_threat.get("name", "the threat")))
+            lines.extend(_wrap_paragraphs(intro_desc))
+        lines.append("")
+    lines.append(f"Players: {players}")
+    lines.append(f"Difficulty: {difficulty.title()}")
+    lines.append("")
+
+    # Region
+    lines.append("Region")
+    lines.append("-" * 60)
+    lines.append("Region Name: _______________________________")
+    lines.append(f"Biome: {biome.get('name', 'Unknown')}")
+    if biome.get("description"):
+        lines.append(str(biome["description"]).strip())
+    if biome.get("terrain"):
+        lines.append(f"Recommended Terrain: {str(biome['terrain']).strip()}")
+    if biome.get("rough"):
+        lines.append(f"Recommended Rough Terrain: {str(biome['rough']).strip()}")
+    if biome.get("tag") or biome.get("tags"):
+        btags = _tags(biome)
+        if btags:
+            lines.append(f"Biome Tags: {_fmt_tags(btags)}")
+    lines.append("")
+
+    # Pressures + Threats (combined)
+    levels = THREAT_LEVELS[difficulty]
+    main_level = levels["main"]
+    secondary_level = levels["secondary"]
+
+    ordered_threats = [main_threat] + list(secondary_threats)
+
+    # Ensure: if we have 2+ threats, at least one appears under each pressure.
+    # Policy:
+    #   - Threat 1 always under Main Pressure
+    #   - If there are 2+ threats, Threat 2 is forced under Sub Pressure
+    #   - Any remaining threats attach to Main Pressure (so main keeps momentum)
+    main_block_idxs: List[int] = [1]
+    sub_block_idxs: List[int] = []
+    if len(ordered_threats) >= 2:
+        sub_block_idxs.append(2)
+        if len(ordered_threats) >= 3:
+            main_block_idxs.extend(list(range(3, len(ordered_threats) + 1)))
+
+    def lvl(i: int) -> int:
+        return main_level if i == 1 else secondary_level
+
+    lines.append("Campaign Pressures and Threats")
+    lines.append("-" * 60)
+
+    lines.append(f"Main Pressure — {main_pressure.get('name', 'Unknown')}")
+    if main_pressure.get("description"):
+        lines.append(str(main_pressure["description"]).strip())
+    lines.append("." * 60)
+    for i in main_block_idxs:
+        t = ordered_threats[i - 1]
+        lines.append(f"Threat {i} (Level {lvl(i)}): {t.get('name', 'Unknown')}")
+        if t.get("description"):
+            lines.append(str(t["description"]).strip())
+        lines.append("." * 60)
+    lines.append("")
+
+    lines.append(f"Sub Pressure — {sub_pressure.get('name', 'Unknown')}")
+    if sub_pressure.get("description"):
+        lines.append(str(sub_pressure["description"]).strip())
+    lines.append("." * 60)
+    if not sub_block_idxs:
+        lines.append("(none)")
+        lines.append("." * 60)
+    else:
+        for i in sub_block_idxs:
+            t = ordered_threats[i - 1]
+            lines.append(f"Threat {i} (Level {lvl(i)}): {t.get('name', 'Unknown')}")
+            if t.get("description"):
+                lines.append(str(t["description"]).strip())
+            lines.append("." * 60)
+    lines.append("")
+
+    # Map Overview
+    lines.append("Map Overview")
+    lines.append("-" * 60)
+    side = int(layout.get("side", 0) or 0)
+    lines.append(f"Grid Size: {side}x{side}")
+    lines.append("")
+
+    lines.append("Settlements")
+    for s in layout.get("settlements_with_coords", []):
+        lines.append("Settlement Name: __________________________")
+        lines.append(f"Category: {s.get('type', '')}  @ {s.get('coord', '')}")
+        lines.append(f"Variant: {s.get('variant') or '(none)'}")
+        desc = (s.get("variant_description") or "").strip()
+        if desc:
+            lines.append(f"About: {desc}")
+        eff = (s.get("effect") or "").strip()
+        if eff:
+            lines.append(f"Effect: {eff}")
+        else:
+            lines.append("Effect: (none)")
+        lines.append("")
+
+    lines.append("Sites")
+    lines.append("-" * 60)
+    order = {"delve": 0, "unexplored": 1, "camp": 2, "hideout": 3}
+    sites_sorted = sorted(layout.get("sites", []), key=lambda s: order.get(s.get("kind", ""), 99))
+    for s in sites_sorted:
+        if s.get("reveal_coord"):
+            lines.append(f"- {s.get('name', 'Site')} @ {s.get('coord', '')}")
+        else:
+            lines.append(f"- {s.get('name', 'Site')}: ____________________")
+    lines.append("")
+
+    # Footnotes
+    lines.append("Footnotes")
+    lines.append("-" * 60)
+    if footnotes:
+        for n in footnotes:
+            lines.append(f"- {n}")
+    else:
+        lines.append("- (none)")
+
+    return "\n".join(lines) + "\n"
+
+
+# ============================================================
+# #LABEL: GENERATOR ENTRYPOINT
+# What this section does: Orchestrates the flow and returns (filename, text).
+# ============================================================
+
+def generate_campaign(data: DataBundle, inputs: Dict[str, Any]) -> Tuple[str, str]:
+    players = int(inputs.get("players", 1))
+    difficulty = _norm(inputs.get("difficulty", "normal"))
+    if difficulty not in DIFFICULTY_THREATS:
+        difficulty = "normal"
+
+    # Optional Custom-mode overrides
+    override_threats = int(inputs.get("override_threats", 0) or 0)
+    override_settlements = int(inputs.get("override_settlements", 0) or 0)
+    override_threats = override_threats if override_threats > 0 else None
+    override_settlements = override_settlements if override_settlements > 0 else None
+
+    footnotes: List[str] = []
+
+    # Required datasets
+    biomes = list(getattr(data, "biomes", []) or [])
+    pressures = list(getattr(data, "campaign_pressures", []) or [])
+    threats = list(getattr(data, "campaign_threats", []) or [])
+    settlement_types = list(getattr(data, "settlement_types", []) or [])
+    intro_starts = list(getattr(data, "intro_starts", []) or [])
+
+    if not biomes:
+        _abort(footnotes, "Missing or empty required file: biomes.txt")
+    if not pressures:
+        _abort(footnotes, "Missing or empty required file: campaign_pressures.txt")
+    if not threats:
+        _abort(footnotes, "Missing or empty required file: threats.txt")
+
+    validate_pressures_have_roles(pressures, footnotes)
+
+    # Step 1/2: Biome + Pressures (support optional locked context from Custom mode)
+    locked_ctx = inputs.get("locked_context") or {}
+    locked_biome_id = str(locked_ctx.get("biome_id", "")).strip()
+    locked_main_pressure_id = str(locked_ctx.get("main_pressure_id", "")).strip()
+    locked_sub_pressure_id = str(locked_ctx.get("sub_pressure_id", "")).strip()
+
+    biome = _find_by_id(biomes, locked_biome_id) if locked_biome_id else None
+    if biome:
+        footnotes.append(f"LOCKED: biome_id={locked_biome_id}")
+    else:
+        biome = weighted_choice(biomes) or biomes[0]
+
+    used_pressure_ids: Set[str] = set()
+    main_pressure = _find_by_id(pressures, locked_main_pressure_id) if locked_main_pressure_id else None
+    if main_pressure:
+        used_pressure_ids.add(str(main_pressure.get("id", "")).strip())
+        footnotes.append(f"LOCKED: main_pressure_id={locked_main_pressure_id}")
+    else:
+        main_pressure = pick_pressure_for_slot(pressures, "main", used_pressure_ids, footnotes)
+
+    sub_pressure = _find_by_id(pressures, locked_sub_pressure_id) if locked_sub_pressure_id else None
+    if sub_pressure:
+        # Avoid duplicates; if locked to same ID as main, reroll properly.
+        sid = str(sub_pressure.get("id", "")).strip()
+        if sid and sid in used_pressure_ids:
+            footnotes.append("LOCKED: sub_pressure_id duplicated main_pressure_id; rerolling sub pressure.")
+            sub_pressure = pick_pressure_for_slot(pressures, "sub", used_pressure_ids, footnotes)
+        else:
+            used_pressure_ids.add(sid)
+            footnotes.append(f"LOCKED: sub_pressure_id={locked_sub_pressure_id}")
+    else:
+        sub_pressure = pick_pressure_for_slot(pressures, "sub", used_pressure_ids, footnotes)
+
+    # Context tags
+    context_tags: Set[str] = set()
+    context_tags |= _tags(biome)
+    context_tags |= _tags(main_pressure)
+    context_tags |= _tags(sub_pressure)
+
+    # Forbidden tokens from not=
+    forbidden_tokens: Set[str] = set()
+    forbidden_tokens |= _not_tokens(biome)
+    forbidden_tokens |= _not_tokens(main_pressure)
+    forbidden_tokens |= _not_tokens(sub_pressure)
+    forbidden_tokens = {_norm(x) for x in forbidden_tokens if _norm(x)}
+
+    # Step 3/4: Threats (support optional locked threat IDs from Custom mode)
+    locked_threat_ids = inputs.get("locked_threat_ids") or []
+    locked_threat_ids = [str(x).strip() for x in locked_threat_ids if str(x).strip()]
+
+    total_needed = int(override_threats or adjusted_threat_count(players, difficulty))
+
+    if locked_threat_ids:
+        picked_threats: List[Dict[str, Any]] = []
+        used_ids: Set[str] = set()
+
+        for tid in locked_threat_ids:
+            t = _find_by_id(threats, tid)
+            if not t:
+                footnotes.append(f"LOCKED: threat_id not found: {tid}")
+                continue
+            t_id = str(t.get("id", "")).strip()
+            if t_id in used_ids:
+                continue
+            used_ids.add(t_id)
+            picked_threats.append(t)
+
+        if not picked_threats:
+            footnotes.append("LOCKED: No valid locked threats found; rolling threats normally.")
+            main_threat, secondary_threats = pick_threats(
+                threats,
+                players=players,
+                difficulty=difficulty,
+                context_tags=context_tags,
+                forbidden_tokens=forbidden_tokens,
+                footnotes=footnotes,
+                override_total=override_threats,
+            )
+        else:
+            # If we need more threats than were locked, fill remaining slots with the normal rules.
+            while len(picked_threats) < total_needed:
+                is_main_slot = (len(picked_threats) == 0)
+                label = "Main Threat" if is_main_slot else f"Secondary Threat {len(picked_threats)}"
+                extra = pick_one_threat_slot(
+                    threats,
+                    label=label,
+                    is_main_slot=is_main_slot,
+                    used_ids=used_ids,
+                    context_tags=context_tags,
+                    forbidden_tokens=forbidden_tokens,
+                    footnotes=footnotes,
+                )
+                picked_threats.append(extra)
+
+            picked_threats = picked_threats[:total_needed]
+            main_threat = picked_threats[0]
+            secondary_threats = picked_threats[1:]
+            footnotes.append(f"LOCKED: Using {len(picked_threats)} threat(s) from Custom selection.")
+    else:
+        main_threat, secondary_threats = pick_threats(
+            threats,
+            players=players,
+            difficulty=difficulty,
+            context_tags=context_tags,
+            forbidden_tokens=forbidden_tokens,
+            footnotes=footnotes,
+            override_total=override_threats,
+        )
+
+    # Step 5: Settlements
+    settlement_counts = choose_settlement_counts(footnotes, override_total=override_settlements)
+    settlements = pick_settlement_types(settlement_types, settlement_counts, footnotes)
+
+    # Step 6: Map + Sites
+    ordered_threats = [main_threat] + list(secondary_threats)
+    layout = generate_map_layout(
+        players=players,
+        difficulty=difficulty,
+        settlements=settlements,
+        threats_ordered=ordered_threats,
+        footnotes=footnotes,
+    )
+
+    
+    intro_start = pick_intro_start(intro_starts, set(main_threat.get("tags") or set()))
+    text = format_campaign_briefing(
+        players=players,
+        difficulty=difficulty,
+        biome=biome,
+        main_pressure=main_pressure,
+        sub_pressure=sub_pressure,
+        main_threat=main_threat,
+        secondary_threats=secondary_threats,
+        layout=layout,
+        intro_start=intro_start,
+        footnotes=footnotes,
+    )
+
+    stamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+    filename = f"campaign_{stamp}.txt"
+    return filename, text

@@ -1,0 +1,19 @@
+001|Brave|description=Courageous in the face of danger.|stat_mod=Fight+1|tag=minor|rp=5|rarity=common
+002|Agile|description=Just a bit faster than their comrades.|stat_mod=Move+1|tag=minor,physical|rp=5|rarity=common
+003|Strong|description=Just a bit stronger than their comrades.|skill=Strength+1|tag=minor,physical|rp=5|rarity=common
+004|Eagle-eyed|description=Their vision is a bit better than their comrades'.|stat_mod=Shoot+1|tag=minor,physical|rp=5|rarity=common
+005|Wise|description=Experience has granted them clarity.|stat_mod=Will+1|tag=minor,physical|rp=5|rarity=common
+006|Tough|description=Takes a lickin' and keeps on tickin'|stat_mod=Health+2|tag=minor,physical|rp=5|rarity=common
+007|Hardened|description=Trained to take a hit from a young age.|stat_mod=Armor+1|tag=minor,physical|rp=5|rarity=common
+008|Fierce|description=Determined to take down their enemies or go down trying.|stat_mod=Fight+1,Shoot+1,Health-2|tag=minor,physical|rp=5|rarity=common
+009|Mad|description=Are they inspired or are they insane?|stat_mod=Will-2,Fight+2|tag=minor,physical|rp=5|rarity=common
+010|Giant|description=Towers above the rest, easy to find from a distance.|stat_mod=Armor+1,Health+5,Move-2|tag=minor,physical|rp=5|rarity=common
+011|Swift|description=Quickly dispatches foes with ease.|stat_mod=Move+1,Fight+1,Armor-2|tag=minor,physical|rp=5|rarity=common
+012|True|description=Their aim is renown across the region.|stat_mod=Shoot+1,Will+1,Armor-1|tag=minor,physical|rp=5|rarity=common
+013|Valiant|description=Honorable and true, their loyalty is their strength.|stat_mod=Armor+1,Fight+2,Shoot-2|tag=minor,physical|rp=5|rarity=common
+014|Arcane|description=Born with a touch of magical essence.|stat_mod=Will+2,Health-2|tag=minor,magic|rp=5|rarity=common
+015|Unlucky|description=A dark cloud of gloom seems to follow him, wherever he goes.|stat_mod=Move-1,Health-1,Fight-1,Shoot-1,Armor-1,Will-1|tag=minor,physical|rp=5|rarity=rare
+016|Lucky|description=Fortune smiles for this individual.|stat_mod=Move+1,Health+1,Fight+1,Shoot+1,Armor+1,Will+1|tag=minor,physical|rp=5|rarity=rare
+017|Corrupted|description=A dark metamorphosis has taken place, leaving them more powerful but mentally, a shell of what they used to be.|stat_mod=Move+1,Health+1,Fight+1,Shoot+1,Armor+2,Will-2|tag=boss_only,major|xp=+10|rarity=uncommon
+018|Toxic|description=Dark sludge oozes out of their mouth and fingers.|stat_mod=Fight+1,Will+1|tag=minor,enemy_only|skill=venom|xp=+5|rarity=uncommon
+019|Possessed|description=Their unnatural movements are due to unseen forces.|stat_mod=Move+1,Fight+2|skill=possessed|tag=minor,enemy_only|xp=+5|rarity=rare

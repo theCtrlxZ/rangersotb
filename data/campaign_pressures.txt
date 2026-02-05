@@ -1,0 +1,26 @@
+001|Impending Invasion|description=Enemy forces gather in the nearby regions ready to lay waste to all in their path. They will not stop until all of the local townspeople are slain.|role=main|not=bandits|rarity=common
+002|Growing Plague|description=A plague is spreading across the land affect livestock and townsfolk. Someone is behind this unnatural disease.|rarity=uncommon|role=main
+003|Nature turns Hostile|description=Predators grow bold and attack during daylight. Old hunting grounds turn to lairs as forces begin to attack local settlements.|tag=beasts,reptiles,goblins|rarity=uncommon|role=either
+004|Slavers Descend|description=Local settlements are beset by slavers who claim to have legal jurisdiction.|not=undead,demons|rarity=rare|role=either
+005|Cult of Personality|description=An underground cult forms around the fear from outside forces. Common townsfolk are allured at the promise of safety from participating in horrid rituals.|tag=cultists|not=reptiles,beasts,military|rarity=uncommon|role=either
+006|Divine Relic|description=A powerful magical item has been found in local catacombs. It has attracted monsters and thieves alike to find it and more like it.|rarity=uncommon|role=either
+007|Green with Envy|description=The nearby land lauded its victories a bit too loudly. Now outsiders have come to take all nearby riches by force.|rarity=common|role=main
+008|The Petty Duke|description=A local lord thought it would be cheaper to hire killers instead of soldiers. Now the countryside is beset with them and has taken him prisoner.|role=sub|not=reptiles,undead|rarity=common
+009|Dreamwalkers|description=Villagers are being driven in their sleep to escape or commit terrible acts. Messages carved into doors by fingernails suggest a villain most foul is behind it.|rarity=rare|role=either
+010|Violent Animals|description=Animals have growing violent, ushered by strange magics|role=sub|rarity=common
+011|Political Pressure|description=Local mayor has received a letter to surrender and pay tribute. They refuse and bad things start to happen|role=either|rarity=common
+012|Dark Portal|description=Dark portal to another dimension opens|role=either|rarity=common
+013|Failing Crops|description=Crops are dying, land is in decay from corrupting forces.|role=sub|rarity=common
+014|Elemental Breakdown|description=Winds stop, rain stops falling, life force of the land has been extinguished as famine wrecks the land|role=sub|rarity=common
+015|Arcane Fallout|description=Fallout from a rogue magical experiment left part of the city under a cloud of unstable wild magic. Proves troublesome to residents|role=sub|rarity=rare
+016|Possession|description=An unearthed relic is cursed and possesses the leader of the below threat to take over the world|role=main|rarity=common
+017|Dreamwalkers|description=The below threat kidnaps townsfolks in order to ritual sacrifice to summon ancient deity.|role=either|rarity=uncommon
+018|Uncivil War|description=Civil war between the two threats below has begun to tear the countryside asunder.|role=main|rarity=common
+019|Guerilla Tactics|description=Violent gang wars|role=sub|rarity=rare
+020|Corrupted Water|description=Water source went toxic leading to scarcity and rationing|role=sub|rarity=common
+021|Assassination Plot|description=Recent assassination of local gov leader throws city into chaos|role=sub|rarity=common
+022|Guild Warfare|description=Dispute between two guilds|role=sub|rarity=uncommon
+023|Prize Fighting Ring|description=Rough and tumble group runs a fighting ring.|role=sub|rarity=uncommon
+024|Unionbreakers|description=Dock and worker strike brings trade to a halt|role=sub|rarity=rare
+025|Overwhelming Refugees|description=Refugees flee in massive numbers into town|role=sub|rarity=rare
+026|Sin Crusade|description=Member of the clergy has taken issue with taverns, criminal underworld, and red light district and is stirring up trouble|role=sub|rarity=uncommon

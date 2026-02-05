@@ -1,0 +1,77 @@
+001|Dead Body|description=Dead Body. There is nothing that can be done for this poor soul.|tag=generic|rarity=common|chance=high|xp=2
+002|Survivor|description=You have found a badly wounded, but living, villager. Treat this figure as one of your companions with the following Stats: Move 3, Fight 0, Armor 10, Health 5.|tag=generic|rarity=uncommon|chance=low|xp=5|type=npc
+003|Zombie|description=The limp body on the ground begins to stir. Its a Zombie! Place a zombie anywhere you wish within 2" of the figure that searched.|tag=undead|rarity=common|chance=mid|xp=3|type=unit
+004|Treasure Chest|description=A plain locked chest stands before you. Roll to Pick Lock (TN8), if success, receive [roll:item:rarity=common].|tag=generic|rarity=common|chance=high|xp=2|type=loot|req=Pick Lock
+005|Horrific Howl|description=A horrific howl echoes around the ruin, sending shivers down the spines of the heroes. Every hero must make a Will Roll (TN10). if it fails, it receives a maximum of one action during its next activation.|tag=generic|rarity=uncommon|chance=mid|type=hazard|req=Will
+006|Fogbank|description=A cloying mist rises from nowhere, making it hard to see more than a few yards in any direction. The maximum line of sight is reduced to 8" for the rest of the scenario.|tag=generic|rarity=rare|chance=mid|type=hazard
+007|Encouraged Evil|description=The heroes feel a strange tingling, and suddenly, all the monsters they are facing seem to gain new strength. Next turn, all evil creatures gain +2 fight.|tag=generic|rarity=rare|chance=low|type=hazard
+008|Light Escapes|description=What light there is suddenly dims , and the heroes feel the crushing weight of hopelessness descend upon them. For the rest of the scenario, all heroes suffer -3 to all Will Rolls.|tag=generic|rarity=rare|chance=low|type=hazard
+009|Evil Incarnate|description=A swirling darkness suddenly coalesces into a shadow knight. Place the shadow knight in the center of a randomly determined table edge. The shadow knight follows the standard rules for evil creatures.|tag=generic|rarity=legendary|chance=low|type=unit
+010|Insect Swarm|description=A loud of stinging, biting insects descends on the heroes. Each hero must make a Health Roll (TN14) or suffer from disease.|tag=generic|rarity=common|chance=mid|type=hazard|req=Health
+011|Caged Animal|description=A wild [roll:unit:tag=animal] is caged. If freed, it will go on a rampage attacking the nearest figure. If there is no figure within 6" it will try to escape.|tag=raid,site,lair|rarity=rare|chance=low|xp=2|type=unit
+012|Hostage|description=It is one of the people you've been sent to rescue! You may escort this person to the edge of the map to escape or let them chance it on their own.|tag=rescue_damsel|rarity=common|chance=high|type=quest
+013|Strange Tracks|description=You discover some very odd tracks. Make an immediate Tracking Roll (TN6) to see if you can determine their nature.|tag=generic|rarity=common|chance=mid|xp=2|type=info|req=Tracking
+014|Keys|description=You find a set of keys. After the scenario, pick one figure to make an Armory Roll (TN4). If successful, you can use these one time to unlock auto unlock one door or chest.|tag=generic|rarity=uncommon|chance=mid|type=loot|req=Armory
+015|Scroll|description=You find a scroll covered in some ancient script. After the scenario, pick one figure to make an Ancient Lore Roll (TN8). If successful, the figure recognizes it as a one-time use scroll of [roll:spell].|tag=generic|rarity=rare|chance=mid|type=loot|req=Ancient Lore
+016|Strange Flowers|description=You have found some strange, purple flowers of a type you don't recognize. After the scenario, choose one figure to make a Survival Roll (TN5) to study them.|tag=generic|rarity=uncommon|chance=high|xp=2|type=info|req=Survival
+017|Corpse|description=You find the corpse of a guardsman facedown. The guard is carrying a [roll:item], which you take with you.|tag=generic|rarity=uncommon|chance=high|type=loot
+018|Herbs|description=You find some [roll:item:tag=herb] discarded by one of the villagers. This may be given to any member of the company after the scenario.|tag=generic|rarity=common|chance=high|type=loot
+019|Lost Animal|description=A [roll:unit:tag=animal] appears at the center of one randomly determined table edge. It follows the standard rules for evil creatures.|tag=generic|rarity=common|chance=mid|type=unit
+020|Broken Crate|description=A broken crate stands before you. You reach your hand inside and feel a glass bottle. Receive [roll:item:tag=armor].|tag=generic|rarity=rare|chance=high|type=loot
+021|Trapped Satchel|description=A used travel bag lies barely visible in the bushes. receive [roll:item].|tag=generic|rarity=uncommon|chance=high|type=loot
+022|Abandoned Supplies|description=A large, opened crate that has been abandoned by its owners lies by the wayside. receive [roll:item:tag=potion].|tag=generic|rarity=uncommon|chance=high|type=loot
+023|Wounded Animal|description=A hurt [roll:unit:tag=animal] is caught in a trap. You can put it out of its misery, leave it be, or try to get it out of the trap. Roll Traps (TN14) If fail, the animal is freed and attacks you. if success by 5+ then it will aid you for the rest of the mission. otherwise it escapes into the brush.|tag=generic|rarity=rare|chance=mid|xp=5|type=npc|req=Traps
+024|Map Scrap|description=A piece of a map that leads to an item of priceless value that perhaps may lead to the salvation of the realm.|tag=fetch_item,scout_extract|rarity=rare|chance=high|type=quest
+025|Blood Trail|description=You discover a trail of dark red liquid leading you to the enemy. Make a Tracking Roll (TN8) to see if you can determine if its from friend or foe.|tag=generic|rarity=common|chance=mid|xp=2|type=info|req=Tracking
+026|Strange Idol|description=An idol belonging to a forgotten deity thrums in your hands. Make a Read Runes Roll (TN12) to determine what the letters say.|tag=generic|rarity=rare|chance=mid|xp=5|type=info|req=Read Runes
+027|Burnt Letter|description=Try as you might, you can only make out the words "dearest yours".|tag=generic|rarity=rare|chance=mid|xp=1|type=info
+028|Broken Weapon|description=Belonging to a warrior less fortunate than yourself. This [roll:item:tag=weapon] is in poor condition and must be repaired.|tag=generic|rarity=rare|chance=mid|type=loot
+029|Fresh Grave|description=Recently dug, it seems that someone nearby still honors their dead. With how recent this grave was dug, they must be close by.|tag=generic|rarity=common|chance=mid|xp=1|type=info
+030|Old Campfire|description=Embers are still warm, someone may be close.|tag=generic|rarity=common|chance=mid|xp=1|type=info
+031|Tattered Banner|description=Seeing the slashed and desecrated flag of the nearby town fills you with a mixture of emotions. gain +1 Fight and +1 Will until the end of next turn.|tag=generic|rarity=common|chance=mid|type=boost
+032|Severed Limb|description=Looks like this limb was chopped off reaching for something it shouldn't have.|tag=generic|rarity=common|chance=mid|type=info
+033|Weeping Statue|description=What an odd place to have a running fountain. The water comes out of the statue's eyes like tears. They glisten in the most unusual way. Make a Perception Roll (TN12) if success, heal 4 HP. If fail, place a gargoyle where the clue once was.|tag=generic|rarity=rare|chance=low|type=hazard|req=Perception
+034|Summoning Chalk|description=There is a half drawn glyph on the ground. that can be completed or destroyed. You can try to complete the glyph by making a Ancient Lore or Read Runes Roll (TN10). If fail, the glyph summons a demon onto the field that you must defeat. If success, something else happens.|tag=generic|rarity=rare|chance=low|type=hazard|xp=10|req=Ancient Lore,Read Runes
+035|Telescoping Spyglass|description=Roll for another clue on the board. You may decide if you want to engage with it or not.|tag=generic|rarity=rare|chance=low|type=info
+036|Fading Echo|description=Ghostly loop of a stranger's dying lover, replaying over and over. Make a Will Roll or Leadership Roll (TN20). If successful, they have found a way to give the ghost peace. It fades away completely as it departs this existence.|tag=generic|rarity=rare|chance=low|type=hazard|xp=10|req=Will,Leadership
+037|Illusion|description=As you get closer, you have a realization. The closest, full-HP minion is actually an illusion. Remove it from the table.|tag=generic|rarity=rare|chance=low|type=info|xp=-2
+038|Overturned Oil|description=A cauldron of hot oil has been turned over and a 3" puddle has formed. Make a Move Roll (TN14) to regain footing or fall prone. Anyone who is standing in the puddle and takes fire or lightning damage catches on fire and take an additional 3 damage per turn for 3 turns.|tag=generic|rarity=rare|chance=low|type=hazard|req=Move
+039|Signal Horn|description=An entact signal horn lays embedded in the mud. You may choose to pull it free and blow, which invigorates all figures on the board to come to that location. Move every figure 3" toward the Horn blower. |tag=generic|rarity=uncommon|chance=mid|type=boost
+040|Teleportation Portal|description=A swirling vortex of magic beckons you to the otherside. Randomly pick another clue marker and this becomes the other side of the portal. You may use an action to open/close/destroy the portal.|tag=generic|rarity=rare|chance=low|type=boost
+041|Grappling Hook|description=A coil of specialty climbing rope with a curled trident hook at the end. Place an already set climbing rope to a piece of terrain or elevation change within 6".|tag=generic|rarity=uncommon|chance=mid|type=boost
+042|Battered Ballista|description=This monstrous piece of siege equipment has seen better days. If it can be repaired, there is only one humongous javelin left. Make an Armory Roll (TN18) If successful, you may make one +15 attack against a figure within 24". If fail, a critical piece shatters and the rest of the equipment is useless.|tag=generic|rarity=rare|chance=low|type=boost|req=Armory
+043|Anvil and Whetstone|description=This must have been used for a makeshift trap that has already been sprung. You may use the anvil for +5 to an Armory Roll.|tag=generic|rarity=rare|chance=mid|type=boost
+044|Blood Gemshard|description=A mage must have been slain in the middle of casting a spell. Their blood has crystalized due to the exposure to magic. If you choose to pull the gemshard, the magic power begins to fade. If a magic user should try to cast a spell while holding a Blood gem, they get +5 to their roll.|tag=generic|rarity=rare|chance=low|type=boost
+045|Void Rift|description=A small tear in reality whispering madness or spawning minor entities. Place one [roll:unit:tier=minion] every round until the Void Rift sustains magic damage.|tag=generic|rarity=rare|chance=low|type=unit
+046|Wanted Posters|description=You see wanted posters hung on nearby poles and nearby terrain. Make a Stealth Roll (TN15) If fail, an alarm is rung and move all enemy figures 4" toward the nearest hero.|tag=generic|rarity=uncommon|chance=low|type=hazard|req=Stealth
+047|Smoldering Pyre|description=This funeral pyre must've gone out in the night. You may make a Will Roll (TN5) or inflict fire damage to reignite. If you do, it will alert the enemy troops and each enemy figure will move 3" towards their nearest target.|tag=generic|rarity=rare|chance=low|type=hazard|req=Will|xp=3
+048|Field Medkit|description=You stumble upon a badly damaged field medkit. There are enough materials inside to do a quick bandaging. recover 3 HP.|tag=generic|rarity=common|chance=mid|type=boost
+049|Ritual Candles|description=Unholy candles used in conjunction with rune glyphs to perform dark magics and summonings. Heroes can use an action to knock over and destroy this item.|tag=ritual_obj|rarity=common|chance=high|type=quest
+050|Spirit Mirror|description=Can be used to direct arcane energy. Heroes can use an action to redirect or destroy this item.|tag=ritual_obj|rarity=common|chance=high|type=quest
+051|Sacrificial Altar|description=Used in conjunction with rune glyphs to perform dark magics and summonings. Heroes can use an action to free the victim and destroy this item.|tag=ritual_obj|rarity=common|chance=high|type=quest
+052|Holy Relic|description=Once used by a legendary wizard to perform miraculous feats.|tag=fetch_item,hill_flag|rarity=common|chance=high|type=quest
+053|Demonic Sword|description=This sword slew a demon and trapped its soul within the blade. It must be returned before the demon breaks free.|tag=fetch_item,hill_flag|rarity=uncommon|chance=high|type=quest
+054|Vital Information|description=This scroll contains information regarding the enemy stronghold defensive weaknesses.|tag=fetch_item,scout_extract|rarity=common|chance=high|type=quest
+055|Antidote Cache|description=This cache contains crucial and powerful medicine that can be used to treat the sick.|tag=fetch_item,plague,scout_extract|rarity=common|chance=high|type=quest
+056|Oracle|description=This person is the key to finding the truth. They must be protected at all costs.|tag=rescue_damsel,hill_flag|rarity=uncommon|chance=high|type=quest
+057|Damsel in Distress|description=Maiden sought after by the forces of evil for their wicked plot.|tag=rescue_damsel,hill_flag|rarity=common|chance=high|type=quest
+058|Crystal Apparatus|description=An alchemical and arcane weapon of ingenious design. We must prevent our enemies from getting their hands on it and we must protect ours in order to deter their plot.|tag=fetch_item,hill_flag|rarity=rare|chance=high|type=quest
+059|Well of Souls|description=A natural spring of magical energy. Our enemies wish to use it for their wicked purposes.|tag=hill_flag|rarity=legendary|chance=high|type=quest
+060|Treasure Hoard|description=Vast sums of wealth in gold, gems, and precious treasure.|tag=hill_flag,fetch_item,scout_extract|rarity=rare|chance=high|type=quest
+061|Uncommon Treasure Chest|description=A unique locked chest stands before you. Roll to Pick Lock (TN10), if success, receive [roll:item:rarity=uncommon].|tag=generic|rarity=uncommon|chance=high|xp=3|type=loot|req=Pick Lock
+062|Rare Treasure Chest|description=An exotic locked chest stands before you. Roll to Pick Lock (TN14), if success, receive [roll:item:rarity=rare].|tag=generic|rarity=rare|chance=mid|xp=5|type=loot|req=Pick Lock
+063|Legendary Treasure Chest|description=An ancient locked chest stands before you. Roll to Pick Lock (TN18), if success, receive [roll:item:rarity=legendary].|tag=generic|rarity=legendary|chance=low|xp=8|type=loot|req=Pick Lock
+064|Old Wise Mentor|description=This wise old mentor has been a thorn in the enemies' side for too long. They have decided to take action and we must save him.|tag=rescue_damsel,hill_flag|rarity=uncommon|chance=high|type=quest
+
+#10–20 objective-linked
+#fail= (optional consequence text)
+#Battering Ram
+#Officer's Insignia
+#Caltrops
+#animated armor piece
+#warhorse carcass
+#family locket
+#bear trap
+#defensive fence
+#guarded stash
+#something hidden

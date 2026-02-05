@@ -1,0 +1,33 @@
+#~~~~~~~~~~~~~~~~
+#Scenario Types
+#~~~~~~~~~~~~~~~~
+001|Fight It Out|description=The most common scenario type. You fight a group of enemies for control of the area.|tag=scenariotype|ID=fight|allow_obj_IDs=eliminate,leader,investigate,scout,hill,escort,duel|setup=Place hero units 2" from entry edge. Enemies may be placed as the player sees fit.
+002|Defensive Battle|description=This type of battle takes place when a foe attacks you. Fight to repel the attack.|enemy_count=x+1|leadership=lieutenant|tag=scenariotype|ID=defensive|allow_obj_IDs=hill,eliminate,leader|setup=Place hero starting location in the middle of table edge or in the center if attacked from all sides.
+003|Moving Battle|description=A ongoing battle while moving through terrain.|tag=scenariotype|leadership=lieutenant|ID=moving|allow_obj_IDs=chase,assassinate,escort,duel|setup=Place hero unit on table edge and enemy units at least 9" away from the same edge.
+004|Raid|description=An attack on an enemy camp or hideout.|enemy_count=x+1|leadership=boss|tag=scenariotype|ID=raid|allow_obj_IDs=scout,fetch,leader,eliminate,rescue,ritual,investigate|setup=Place hero units within 2" of table edge and place enemy units at least 9" from the same edge.
+005|Site Battle|description=If you are exploring a Delve, you play a Site Battle.|tag=scenariotype,rooms_based|ID=site|allow_obj_IDs=rescue,fetch,leader,escort,ritual|setup=Place hero units within 2" of initial room.
+006|Monster Lair|description=Into the belly of the beast; a Raid where the enemy roams.|tag=scenariotype,rooms_based|ID=lair|allow_obj_IDs=leader,rescue|setup=Place hero units within 2" of initial room.
+007|Break the Siege|description=Enemy starts in an advantageous position; win by defeating enemies or escaping to the other side.|tag=scenariotype|leadership=boss|ID=siege|allow_obj_IDs=leader,eliminate,scout,escort|setup=Place hero units 2" from entry edge. Enemies may be placed as the player sees fit.
+008|Final Showdown|description=Final battle with the BBEG.|tag=scenariotype|leadership=BBEG|ID=bbeg|allow_obj_IDs=eliminate,leader,ritual,duel|setup=Place hero units 2" from entry edge. Enemies may be placed as the player sees fit.
+#~~~~~~~~~~~~~~
+#Objectives
+#~~~~~~~~~~~~~~
+009|Eliminate the Enemy|description=The goal is to inflict as many enemy losses as possible.|tag=objective|ID=eliminate
+010|Investigate the Area|description=Investigate all the clues.|enemy_count=x+1|tag=objective|ID=investigate
+011|King of the Hill|description=defend until after the final round.|enemy_count=x+1|tag=objective|ID=hill|must=clue:hill_flag:count=1
+012|Disrupt the Ritual|description=Stop the ritual before the final round.|tag=objective|ID=ritual|must=clue:ritual_obj:count=1
+013|Escort Mission|description=Help the NPC from point A to point B.|enemy_count=x+1|tag=objective|ID=escort
+014|Rescue the Damsel|description=Rescue the NPC from point A to point B.|enemy_count=x+1|tag=objective|ID=rescue|must=clue:rescue_damsel:count=1
+015|Chase and Capture|description=Subdue the enemy leader and bring him to the table edge before he escapes.|enemy_count=x+1|tag=objective|ID=chase|must=target:tier=leader
+016|Defeat the Leader|description=Defeat the enemy leader.|tag=objective|ID=leader|must=target:tier=leader
+017|Assassination|description=Defeat the unit before they escape.|tag=objective|ID=assassinate|must=target:tier=leader
+018|Fetch Quest|description=Obtain an object from the clutches of the enemy before the final round.|tag=objective|ID=fetch|must=clue:fetch_item:count=1
+019|Scout and Extract|description=Investigate 3 clues, then successfully exit via table edge.|tag=objective|ID=scout|must=clue:scout_extract:count=1
+020|Duel to the Death|description=1v1 battle. Each side chooses their champion to fight to the death. It is much more civilized.|tag=objective|ID=duel|weight=0.15|must=target:tier=leader
+#~~~~~~~~~~~~~~
+#Ideas
+#~~~~~~~~~~~~~~
+#not sure how to randomize-021|Scripted Special|description=A specialty handcrafted mission.|tag=objective|ID=special
+
+
+

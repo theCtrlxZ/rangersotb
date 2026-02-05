@@ -1,0 +1,224 @@
+from pathlib import Path
+
+settings = """# ============================================================
+# SETTINGS — Rangers at the Borderlands (v1 lock candidate)
+# key=value, comma-lists, # comments
+# ============================================================
+
+# ----------------------------
+# DEFAULT INPUTS (CLI + fallback)
+# ----------------------------
+default.encounter_kind=Scenario
+default.players=2
+default.allied_combatants=4
+default.difficulty=Normal
+default.leadership_tier=Random
+default.objective=Random
+default.threat_tag_1=Random
+default.threat_tag_2=none
+
+# Campaign defaults
+default.campaign_mode=Quick
+default.campaign_override_threats=0
+default.campaign_override_settlements=0
+
+# ----------------------------
+# RANDOMIZATION TOGGLES
+# (lets you freeze parts of the generator)
+# ----------------------------
+randomize.threats=true
+randomize.terrain=true
+randomize.scenario_types=true
+randomize.objectives=true
+
+# ----------------------------
+# ENABLED POOLS — if a list is present, selection must come from it
+# If omitted/blank, everything in the data files is allowed
+# ----------------------------
+
+# Threat tags allowed to appear when threats are randomized
+enabled.threats=goblins,bandits,undead,cultists,beasts,elves,vikings,reptiles,demons,soldiers
+
+# Terrain tags allowed (used by your terrain picker when you add it)
+enabled.terrain=forest,plains,ruins,swamp,road,coast,desert,mountains,underground,urban
+
+# Scenario types (tag=scenariotype in scenario_objectives.txt)
+enabled.scenario_types=defensive,fight,raid,site,lair,siege,moving,bbeg
+
+# Objectives (tag=objective in scenario_objectives.txt)
+enabled.objectives=eliminate,investigate,hill,ritual,escort,rescue,chase,leader,assassinate,fetch,scout
+
+# ----------------------------
+# THREAT WEIGHT OVERRIDES (multipliers)
+# 1.0 = normal, 0 = never (even if enabled elsewhere)
+# ----------------------------
+threat_weight.goblins=1.0
+threat_weight.bandits=1.0
+threat_weight.undead=1.0
+threat_weight.cultists=0.8
+threat_weight.beasts=1.0
+threat_weight.elves=0.7
+threat_weight.vikings=0.9
+threat_weight.reptiles=0.6
+threat_weight.demons=0.4
+threat_weight.soldiers=0.8
+
+# ----------------------------
+# CLUE ROLL BEHAVIOR (legacy / campaign / non-rooms modes)
+# ----------------------------
+clues.die_sides=20
+clues.allow_no_clue=false
+clues.fill_strategy=scale   # scale | pad | allow_none
+
+# ----------------------------
+# LAIR (rooms-based)
+# ----------------------------
+lair.force_monsters=1
+
+# ----------------------------
+# ROOM EVENTS (rooms-based modes)
+# ----------------------------
+rooms.events.include_generic=true
+rooms.events.exclude_tags=weather
+rooms.events.generic_share=0.25
+
+# --- EVENT TAG WEIGHTS (soft balancing) ---
+events.tag_weight.loot=1.0
+events.tag_weight.combat=1.0
+events.tag_weight.skillcheck=1.0
+events.tag_weight.positive=1.0
+events.tag_weight.neutral=1.0
+events.tag_weight.negative=1.0
+
+# ----------------------------
+# PRESSURE (rooms-based modes)
+# ----------------------------
+
+# Start pressure by difficulty
+pressure.start.easy=1
+pressure.start.normal=2
+pressure.start.hard=3
+pressure.start.brutal=4
+
+# Thresholds
+pressure.threshold.alert=4
+pressure.threshold.lockdown=7
+pressure.threshold.hunt=9
+pressure.threshold.catastrophe=11
+
+# Alarm injection: when pressure hits ALERT (first time), inject the Alarm card into the top K cards.
+pressure.autoinject_alarm=1
+pressure.alarm_top_k=5
+
+# NOTE: Alarm 'state' is NOT tracked by the generator.
+# The following pressure.alarm.card.* settings only control the text/guidance printed on the Alarm card.
+# The GM/players manage any ongoing Alarm effects manually.
+
+# Pressure gain model (GM-facing guidance; generator prints this)
+# - No passive per-round pressure in v1
+pressure.gain.on_failed_check=1
+pressure.gain.on_combat_round=1
+
+# Transitions do NOT automatically raise pressure (stealth can shine)
+pressure.gain.on_transition_lair=0
+pressure.gain.on_transition_site=0
+pressure.gain.on_transition_delve=0
+
+# Alarm card guidance: stealth becomes riskier once Alarm is drawn/resolved (tracked manually)
+pressure.alarm.card.stealth_fail_pressure=1
+pressure.alarm.card.stealth_harder=true
+pressure.alarm.card.stealth_note=On failed Stealth while Alarm is active, increase Pressure by +1 (global). TN guidance only; GM sets TN.
+
+# Alarm card guidance: spawns a big patrol (minion/elite only; never leader-tier)
+pressure.alarm.card.spawn_patrol=1
+pressure.alarm.card.patrol_min=3
+pressure.alarm.card.patrol_max=6
+pressure.alarm.card.patrol_tiers=minion,elite
+
+# Pressure relief (choice-based)
+# Secure Room: reduces pressure but costs tempo/resources; does NOT require drawing an event for the first N uses.
+pressure.relief.secure_room=-1
+pressure.relief.secure_room.action_cost=2
+pressure.relief.free_uses=2
+pressure.relief.after_free.requires_event_draw=true
+
+# ----------------------------
+# ROOMS-BASED MAP / GRAPH KNOBS
+# ----------------------------
+
+# Composition guarantees (spine before objective; transitions don't count)
+rooms.min_combat_before_objective=2
+rooms.min_check_before_objective=1
+
+# Leader/objective separation (when objective != leader)
+rooms.separate_leader_objective_chance=0.65
+
+# ---- HARD BUDGET CAPS (prevents >Z maps) ----
+rooms.total_cap.easy=12
+rooms.total_cap.normal=16
+rooms.total_cap.hard=20
+rooms.total_cap.brutal=24
+
+rooms.spine_cap.easy=7
+rooms.spine_cap.normal=9
+rooms.spine_cap.hard=11
+rooms.spine_cap.brutal=12
+
+rooms.branch_cap.easy=2
+rooms.branch_cap.normal=3
+rooms.branch_cap.hard=4
+rooms.branch_cap.brutal=5
+
+# ---- PER-DIFFICULTY BRANCH DEPTH ----
+rooms.branch_length_min.easy=1
+rooms.branch_length_max.easy=2
+
+rooms.branch_length_min.normal=2
+rooms.branch_length_max.normal=3
+
+rooms.branch_length_min.hard=2
+rooms.branch_length_max.hard=4
+
+rooms.branch_length_min.brutal=3
+rooms.branch_length_max.brutal=5
+
+# Backward-compatible baselines (used if per-difficulty keys are missing)
+rooms.branch_length_min=2
+rooms.branch_length_max=3
+rooms.branch_count_base=2
+
+# Transitions: target ratio of transition rooms among the "gaps" between spine rooms.
+rooms.transition_ratio_min=0.30
+rooms.transition_ratio_max=0.40
+
+# Loops (site/delve only; lair avoids loops)
+rooms.loops.enabled_site=true
+rooms.loops.enabled_delve=true
+rooms.loops.enabled_lair=false
+
+rooms.loops.max_extra_edges.easy=0
+rooms.loops.max_extra_edges.normal=1
+rooms.loops.max_extra_edges.hard=2
+rooms.loops.max_extra_edges.brutal=3
+
+# Cap loops as fraction of rooms (prevents spaghetti graphs)
+rooms.loops.max_frac_of_rooms=0.12
+
+# Branch endpoint loot odds by difficulty (site/delve branches)
+rooms.branch_end_loot_chance.easy=0.90
+rooms.branch_end_loot_chance.normal=0.75
+rooms.branch_end_loot_chance.hard=0.60
+rooms.branch_end_loot_chance.brutal=0.45
+
+# ----------------------------
+# ROOMS-BASED EVENT DECK COVERAGE
+# ----------------------------
+rooms.events.min.loot=1
+rooms.events.min.skillcheck=1
+rooms.events.max_frac.combat=0.60
+"""
+
+dst = Path("/mnt/data/settings_v1_lock_renamed_alarm_card.txt")
+dst.write_text(settings)
+str(dst), dst.stat().st_size
+

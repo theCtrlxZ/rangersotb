@@ -1,0 +1,157 @@
+#SHOP CORE
+S001|Shield|description=A figure is carrying a shield receives +1 to its Armor. It may not however, also carry a two-handed weapon or staff.|stat_mod=Armor+1|tag=shop_core,armor|price=40|dur=5|cat=armor|build=material
+S002|Light Armor|description=This armor weighs less and is quite flexible at the expense of defense.|stat_mod=Armor+1|tag=shop_core,armor|price=20|dur=5|cat=armor|build=material
+S003|Helmet|description=A figure wearing a helmet receives +1 to its Armor.|stat_mod=Armor+1|tag=shop_core,armor|price=30|dur=3|cat=armor|build=material
+S004|Staff|description=The staff is best known for its defensive properties. Staffs have a -1 damage modifier, but also give the opponent a -1 damage modifier in hand-to-hand combat. This doesn't apply to shooting attacks.|stat_mod=Damage-1|tag=shop_core|price=20|dur=3
+S005|Dagger|description=This is a knife that is not balanced for throwing. Daggers have a -1 damage modifier|stat_mod=Damage-1|tag=shop_core|price=10|dur=2
+S006|Sword|description=Standard weapon of the realm.|tag=shop_core,hand|price=10|dur=5|cat=weapon|build=material
+S008|Sling|description=Basic ranged weapon that'll do in a pinch.|tag=shop_core|price=20|dur=2
+S009|Bow|description=The favored missile weapon of rangers, bows may be loaded and fired in a single action. Maximum range is 24". A figure must carry a quiver or use magic ammunition to use a bow.|tag=shop_core|price=50|dur=5
+S010|Quiver|description=Purpose-built to hold ammunition for a bow or crossbow. Must be equipped to make normal shooting attacks. One piece of magic ammunition may be carried without taking up an item slot.|tag=shop_core|price=100
+S011|Tool Kit|description=A figure carrying tool kit gains +2 to all Armory and Traps Skill Rolls.|skill_mod=Armory+2,Traps+2|tag=shop_core|price=50
+S012|Rope|description=Whenever a figure carrying rope is standing at the top of a vertical structure, it may spend an action to set a rope. Any figure may now use this rope to climb without suffering any movement penalties. A figure may set one rope per game per rope item carried.|tag=shop_core|price=40
+S013|Rations|description=Common traveler's food.|tag=shop_core|price=30
+S014|Torch|description=Lights up 6" around the carrying figure. If dropped or extinguished it is consumed.|tag=shop_core|price=40
+S015|Bandages|description=Provides basic healing in dire circumstances.|tag=shop_core|price=20
+
+#SHOP EXTRA
+SE001|Fine Sword|description=Quality craftsmanship for the standard weapon of the realm.|tag=shop_extra,hand|price=30|dur=7|cat=weapon|build=material
+SE002|Greatsword|description=A larger version of the standard weapon of the realm.|stat_mod=Damage+2|tag=shop_extra,twohand|price=80|dur=5|cat=weapon|build=material
+SE003|Fine Light Armor|description=Quality armor designed to be lighter at the expense of defensive coverage.|stat_mod=Armor+1|tag=shop_extra,armor|price=40|dur=7|cat=armor|build=material
+SE004|Heavy Armor|description=This armor is built for defense but at the expense of mobility.|stat_mod=Armor+2,Move-1|tag=shop_extra,armor|price=150|dur=5|cat=armor|build=material
+SE005|Crossbow|description=Crossbows take one action to load and one action fire. If a figure wishes, he may replace his movement action with a reload action. Crossbows have a +2 damage modifier and a max range of 24". It is assumed that all crossbows start the game ready to fire. A figure must carry a quiver or use magic ammunition to use a crossbow.|stat_mod=Damage+2|tag=shop_extra|price=100|dur=5
+SE006|Longbow|description=The favored missile weapon of rangers, bows may be loaded and fired in a single action. Maximum range is 24". A figure must carry a quiver or use magic ammunition to use a bow.|tag=shop_extra|price=100|dur=5
+SE007|Holy Icon|description=Used to inspire divine supplication.|tag=shop_extra|price=80
+SE008|Throwing Knife|description=This includes any kind of small throwing weapons such as knives, axes, and javelins. A figure may make one shooting attack per game for each knife carried. This attack has a range of 8" and does -1 damage. in a pinch, they can be used as a backup melee weapon with a -2 damage modifier in hand-to-hand combat.|stat_mod=Damage-1|tag=shop_extra|price=50|dur=1
+SE009|Repair kit|description=Repairs 2-5 durability of weapon or armor. Used in conjunction with your Armory skill.|tag=shop_extra|price=60
+
+
+#Herbs
+H001|Dremlocke Weed|description=Gives health|tag=herb|rarity=common|cat=consumable|slot=none|uses=1|price=60
+H002|Fairlight Leaf|description=gives mana|tag=herb|rarity=common|cat=consumable|slot=none|uses=1|price=60
+H003|Fireheart Green|description=gives strength|tag=herb|rarity=common|cat=consumable|slot=none|uses=1|price=60
+H004|Fury Leaves|description=gives will|tag=herb|rarity=common|cat=consumable|slot=none|uses=1|price=60
+H005|Ironbark Powder|description=gives armor|tag=herb|rarity=common|cat=consumable|slot=none|uses=1|price=60
+H006|Nightnock|description=gives sight|tag=herb|rarity=common|cat=consumable|slot=none|uses=1|price=60
+H007|Quickbeam Root|description=gives move|tag=herb|rarity=common|cat=consumable|slot=none|uses=1|price=60
+H008|Haikwheat|description=gives fight|tag=herb|rarity=common|cat=consumable|slot=none|uses=1|price=60
+H009|Silverhair|description=gives armory|tag=herb|rarity=common|cat=consumable|slot=none|uses=1|price=60
+H010|Anthalas|description=gives stealth|tag=herb|rarity=common|cat=consumable|slot=none|uses=1|price=60
+H011|Springwind Berries|description=gives health|tag=herb|rarity=common|cat=consumable|slot=none|uses=1|price=60
+
+
+#Potions
+P001|Potion of Healing|description=heal|tag=potion|rarity=common|cat=consumable|slot=none|uses=1|group=potency|price=40
+P002|Potion of Strength|description=strength|tag=potion|rarity=common|cat=consumable|slot=none|uses=1|group=potency|price=40
+P003|Potion of Toughness|description=tough|tag=potion|rarity=common|cat=consumable|slot=none|uses=1|group=potency|price=40
+P004|Philtre of Fairy Dust|description=fairy|tag=potion|rarity=common|cat=consumable|slot=none|uses=1|price=40
+P005|Explosive Cocktail|description=fire|tag=potion|rarity=common|cat=consumable|slot=none|uses=1|price=40
+P006|Cordial of Spellfire|description=spell|tag=potion|rarity=common|cat=consumable|slot=none|uses=1|price=40
+P007|Potion of Wraithwalk|description=stealth|tag=potion|rarity=common|cat=consumable|slot=none|uses=1|price=40
+P008|Potion of Slow Fall|description=flying|tag=potion|rarity=common|cat=consumable|slot=none|uses=1|price=40
+P009|Potion of Heroism|description=inspiring|tag=potion|rarity=common|cat=consumable|slot=none|uses=1|price=40
+P010|Potion of Restoration|description=Used to remedy status ailments.|tag=potion|rarity=common|cat=consumable|slot=none|uses=1|group=potency|price=40
+P011|Holy Water|description=Effective for blessings and dispeling dark magics. Can do great damage against the undead.|tag=potion|rarity=uncommon|cat=consumable|slot=none|uses=1|group=potency|price=40
+#tonic
+
+
+
+#Armor
+A001|Shield|description=A figure is carrying a shield receives +1 to its Armor. It may not however, also carry a two-handed weapon or staff.|stat_mod=Armor+1|tag=armor|rarity=common|cat=armor|slot=offhand|price=40|build=weakness,ward,condition,material
+A002|Light Armor|description=This armor is mostly constructed out of leather or other non-metal materials.|stat_mod=Armor+1|tag=armor|rarity=common|cat=armor|slot=chest|price=20|build=weakness,ward,condition,material
+A003|Heavy Armor|description=This armor is mostly constructed out of metal.|stat_mod=Armor+2,Move-1|tag=armor|rarity=common|cat=armor|slot=chest|price=150|build=weakness,ward,condition,material
+A004|Scout's Cloak|description=A figure wearing this cloak receives +1 to all Stealth Rolls.|skill_mod=Stealth+1|tag=item|rarity=common|cat=trinket|slot=back|price=60
+A005|Greyleaf Cloak|description=A figure wearing this cloak receives +2 to all Stealth Rolls.|skill_mod=Stealth+2|tag=item|rarity=common|cat=trinket|slot=back|price=60
+A006|Gauntlets of Strength|description=A figure may use this item to gain a +5 to any Strength Rolls. The figure must choose whether to use this item before the Skill Roll is made.|skill_mod=Strength+5|tag=item|rarity=common|cat=misc|slot=arms
+A007|Cloak of Invisibility|description=A figure may use this item at any time. For the rest of the turn, no evil creature will force combat with the figure. Furthermore, do not take this figure into account when determining the actions of evil creatures. The figure receives +8 to all Stealth Rolls while invisible.|skill_mod=Stealth+8|tag=item|rarity=common|cat=trinket|slot=back
+A008|Gloves of Climbing|description=A figure may use this item to gain +5 to any Climb Roll. The figure must choose whether to use this item before the Skill Roll is made.|skill_mod=Climb+5|tag=item|rarity=common|cat=misc|slot=arms
+A009|Boots of Soft Tread|description=A figure wearing these boots may activate them during its activation. For the rest of the turn, the figure can ignore any movement penalties for rough ground.|tag=item|rarity=common|cat=trinket|slot=feet
+A010|Helmet|description=A figure wearing a helmet receives +1 to its Armor.|stat_mod=Armor+1|tag=armor|rarity=uncommon|cat=armor|slot=head|price=30|build=weakness,ward,condition,material
+
+
+
+#Randomized Weapons (roll for main weapon and two handed weapon)
+W001|Sword|tag=hand|rarity=common|cat=weapon|slot=mainhand|build=condition,material,element,infusion,bane|price=10|dur=5|weight=5
+W002|Longsword|tag=hand,shop_no|rarity=common|cat=weapon|slot=mainhand|price=10|dur=5|build=condition,material,element,infusion,bane|weight=1
+W003|Shortsword|tag=hand,shop_no|rarity=common|cat=weapon|slot=mainhand|price=10|dur=5|build=condition,material,element,infusion,bane|weight=1
+W004|Flail|tag=hand,shop_no|rarity=common|cat=weapon|slot=mainhand|price=10|dur=5|build=condition,material,element,infusion,bane|weight=1
+W005|Mace|tag=hand,shop_no|rarity=common|cat=weapon|slot=mainhand|price=10|dur=5|build=condition,material,element,infusion,bane|weight=1
+W006|Axe|tag=hand,shop_no|rarity=common|cat=weapon|slot=mainhand|price=10|dur=5|build=condition,material,element,infusion,bane|weight=1
+W007|Club|tag=hand,shop_no|rarity=common|cat=weapon|slot=mainhand|price=10|dur=5|build=condition,material,element,infusion,bane|weight=.25
+W008|Spear|tag=hand,shop_no|rarity=common|cat=weapon|slot=mainhand|price=10|dur=5|build=condition,material,element,infusion,bane|weight=1
+W009|Morning Star|tag=hand,shop_no|rarity=common|cat=weapon|slot=mainhand|price=10|dur=5|build=condition,material,element,infusion,bane|weight=.25
+W010|Battle-Axe|stat_mod=Damage+2|tag=twohand,shop_no|rarity=common|cat=weapon|slot=2hand|price=80|dur=5|build=condition,material,element,infusion,bane|weight=1
+W011|Greatsword|stat_mod=Damage+2|tag=twohand|rarity=common|cat=weapon|slot=2hand|build=condition,material,element,infusion,bane|price=80|dur=5|weight=5
+W012|Greataxe|stat_mod=Damage+2|tag=twohand,shop_no|rarity=common|cat=weapon|slot=2hand|price=80|dur=5|build=condition,material,element,infusion,bane|weight=1
+W013|Maul|stat_mod=Damage+2|tag=twohand,shop_no|rarity=uncommon|cat=weapon|slot=2hand|price=80|dur=5|build=condition,material,element,infusion,bane|weight=.25
+W014|Warhammer|tag=hand,shop_no|rarity=common|cat=weapon|slot=mainhand|price=10|dur=5|build=condition,material,element,infusion,bane|weight=.25
+W015|Zweihander|stat_mod=Damage+2|tag=twohand,shop_no|rarity=rare|cat=weapon|slot=2hand|price=80|dur=5|build=condition,material,element,infusion,bane|weight=.25
+W016|Claymore|stat_mod=Damage+2|tag=twohand,shop_no|rarity=uncommon|cat=weapon|slot=2hand|price=80|dur=5|build=condition,material,element,infusion,bane|weight=1
+W017|Halberd|stat_mod=Damage+2|tag=twohand,shop_no|rarity=uncommon|cat=weapon|slot=2hand|price=80|dur=5|build=condition,material,element,infusion,bane|weight=1
+W018|Poleaxe|stat_mod=Damage+2|tag=twohand,shop_no|rarity=uncommon|cat=weapon|slot=2hand|price=80|dur=5|build=condition,material,element,infusion,bane|weight=.25
+W019|Pike|stat_mod=Damage+2|tag=twohand,shop_no|rarity=uncommon|cat=weapon|slot=2hand|price=80|dur=5|build=condition,material,element,infusion,bane|weight=.25
+W020|Glaive|stat_mod=Damage+2|tag=twohand,shop_no|rarity=uncommon|cat=weapon|slot=2hand|price=80|dur=5|build=condition,material,element,infusion,bane|weight=1
+W021|Katana|tag=hand,shop_no|rarity=uncommon|cat=weapon|slot=mainhand|price=10|dur=5|build=condition,material,element,infusion,bane|weight=1
+W022|Dai-katana|stat_mod=Damage+2|tag=twohand,shop_no|rarity=rare|cat=weapon|slot=2hand|price=80|dur=5|build=condition,material,element,infusion,bane|weight=.25
+W023|Odachi|stat_mod=Damage+2|tag=twohand,shop_no|rarity=rare|cat=weapon|slot=2hand|price=80|dur=5|build=condition,material,element,infusion,bane|weight=.25
+W024|Flamberge|stat_mod=Damage+2|tag=twohand,shop_no|rarity=rare|cat=weapon|slot=2hand|price=80|dur=5|build=condition,material,element,infusion,bane|weight=1
+W025|Falchion|tag=hand,shop_no|rarity=uncommon|cat=weapon|slot=mainhand|price=10|dur=5|build=condition,material,element,infusion,bane|weight=1
+W026|Broadsword|tag=hand,shop_no|rarity=common|cat=weapon|slot=mainhand|price=10|dur=5|build=condition,material,element,infusion,bane|weight=1
+W027|Saber|tag=hand,shop_no|rarity=uncommon|cat=weapon|slot=mainhand|price=10|dur=5|build=condition,material,element,infusion,bane|weight=.25
+W028|Rapier|tag=hand,shop_no|rarity=uncommon|cat=weapon|slot=mainhand|price=10|dur=5|build=condition,material,element,infusion,bane|weight=1
+W029|Scimitar|tag=hand,shop_no|rarity=uncommon|cat=weapon|slot=mainhand|price=10|dur=5|build=condition,material,element,infusion,bane|weight=.25
+W030|Gladius|tag=hand,shop_no|rarity=uncommon|cat=weapon|slot=mainhand|price=10|dur=5|build=condition,material,element,infusion,bane|weight=.25
+W031|Shamshir|tag=hand,shop_no|rarity=rare|cat=weapon|slot=mainhand|price=10|dur=5|build=condition,material,element,infusion,bane|weight=.25
+W032|Scythe|tag=twohand,shop_no|rarity=uncommon|cat=weapon|slot=2hand|price=80|dur=5|build=condition,material,element,infusion,bane|weight=.25
+W033|Sickle|tag=hand,shop_no|rarity=uncommon|cat=weapon|slot=mainhand|price=10|dur=5|build=condition,material,element,infusion,bane|weight=.25
+W034|Lance|stat_mod=Damage+2|tag=twohand,shop_no|rarity=uncommon|cat=weapon|slot=2hand|price=80|dur=5|build=condition,material,element,infusion,bane|weight=1
+W035|Trident|stat_mod=Damage+2|tag=twohand,shop_no|rarity=uncommon|cat=weapon|slot=2hand|price=80|dur=5|build=condition,material,element,infusion,bane|weight=.25
+W036|Estoc|tag=hand,shop_no|rarity=rare|cat=weapon|slot=mainhand|price=10|dur=5|build=condition,material,element,infusion,bane|weight=.25
+
+#Weapons
+W037|Dagger|description=This is a knife that is not balanced for throwing. Daggers have a -1 damage modifier|stat_mod=Damage-1|rarity=common|cat=weapon|slot=mainhand|price=10|dur=2
+W038|Throwing Knife|description=This includes any kind of small throwing weapons such as knives, axes, and javelins. A figure may make one shooting attack per game for each knife carried. This attack has a range of 8" and does -1 damage. in a pinch, they can be used as a backup melee weapon with a -2 damage modifier in hand-to-hand combat.|stat_mod=Damage-1|tag=ranged|rarity=common|cat=weapon|slot=offhand|price=50|dur=1
+W039|Bow|description=The favored missile weapon of rangers, bows may be loaded and fired in a single action. Maximum range is 24". A figure must carry a quiver or use magic ammunition to use a bow.|tag=ranged|rarity=common|cat=weapon|slot=2hand|price=50|dur=5
+W040|Crossbow|description=Crossbows take one action to load and one action fire. If a figure wishes, he may replace his movement action with a reload action. Crossbows have a +2 damage modifier and a max range of 24". It is assumed that all crossbows start the game ready to fire. A figure must carry a quiver or use magic ammunition to use a crossbow.|stat_mod=Damage+2|tag=ranged|rarity=uncommon|cat=weapon|slot=2hand|price=100|dur=5
+W041|Heirloom Blade|description=A beloved, jewel-encrusted sword with a heraldic family crest on the pommel. It has never seen combat nor tasted blood.|tag=noble|rarity=rare|cat=misc|slot=none|dur=2
+W042|Staff|description=The staff is best known for its defensive properties. Staffs have a -1 damage modifier, but also give the opponent a -1 damage modifier in hand-to-hand combat. This doesn't apply to shooting attacks.|stat_mod=Damage-1|tag=twohand|rarity=common|cat=weapon|slot=2hand|price=20|dur=3
+W043|Longbow|description=The favored missile weapon of rangers, bows may be loaded and fired in a single action. Maximum range is 24". A figure must carry a quiver or use magic ammunition to use a bow.|tag=ranged|rarity=uncommon|cat=weapon|slot=2hand|price=100
+W044|Heavy Crossbow|description=Crossbows take one action to load and one action fire. If a figure wishes, he may replace his movement action with a reload action. Crossbows have a +2 damage modifier and a max range of 24". It is assumed that all crossbows start the game ready to fire. A figure must carry a quiver or use magic ammunition to use a crossbow.|stat_mod=Damage+2|tag=ranged|rarity=rare|cat=weapon|slot=2hand|price=150
+W045|Sling|tag=ranged|rarity=common|cat=weapon|slot=2hand|price=20|dur=2
+W046|Wand|tag=magic|rarity=rare|cat=weapon|slot=mainhand|price=100|dur=1|roll:spells:tag=weapon_spell:count=1d2|charges_max=3
+
+
+#Trinkets
+T001|Gemstone of Spellfire|description=A figure possessing spells may use this gemstone to cast one of those spells without expending that spell for the scenario.|tag=item|rarity=common|cat=trinket|slot=none|price=20
+T002|Sunfire Pendant|description=A figure wearing this pendant may choose to activate it at any time as a free action. For the rest of the game, all attacks made by the figure while in combat with undead creatures count as magic. Furthermore, all undead creatures in combat with the figure suffer Fight-2 and Armor-2|tag=item|rarity=common|cat=trinket|slot=neck|price=20
+T003|Amulet of Leadership|description=If a user wears this amulet, he may add +5 to his recruitment point total when recruiting companions for the coming mission.|tag=item|rarity=common|cat=trinket|slot=neck|price=20
+T004|Eagle-eye Brooch|description=A figure wearing this item gains +2 to all Perception Skill Rolls.|skill_mod=Perception+2|tag=item|rarity=common|cat=misc|slot=none|price=20
+T005|Ring of Teleportation|description=A figure may spend an action to use this ring. Immediately move the figure 10" in any direction, so long as the destination spot is within line of sight.|tag=item|rarity=common|cat=trinket|slot=ring|price=20
+T006|Fishglass|description=A figure that swallows this small marble automatically passes all Swimming Rolls for the remainder of the game.|tag=item|rarity=common|cat=trinket|slot=none|price=20
+T007|Gemstone of Heartlight|description=A figure carrying this gem may discard the gem during its activation to gain an extra action. This may not take a figure above three actions during its activation.|tag=item|rarity=common|cat=trinket|slot=none|price=20
+T008|Spell Ring|description=The wearer of the ring may spend an action to cast one spell. If number of uses reaches zero, the ring is destroyed.|tag=item|rarity=common|cat=trinket|slot=ring|roll:spells:tag=spells:count=1|charges_max=3|price=20
+T009|Skill Ring|description=The wearer of the ring gains +2 benefits towards a particular skill.|tag=item|rarity=uncommon|cat=trinket|slot=ring|roll:spells:tag=core:count=1|price=20
+T010|Hero Ring|description=The wearer of the ring gains benefits towards a particular skill.|tag=item|rarity=uncommon|cat=trinket|slot=ring|roll:spells:tag=hero:count=1|price=20
+T011|Fate Stone|description=A figure carrying this stone may use it to re=roll any one die roll that it makes.|tag=item|rarity=common|cat=trinket|slot=none|price=20
+T012|Spell-shield Pendant|description=A figure wearing this pendant, that is forced to make a Will Roll to resist a spell, may discard this pendant and cancel the spell. This item can be used after the Will Roll is made.|tag=item|rarity=common|cat=trinket|slot=neck|price=20
+T013|Holy Icon|description=Used to inspire divine supplication.|tag=item|rarity=common|cat=trinket|slot=neck|price=80
+
+
+#Misc
+M001|Quiver|description=Purpose-built to hold ammunition for a bow or crossbow. Must be equipped to make normal shooting attacks. One piece of magic ammunition may be carried without taking up an item slot.|tag=item|rarity=common|cat=tool|slot=none|price=100
+M002|Tool Kit|description=A figure carrying tool kit gains +2 to all Armory and Traps Skill Rolls.|skill_mod=Armory+2,Traps+2|tag=item|rarity=common|cat=tool|slot=none|price=50
+M003|Rope|description=Whenever a figure carrying rope is standing at the top of a vertical structure, it may spend an action to set a rope. Any figure may now use this rope to climb without suffering any movement penalties. A figure may set one rope per game per rope item carried.|tag=item|rarity=common|cat=tool|slot=none|price=40
+M004|Herb Pouch|description=The herb pouch takes up one item slot, but can hold two herbs, essentially allowing the figure to carry two herbs in one item slot.|tag=item|rarity=common|cat=misc|slot=none|price=20
+M005|Book of Lore|description=A figure carrying a book of lore receives +2 to all Ancient Lore and Read Runes Skill Rolls|skill_mod=AncientLore+2,ReadRunes+2|tag=item|rarity=common|cat=misc|slot=none|price=20
+M006|Enchanted Lockpicks|description=A figure may use this item to gain a +5 to any Pick Lock Skill Roll. The figure must choose whether to use this item before the Skill Roll is made.|skill_mod=Pick Lock+5|tag=item|rarity=common|cat=misc|slot=none|price=20
+M007|Fireball Orb|description=A figure may spend an action to throw this orb anywhere with 10". Every figure within 2" of the point of impact immediately suffers a +5 elemental magic shooting attack.|tag=item|rarity=common|cat=consumable|slot=offhand|uses=1|price=20
+M008|Thief Tools|description=A figure carrying thief tools gains +2 to all Pick Locks and Traps Skill Rolls.|skill_mod=Pick Lock+2,Traps+2|tag=item|rarity=common|cat=tool|slot=none|price=80
+M009|Rations|description=Common traveler's food.|rarity=common|cat=consumable|slot=none|uses=1|price=30
+M010|Torch|description=Lights up 6" around the carrying figure. If dropped or extinguished it is consumed.|rarity=common|cat=consumable|slot=offhand|uses=1|price=40
+M011|Repair kit|description=Repairs 2-5 durability of weapon or armor. Used in conjunction with your Armory skill.|rarity=common|cat=consumable|slot=none|uses=1|price=60
+M012|Bandages|description=Provides basic healing in dire circumstances.|rarity=common|cat=consumable|slot=none|uses=1|price=20
+#map
+
+
+
+

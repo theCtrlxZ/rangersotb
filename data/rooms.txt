@@ -1,0 +1,217 @@
+# ============================================================
+# Delve Rooms  rooms.txt
+# ============================================================
+
+R001|Long Hallway Entrance|description=A long, echoing corridor leads from daylight into shadow. Old dust and faint footprints suggest others have passed this way, recently.|size=medium|tag=room,transition,exploration,chokepoint|rarity=common|weight=3.0|pressure=+0|exit=branch2|flag=entrance
+
+R002|Chapel|description=Cracked pews face a defaced altar. The air is heavy with old incense and the feeling of being watched.|size=medium|tag=room,lore,exploration,setpiece|only=cultists,undead,demons|rarity=uncommon|weight=1.0|entering=Place an altar setpiece at center; Place 2 light-cover obstacles (pews); Roll 1 [roll:item:tag=herb] and place it near the altar|check=Will TN12|fail=pressure+1; Spawn 1 [roll:unit:tag=magic] near the altar|loot=Roll 1 [roll:item:rarity=uncommon]
+
+R003|Training Grounds|description=Weapon racks and worn dummies line the walls. Scuffed floors mark a place where discipline was forged, or broken.|size=large|tag=room,combat,setpiece|rarity=common|weight=1.2|entering=Place 2 obstacles (training racks) and 1 open setpiece (sparring ring); Spawn 2 [roll:unit:tag=martial] split across the room|effect=The first time an enemy is damaged each round, it gains +1 Fight until end of its next activation
+
+R004|Arena|description=A circular pit with raised edges, built for spectacle. The acoustics turn every sound into a declaration.|size=epic|tag=room,combat,setpiece,open|rarity=rare|weight=0.9|entering=Place a central arena ring; Remove most cover (max 2 obstacles); Spawn 2 [roll:unit:tag=martial] and 2 [roll:unit:tag=ranged] on opposite sides|effect=Ranged attacks have clear lanes: +1 Shoot if attacker did not move this activation|obj_only=leader|flag=boss,final,objective
+
+R005|Oubliette|description=A deep shaft vanishes into darkness. The smell is stale, and the silence feels earned.|size=small|tag=room,trap,hazard,vertical|rarity=uncommon|weight=1.0|entering=Place a pit/shaft hazard in the center; Place 1 ladder/rope access point|check=Perception TN14|fail=Each hero tests Health TN10 or takes 1 damage; pressure+1|loot=Roll 1 [roll:item:rarity=common]|obj_only=rescue|flag=objective,final
+
+R006|Torture Chamber|description=Iron tools hang in neat rows that feel too practiced. Old stains mark the places where questions ended.|size=medium|tag=room|rarity=uncommon|weight=0.9|entering=Place 2 obstacles (tables/chains) and 1 rough terrain patch (slick floor); Spawn 1 [roll:unit:tag=martial] near the far wall|effect=Heroes within 6" of the main setpiece suffer -1 Will (minimum +0)|flag=objective,final|obj_only=rescue,ritual
+
+R007|Graveyard|description=Lean stones jut from uneven earth. The ground looks recently disturbed, and the wind refuses to stay quiet.|size=large|tag=room,exploration,hazard,undead|only=undead|rarity=common|weight=1.1|entering=Place 6 small obstacles (grave markers) and 2 rough terrain patches (soft earth); Roll 1 [roll:unit:tag=animal] at the perimeter|check=Will TN13|fail=pressure+1; Spawn 1 [roll:unit:tag=martial] from the ground at center
+
+R008|Burial Grounds|description=Stacked cairns and shallow pits spread across a wide field. Something about this place feels unfinished.|size=large|tag=room,lore,exploration,hazard|rarity=uncommon|weight=1.0|entering=Place 3 rough terrain patches (loose stone) and 3 obstacles (cairns)|pressure=+0|effect=The first time a model is reduced to 0 Health, roll Will TN12; on fail, pressure+1
+
+R009|Crypt|description=Carved stone sarcophagi line the walls. The air is cold and unnaturally still.|size=medium|tag=room,undead,lore,setpiece|only=undead,cultists|rarity=uncommon|weight=1.0|entering=Place 2 sarcophagus obstacles; Place 1 central altar/marker; Spawn 1 [roll:unit:tag=martial] near the marker|check=AncientLore TN12|fail=pressure+1; Spawn 1 [roll:unit:tag=magic] at the central marker|loot=Roll 1 [roll:item:rarity=uncommon]
+
+R010|Catacombs|description=Narrow passages branch into darkness, marked by crude symbols and broken bone.|size=large|tag=room,maze,exploration,undead|only=undead,cultists|rarity=rare|weight=0.8|entering=Place 4 obstacles to form winding corridors; Place 3 rough terrain patches|pressure=+0|effect=Visibility is limited: ranged attacks beyond 12" suffer -1 Shoot
+
+R011|Warren|description=Low tunnels and burrowed chambers create a cramped sprawl. You hear scrapes that stop when you do.|size=large|tag=room,maze,exploration,chokepoint|only=goblins,beasts,reptiles,monsters|rarity=common|weight=1.2|entering=Place 4 obstacles forming tight lanes; Place 2 rough terrain patches; Spawn 2 [roll:unit:tag=martial] split across side corridors|effect=Enemies benefit from cover: +1 Armor while within 1" of an obstacle
+
+R012|Nesting Grounds|description=A rank stench clings to the air. This chamber is lived-in, defended, not merely occupied.|size=large|tag=room,combat,hazard,lair,nest|only=monsters|rarity=uncommon|weight=1.0|entering=Place 1 central nest setpiece; Spawn 1 [roll:unit:tag=monsters] near the nest; Spawn 1 [roll:unit:tag=martial] guarding an approach|effect=At end of round 2, pressure+1 (the nest churns with movement)
+
+R013|Treasury|description=Locked chests and heavy shelves promise reward, and consequences. Dust here is thinner, as if someone visits often.|size=medium|tag=room,treasure,trap,setpiece,deadend_risk|rarity=rare|weight=0.7|entering=Place 2 chest markers and 2 obstacles (shelves)|pressure=+0|check=PickLock TN14|fail=pressure+1; Trigger 1 trap; Spawn 1 [roll:unit:tag=martial] at the nearest entry point|loot=Roll 1 [roll:item:rarity=rare]|exit=deadend|obj_only=fetch|flag=objective
+
+R014|Throne Room|description=A seat of authority dominates the chamber. Even abandoned, it feels like a place where decisions become fate.|size=epic|tag=room,setpiece,combat,lore,open|rarity=legendary|weight=0.5|entering=Place a throne setpiece at far end; Place 2 obstacles (pillars)|pressure=+1|effect=Enemies within 12" of the throne gain +1 Will|obj_only=leader,escort,rescue|flag=boss,final,objective
+
+R015|Barracks|description=Bunks and footlockers sit in hurried disorder. A place built for numbers, not comfort.|size=large|tag=room,combat,exploration|rarity=common|weight=1.1|entering=Place 3 obstacles (bunks) and 2 rough terrain patches (scattered gear); Spawn 2 [roll:unit:tag=martial] near bunks|loot=Roll 1 [roll:item:rarity=common]
+
+R016|Bell Tower|description=Above, a heavy bell hangs from warped beams. A single ring here could wake the entire complex.|size=large|tag=room,vertical,setpiece,stealth|rarity=uncommon|weight=0.9|entering=Place a tower/high ground piece; Place 1 rope/stair access; Spawn 1 [roll:unit:tag=ranged] on high ground|check=Stealth TN15|fail=pressure+2; All enemies gain a free reposition (6") toward the heroes
+
+R017|Prison Cells|description=Rows of bars and locks, some broken, some intact. The quiet inside feels like it has teeth.|size=medium|tag=room,lore,trap,exploration|rarity=common|weight=1.0|entering=Place 4 cell obstacles (bars/doors) along one side; Roll 1 [roll:item:tag=herb] as contraband|check=Perception TN12|fail=pressure+1; Trigger 1 trap in a random cell|obj_only=rescue|flag=objective
+
+R018|Guard Station|description=A cramped post built for vigilance, maps, notes, and a clear view of approach lines.|size=small|tag=room,combat,chokepoint|rarity=common|weight=1.2|entering=Place 2 obstacles forming a checkpoint; Spawn 1 [roll:unit:tag=ranged] in cover|pressure=+0|effect=First enemy activation each round may make a free 3" move (patrol reflex)
+
+R019|War Room|description=A large table dominates the space, covered in scraps of plans and tokens. Someone prepared for this conflict.|size=medium|tag=room,lore,setpiece,combat|rarity=uncommon|weight=0.9|entering=Place 1 war table setpiece and 2 obstacles (cabinets); Spawn 1 [roll:unit:tag=magic] near the table|loot=Roll 1 [roll:item:rarity=uncommon]|obj_only=leader|flag=boss
+
+R020|Quarry|description=Jagged stone and piled rubble create harsh sightlines. The ground is uneven, ready to twist an ankle at the worst moment.|size=epic|tag=room,hazard,exploration,open|biome=mountain,ruins|rarity=uncommon|weight=0.8|entering=Place 4 rough terrain patches (rubble) and 3 obstacles (stone blocks)|pressure=+0|effect=Models that move more than 6" in an activation test Health TN10 or suffer -1 Move next activation
+
+R021|Mine Shaft|description=Timbers groan, and the air tastes like damp stone. Narrow passages force you into single-file decisions.|size=large|tag=room,transition,hazard,chokepoint|biome=mountain,ruins|rarity=common|weight=1.1|entering=Place 3 obstacles to form a narrow lane; Place 2 rough terrain patches|pressure=+0|effect=No model may end its move within 1" of more than 2 enemies (tight spacing)
+
+R022|Waterfall|description=Roaring water drowns out footsteps and speech alike. Mist clings to everything, turning stone slick.|size=large|tag=room,hazard,setpiece,exploration|biome=forest,mountain,swamp|rarity=uncommon|weight=0.8|entering=Place a waterfall setpiece at one edge; Place 2 rough terrain patches (slick ground)|pressure=+0|check=Strength TN12|fail=A random hero slips: move them 3" toward the waterfall and they take 1 damage
+
+R023|River|description=Cold water cuts through the space, fast enough to be dangerous. Crossing it is a decision, not a step.|size=large|tag=room,hazard,setpiece,exploration|biome=forest,swamp,coast|rarity=common|weight=0.9|entering=Place a river line across the table; Mark 1 ford/crossing point|pressure=+0|effect=Crossing the river costs +2" of movement and grants -1 Armor until end of activation
+
+R024|Fountain|description=A cracked fountain still trickles, impossibly. The water looks clean, almost inviting.|size=medium|tag=room,setpiece,resource,lore|rarity=uncommon|weight=0.9|entering=Place a fountain setpiece at center|pressure=+0|check=AncientLore TN10|fail=pressure+1; The fountain becomes tainted (heroes within 6" test Health TN12 or suffer -1 Will next round)|loot=Roll 1 [roll:item:tag=herb]
+
+R025|Bridge|description=A narrow span over a drop you’d rather not measure. Every step feels louder than it should.|size=medium|tag=room,chokepoint,setpiece,combat|rarity=common|weight=1.0|entering=Place a bridge crossing with hazards on both sides; Place 1 obstacle at each end (cover); Spawn 1 [roll:unit:tag=ranged] at the far end|effect=Only 2 models may be on the bridge at once (treat as difficult terrain)|exit=straight
+
+R026|Sacrificial Altar Room|description=The stone here is worn smooth by countless rituals. Symbols carved into the floor feel fresh enough to sting the eyes.|size=large|tag=room,setpiece,ritual,combat|only=cultists,demons,undead,beasts|rarity=rare|weight=0.7|entering=Place an altar setpiece at center; Spawn 1 [roll:unit:tag=magic] near the altar; Spawn 1 [roll:unit:tag=martial] guarding|pressure=+1|check=Will TN15|fail=pressure+2; Spawn 1 [roll:unit:tag=animal] as a summoned guardian|loot=Roll 1 [roll:item:rarity=rare]|obj_only=leader,ritual,rescue|flag=boss,final,objective
+
+R027|Laboratory|description=Broken glass, scorched stone, and notes half-burned. The work here wasn’t meant to be safe.|size=medium|tag=room,lore,trap,hazard,setpiece|rarity=rare|weight=0.7|entering=Place 2 hazards (volatile tables) and 2 obstacles (shelves)|pressure=+0|only=cultists,soldiers,undead,goblins|check=Traps TN14|fail=Trigger 1 explosion hazard (3" radius, 1 damage); pressure+1|loot=Roll 1 [roll:item:rarity=uncommon]|obj_only=fetch,escort,rescue,ritual|flag=final,objective
+
+R028|Workshop|description=Tools and half-made parts cover benches. Someone here cared about making things that last, or things that end.|size=medium|tag=room,resource,lore,setpiece|rarity=common|weight=1.0|entering=Place 2 workbench obstacles and 1 tool cache marker|pressure=+0|only=cultists,soldiers,beasts,goblins|loot=Roll 1 [roll:item:rarity=uncommon]
+
+R029|Dam|description=Massive stonework holds back a patient weight of water. A wrong move here feels like it could become a disaster.|size=epic|tag=room,setpiece,hazard,open|biome=mountain,coast,swamp|rarity=rare|weight=0.6|entering=Place a dam wall feature along one edge; Place 2 hazardous zones (spillway)|pressure=+0|effect=At end of round 3, roll d6: on 1-2, pressure+1 (structural stress draws attention)
+
+R030|Warehouse|description=Stacks of crates form aisles and blind corners. The smell of old goods mixes with something fresher, recent activity.|size=large|tag=room,combat,exploration,maze|rarity=common|weight=1.1|entering=Place 6 obstacles (crates) to form lanes; Spawn 1 [roll:unit:tag=martial] behind a crate line|pressure=+0|effect=First attack made from behind an obstacle each round gains +1 Shoot or +1 Fight (attacker’s choice)
+
+R031|Cafeteria|description=Long tables sit under a stained ceiling. The leftovers are gone, but the sense of routine still lingers.|size=large|tag=room,resource,exploration|rarity=common|weight=0.9|entering=Place 2 table obstacles and 1 food cache marker|pressure=+0|loot=+10 gold; Roll 1 [roll:item:tag=herb]
+
+R032|Abandoned Medical Wing|description=Rows of cots and bandages, some clean, some not. This place tried to heal, but it may have failed.|size=epic|tag=room,resource,lore,hazard|rarity=uncommon|weight=0.8|entering=Place 2 cot obstacles and 1 supply marker|pressure=+0|check=Medicine TN12|fail=A random hero is exposed: test Health TN12 or suffer -1 Fight next round|loot=Roll 1 [roll:item:rarity=uncommon]
+
+R033|Watch Tower|description=High ground and clear sightlines. Whoever holds this point controls what approaches, and what escapes.|size=large|tag=room,vertical,combat,setpiece|rarity=uncommon|weight=0.9|entering=Place a tower/high ground feature; Spawn 1 [roll:unit:tag=ranged] on high ground|pressure=+0|effect=Enemies on high ground gain +1 Shoot
+
+R034|Light House|description=A beacon built to guide ships, and warn intruders. The lens is cracked, but the intent remains sharp.|size=large|tag=room,setpiece,vertical,lore|biome=coast|rarity=rare|weight=0.6|entering=Place a lighthouse feature; Place 2 obstacles (stairs/mechanism)|pressure=+0|check=Stealth TN14|fail=pressure+2; A flare/light reveals positions (enemies gain +1 Shoot next round)
+
+R035|Gate|description=A hardened entry point designed to slow armies. You can almost hear the echo of boots that once marched through.|size=large|tag=room,chokepoint,setpiece,combat|rarity=common|weight=1.0|entering=Place a gate setpiece and 2 obstacles (guard cover); Spawn 2 [roll:unit:tag=martial] at the gate|effect=The gate zone grants +1 Armor to defenders behind it|exit=straight
+
+R036|Portcullis|description=Rusted teeth of iron hang overhead, ready to fall. The mechanism looks old, but not harmless.|size=medium|tag=room,trap,chokepoint,setpiece|rarity=uncommon|weight=0.9|entering=Place a portcullis marker across a passage|pressure=+0|check=Strength TN13|fail=The portcullis drops: split the party (no crossing for 1 round); pressure+1|exit=straight
+
+R037|Shrine|description=A small place of devotion, quiet, personal, stubbornly intact. Even enemies sometimes leave these alone.|size=small|tag=room,lore,rest,setpiece|rarity=uncommon|weight=0.9|entering=Place a shrine setpiece|pressure=-1 (once per delve, if not already used)|effect=Once per room, a hero may reroll one failed Will test|loot=Roll 1 [roll:item:rarity=common]
+
+R038|Library|description=Shelves rise like walls, heavy with silence. Dust coats knowledge that might still bite back.|size=large|tag=room,lore,puzzle,exploration,maze|rarity=rare|weight=0.7|entering=Place 4 shelf obstacles forming lanes|pressure=+0|check=ReadRunes TN13|fail=pressure+1; Trigger 1 hazard (falling shelves: 1 damage in a 3" line)|loot=Roll 1 [roll:item:rarity=uncommon]
+
+R039|Bedroom Chambers|description=Private quarters with signs of hurried departure. The small details make the place feel uncomfortably human.|size=medium|tag=room,exploration,lore|rarity=common|weight=0.9|entering=Place 2 obstacles (beds/wardrobes); Roll 1 [roll:item:rarity=common]|pressure=+0
+
+R040|Secret Passage|description=A narrow route hidden behind stonework. The air is tighter here, as if the walls are leaning in.|size=small|tag=room,transition,stealth,secret,chokepoint|rarity=rare|weight=0.7|entering=Place 2 obstacles forming a tight corridor|pressure=-1|check=Perception TN14|fail=You miss it entirely; treat as straight exit to the next visible room|exit=straight|flag=secret
+
+R041|Underground Tunnels|description=Twisting routes carved by time, claws, or both. Every turn feels like a choice you can’t take back.|size=epic|tag=room,maze,exploration,transition|rarity=common|weight=1.0|entering=Place 5 obstacles to form winding lanes; Place 3 rough terrain patches|pressure=+0|effect=At the start of each round, roll d6: on 1-2, a random enemy may reposition 3" (tunnel advantage)
+
+R042|Grand Staircase|description=Massive stone steps intended to inspire awe for its invited guests.|size=large|tag=room,transition,vertical|rarity=uncommon|weight=1.0|entering=Spawn 2 [roll:unit:tag=ranged] in cover|pressure=+0|effect=Figures at the top of the stairs have their range extended by 6".|exit=straight
+
+R043|Stables|description=Stalls line the walls, hay rots in piles, and tack hangs like forgotten skins. Something large has been kept, or has nested, here.|size=large|tag=room,setpiece,combat,beasts,hazard|only=bandits,soldiers,goblins,beasts,reptiles|rarity=common|weight=1.0|entering=Place 4 stall obstacles forming lanes; Place 2 rough terrain patches (hay); Spawn 2 [roll:unit:tag=animal] and 1 [roll:unit:tag=martial]|pressure=+0|effect=If any model is knocked to 0 HP here, the noise draws attention: pressure+1 (once per room)|loot=Roll 1 [roll:item:rarity=common]|flag=
+
+R044|Sanctuary|description=A calm, protected space, cleaner than it should be. Even enemies hesitate to profane it.|size=medium|tag=room,safe,rest,blessing|rarity=rare|weight=0.6|entering=Place 1 sanctuary marker (center)|pressure=-1|effect=Once per scenario, heroes may take a short rest here: heal 2 HP each and remove one minor condition (if any)|flag=rest
+
+R045|Armory|description=Racks of weapons and armor sit in ordered rows, some empty, some untouched. The smell of oil and old steel hangs in the air.|size=large|tag=room,combat,treasure,setpiece|rarity=uncommon|weight=1.0|entering=Place 4 obstacles (racks) forming lanes; Place 1 locked cache marker; Spawn 1 [roll:unit:tag=martial] guarding the cache|check=PickLock TN12|fail=pressure+1; Trigger 1 trap (alarm); Spawn 1 [roll:unit:tag=ranged] at maximum distance|loot=Roll 1 [roll:item:rarity=uncommon]|flag=
+
+R046|Junk Room|description=Piles of broken furniture and warped scrap make the room feel like a midden of history. Something shifts when you breathe too loudly.|size=large|tag=room,exploration,hazard,maze|rarity=common|weight=1.1|entering=Place 4 rough terrain patches (debris) and 4 obstacles (piles) to create blind corners|pressure=+0|check=Perception TN12|fail=pressure+1; A hidden threat engages from cover (Spawn 1 [roll:unit:tag=martial] within 6" of a random obstacle)|loot=Roll 1 [roll:item:rarity=common]|flag=
+
+R047|Nursery|description=Small beds, crude toys, and soft blankets, disturbingly out of place down here. The air is warm, alive, and protective.|size=medium|tag=room,beasts,lore,setpiece,hazard|only=goblins,beasts,reptiles,soldiers,cultists|rarity=uncommon|weight=0.9|entering=Place 1 nursery setpiece cluster (beds/toys); Spawn 1 [roll:unit:tag=animal] near the setpiece|pressure=+0|effect=While this room is uncleared, pressure cannot be reduced below 0 (the lair feels “awake”)|check=Stealth TN14|fail=pressure+2; Enemies immediately converge (each enemy may make a free 3" move toward nearest hero)|flag=
+
+R048|Amphitheater|description=A sunken ring of stone tiers descends to a worn central floor. Every step echoes, and every sightline feels exposed.|size=epic|tag=room,setpiece,combat,open,chokepoint|rarity=uncommon|weight=0.7|entering=Place a circular central arena marker; Place 4 tiered obstacles (stone benches) as cover on the perimeter; Spawn 1 [roll:unit:tag=ranged] on high ground and 1 [roll:unit:tag=martial] near the arena floor|pressure=+0|effect=High Ground: attacks made from the tiers gain +1 Shoot; models in the arena floor suffer -1 to Stealth checks|flag=
+
+R049|Vault|description=Thick stone, thick iron, thicker intent. Whatever was stored here was worth defending, or hiding.|size=medium|tag=room,treasure,trap,chokepoint,setpiece,deadend_risk|rarity=rare|weight=0.6|entering=Place 1 vault door marker and 2 obstacles (support pillars)|pressure=+0|check=PickLock TN15|fail=pressure+2; Trigger 1 trap (poison gas zone for 1 round)|loot=Roll 1 [roll:item:rarity=rare]|exit=deadend|obj_only=escort,fetch|flag=final,objective
+
+R050|Sleep Quarters|description=Blankets, bedrolls, and personal trinkets, evidence of long occupation. It smells like sweat and old smoke.|size=large|tag=room,exploration,combat|rarity=common|weight=1.0|entering=Place 3 obstacles (bunks/bedroll piles); Spawn 2 [roll:unit:tag=martial] near the far side|pressure=+0|effect=If heroes enter loudly (fail Stealth check elsewhere), add pressure+1 (word spreads from here)|flag=
+
+R051|Smithy|description=An anvil, soot-stained walls, and half-finished work. Heat lives here even when the fires are cold.|size=large|tag=room,setpiece,resource,hazard|rarity=uncommon|weight=0.9|entering=Place 2 obstacles (forge/anvil) and 1 hazard zone (hot coals)|pressure=+0|check=Armory TN12|fail=Take 1 damage to the acting hero (burn) and pressure+1|loot=Roll 1 [roll:item:rarity=uncommon]|flag=
+
+R052|Hostage Room|description=Muffled sobs, or maybe just dripping water. Someone has been kept here, and the locks look new.|size=medium|tag=room,setpiece|only=bandits,cultists,soldiers,vikings|rarity=rare|weight=0.7|entering=Place 1 hostage marker and 2 obstacles (chains/locked door); Spawn 1 [roll:unit:tag=martial] guarding|pressure=+1|check=Stealth TN15|fail=pressure+2; Hostage is threatened (heroes suffer -1 Will next round)|loot=+15 gold (ransom cache) or Roll 1 [roll:item:rarity=uncommon]|obj_only=rescue|flag=objective
+
+R053|Tavern|description=Tables overturned, stale ale, and a hearth that once promised warmth. It feels like the aftermath of a story you missed.|size=large|tag=room,setpiece,exploration,combat|rarity=uncommon|weight=0.8|entering=Place 3 obstacles (tables/bar) creating cover; Place 1 hearth marker|pressure=+0|effect=The first time a hero would take damage each round, they may dive for cover: reduce damage by 1 if within 1" of an obstacle
+
+R054|Cold Storage|description=A sealed chamber of frost-rimed stone. The layout invites ambushes and mistakes.|size=large|tag=room,combat,exploration,maze|rarity=common|weight=1.1|entering=Place 6 obstacles (crates) and 2 difficult terrain of ‘ice patches’; Spawn 1 [roll:unit:tag=martial] behind a crate line|pressure=+0|effect=All models: -1 Move while inside unless resist cold.
+
+R055|Cellar|description=Cool stone and the smell of moldy wood. Barrels line the walls, some intact, some smashed.|size=medium|tag=room,exploration,hazard,setpiece|rarity=common|weight=0.9|entering=Place 3 obstacles (barrels) and 1 rough terrain patch (slick spill)|pressure=+0|check=Perception TN11|fail=A random hero slips: lose 2" movement next activation; pressure+1|loot=Roll 1 [roll:item:rarity=common]
+
+R056|Old Campfire|description=Charcoal and cold ash in a ring of stones. Someone rested here, and left in a hurry.|size=small|tag=room,lore,exploration|rarity=common|weight=1.2|entering=Place 1 campfire marker|pressure=+0|check=Perception TN12|fail=pressure+1; You misread the signs and stumble into a patrol (Spawn 1 [roll:unit:tag=martial] at nearest entry edge)|loot=Roll 1 [roll:item:tag=herb]
+
+R057|Hidden Alcove|description=A pocket of space tucked behind loose stone. It feels like a secret kept out of fear, not greed.|size=closet|tag=room,secret,treasure,exploration,deadend_risk|rarity=rare|weight=0.8|pressure=+0|check=Perception TN12|fail=You miss it; treat as a normal corridor and move on|loot=Roll 1 [roll:item:rarity=uncommon]|exit=deadend|flag=secret
+
+R058|Mausoleum|description=A grand resting place sealed with ceremony. The names carved here feel heavy, like they still matter.|size=large|tag=room,undead,lore,setpiece|only=undead,cultists|rarity=uncommon|weight=0.9|entering=Place 2 sarcophagus obstacles and 1 central marker|pressure=+0|check=Will TN13|fail=pressure+1; Spawn 1 [roll:unit:tag=martial] from the marker|loot=Roll 1 [roll:item:rarity=uncommon]
+
+R059|Crematorium|description=Soot-blackened ovens and ash piles. The heat is gone, but the purpose still stains the room.|size=medium|tag=room,hazard,undead,lore|only=undead,cultists|rarity=rare|weight=0.7|entering=Place 1 furnace setpiece and 2 ash rough-terrain patches|pressure=+0|effect=Models that end their activation in ash test Health TN10 or suffer -1 Will next round
+
+R060|Basement|description=Low beams, damp stone, and that feeling of being below where you should be. Every sound carries too far.|size=large|tag=room,exploration,transition,hazard|rarity=common|weight=1.0|entering=Place 2 rough terrain patches (damp) and 2 obstacles (storage)|pressure=+0|effect=Stealth checks here are +2 TN (echoing space)
+
+R061|Windmill|description=Rotting wood and a groaning mechanism. The blades above feel like a slow warning that never stops.|size=large|tag=room,setpiece,vertical,hazard|biome=plains,coast|rarity=rare|weight=0.6|entering=Place a windmill tower feature; Place 1 hazard zone near gears|pressure=+0|check=Strength TN12|fail=Take 1 damage (gear snag) and pressure+1
+
+R062|Circus|description=Faded banners, broken props, and a ring that once held cheering crowds. Now it holds only echoes.|size=epic|tag=room,setpiece,combat,open|rarity=rare|weight=0.6|entering=Place a central ring marker; Place 2 obstacle props; Spawn 1 [roll:unit:tag=martial] and 1 [roll:unit:tag=ranged] opposite sides|pressure=+0|effect=Once per round, a hero may swing/climb: ignore one obstacle while moving (treat as a 1-time free vault)
+
+R063|Abandoned Camp|description=Collapsed tents and scattered gear. The place feels recently deserted, like the decision to leave was sudden and unanimous.|size=medium|tag=room,lore,exploration|rarity=common|weight=1.1|entering=Place 2 obstacles (tents/wagons) and 1 supply marker|pressure=+0|check=Perception TN12|fail=pressure+1; A stalking threat closes in (Spawn 1 [roll:unit:tag=animal] at maximum distance)|loot=Roll 1 [roll:item:rarity=common]
+
+R064|Art Gallery|description=Frames line the walls, some empty, some depicting scenes that feel too personal. Someone curated this, and that matters.|size=large|tag=room,lore,puzzle,setpiece|rarity=uncommon|weight=0.8|entering=Place 3 obstacles (statues/plinths)|pressure=+0|check=ReadRunes TN12|fail=pressure+1; Trigger 1 trap (dart line) |loot=Roll 1 [roll:item:rarity=uncommon]
+
+R065|Old Bathhouse|description=Cracked basins and old drains. It’s mundane in a way that makes the rest of the place feel worse.|size=small|tag=room,exploration,resource|rarity=common|weight=0.8|entering=Place 1 basin marker|pressure=+0|effect=Once per delve, a hero may remove one minor condition here (if you use conditions)|loot=Roll 1 [roll:item:tag=herb]
+
+R066|Sewers|description=Stagnant water and tight tunnels. The smell hits first, then the sense that something lives in it.|size=epic|tag=room,maze,hazard,exploration|biome=urban,ruins,swamp|rarity=uncommon|weight=0.8|entering=Place 3 water/filth rough terrain patches and 3 obstacles (walls/pipes)|pressure=+0|effect=Models moving through filth test Health TN10 or suffer -1 Fight next round
+
+R067|Refectory|description=Long tables and benches, built for routine meals and loud conversations. Now it’s a place where footsteps feel wrong.|size=large|tag=room,exploration,setpiece,combat|rarity=common|weight=0.9|entering=Place 2 long-table obstacles and 1 service counter obstacle|pressure=+0|effect=First time each round a hero searches here, pressure-1 (finding small comforts)
+
+R068|Mushroom Circle|description=Bioluminescent fungi form a ring that looks deliberate. The spores glitter like dust that wants to be breathed.|size=medium|tag=room,hazard,lore,magic|biome=forest,swamp,underground|rarity=rare|weight=0.6|entering=Place 1 mushroom ring marker|pressure=+0|check=Health TN12|fail=Spores overwhelm: -1 to all stats next round; pressure+1|loot=Roll 1 [roll:item:tag=herb]
+
+R069|Hideout|description=A lived-in corner of the complex, spare weapons, notes, and escape routes. Someone planned to survive here.|size=medium|tag=room,exploration,treasure,lore|only=bandits,cultists|rarity=uncommon|weight=0.9|entering=Place 2 obstacles (bedroll/boxes) and 1 cache marker|pressure=+0|check=Perception TN12|fail=pressure+1; The hideout’s owner returns (Spawn 1 [roll:unit:tag=martial])|loot=Roll 1 [roll:item:rarity=uncommon]
+
+R070|Sacred Pools|description=Still water reflects more than it should. The surface is calm, but the feeling underneath is ancient and awake.|size=large|tag=room,setpiece,lore,resource,magic|biome=forest,swamp,ruins|rarity=rare|weight=0.6|entering=Place 2 pool hazard markers|pressure=+0|check=Will TN13|fail=pressure+1; A vision rattles the mind (-1 Will next round)|effect=Once per room, a hero may heal 2 HP if they end an activation within 1" of a pool
+
+R071|Storehouse|description=Supplies stacked with purpose, ropes, nails, spare parts. It feels like the place that keeps everything else running.|size=large|tag=room,resource,exploration|rarity=common|weight=1.0|entering=Place 4 obstacles (crates) and 1 supply marker|pressure=+0|loot=Roll 1 [roll:item:rarity=common], Roll 1 [roll:item:rarity=common]
+
+R072|Ruined Schoolroom|description=Tiny desks lie overturned, chalk dust still clinging to the slate. The lessons ended abruptly here.|size=medium|tag=room,lore,grim,exploration|rarity=common|weight=0.9|entering=Place 4 desk obstacles as light cover; Place 1 “lesson slate” marker|pressure=+0|check=Perception TN10 or AncientLore TN10|fail=pressure+1; Unease: all heroes suffer -1 Will until next room|effect=If passed, reveal a hint: next room’s tag is announced (trap/combat/treasure/etc.)
+
+R073|Archive|description=Rows of brittle shelves sag under moldy ledgers and sealed scroll tubes. The air is dry, dusty, and strangely watchful.|size=medium|tag=room,lore,exploration,quiet|rarity=common|weight=1.0|entering=Place 3 shelf obstacles as light cover; Place 1 “record cache” marker|pressure=+0|check=ReadRunes or AncientLore TN12|fail=pressure+1; Disturbance draws 1 [roll:unit:tag=martial]|loot=Roll 1 [roll:item:rarity=uncommon]
+
+R074|Trophy Room|description=Skulls, banners, and broken weapons line the walls, proof that someone here collects victories like coins.|size=large|tag=room,setpiece,combat,elite|rarity=uncommon|weight=0.8|entering=Place 4 trophy obstacles (pillars/stands) as cover; Spawn 1 [roll:unit:tag=martial] and 1 [roll:unit:tag=ranged]|pressure=+0|effect=If a hero drops an enemy here, gain +1 XP (once per scenario)
+
+R075|Council Room|description=A long table dominates the chamber, surrounded by high-backed chairs and old authority. Decisions were made here, and some still linger.|size=medium|tag=room,command,chokepoint,combat|rarity=common|weight=1.0|entering=Place 1 long table as heavy cover; Place 2 side-door markers; Spawn 1 [roll:unit:tag=support] near the table|pressure=+0|effect=First time a model takes cover behind the table, it gains +1 Armor until it moves (once per model)
+
+R076|Great Hall|description=An enormous hall of feasting and speeches, now silent except for distant movement. You feel small here.|size=epic|tag=room,setpiece,combat,open|rarity=uncommon|weight=0.7|entering=Place 6 obstacles (tables/benches) scattered; Place 2 elevated features (dais/balcony) if available; Spawn 2 [roll:unit:tag=martial] and 1 [roll:unit:tag=ranged]|pressure=+0|effect=Echoing Space: Stealth checks suffer -2 TN; ranged attacks gain +1 Shoot if shooter is on elevation
+
+R077|Mill|description=Rusty gears and rotting belts hang over grinding stones. The machinery looks dormant... but not dead.|size=large|tag=room,hazard,industrial,combat|rarity=common|weight=0.9|entering=Place 1 large machinery obstacle (millstone/gears) and 2 narrow lanes|pressure=+0|check=Perception TN12|fail=pressure+1; Trap triggers: nearest model takes 1d6 damage (or Health TN12 to halve)|effect=Each round, the milling zone counts as dangerous terrain (entering costs +2" movement)
+
+R078|Trading Post|description=A battered counter, empty crates, and coin-scored floorboards suggest commerce once thrived here, until greed took over.|size=medium|tag=room,treasure,exploration,urban|rarity=uncommon|weight=1.1|entering=Place 2 counters as cover and 3 crate obstacles; Place 1 “locked strongbox” marker|pressure=+0|check=PickLock TN10|fail=pressure+1; Alarm: spawn 1 [roll:unit:tag=ranged]|loot=Roll 1 [roll:item:rarity=uncommon]
+
+R079|Docks|description=Wet wood creaks underfoot. Water slaps the supports below, and shapes drift just beyond the light.|size=large|tag=room,water,setpiece,combat|rarity=uncommon|weight=0.8|entering=Place 1 pier lane (long narrow) and 2 water-edge hazard zones; Spawn 1 [roll:unit:tag=ranged] on a high post if possible|pressure=+0|effect=Slippery Planks: first model to run each round tests Strength TN10 or ends movement early
+
+R080|Infirmary|description=Bandages, old splints, and stained cots fill the room. Healing happened here, but so did suffering.|size=medium|tag=room,support,resource,grim|rarity=common|weight=1.0|entering=Place 3 cot obstacles; Place 1 “medical supplies” marker|pressure=+0|effect=Once per scenario, a hero may use an action at the supplies marker to heal 3 HP or remove one negative condition|loot=Roll 1 [roll:item:rarity=common]
+
+R081|Illusion Trap Chamber|description=The room looks safe, too safe. The edges blur when you stare too long, and your instincts argue with your eyes.|size=small|tag=room,trap,magic,illusion|rarity=rare|weight=0.9|entering=Place 2 false-wall markers and 1 “glimmer” marker|pressure=+0|check=Will TN14 or ReadRunes TN12|fail=pressure+2; Split the party: one random hero is moved 6" in a random direction (or into the nearest side passage)|effect=Until the check is passed, ranged attacks suffer -1 Shoot in this room|flag=secret
+
+R082|Haunted Room|description=Cold settles in your lungs. Old whispers crawl along the walls, and your torchlight seems hesitant.|size=medium|tag=room,haunted,fear,magic|rarity=uncommon|weight=0.8|entering=Dim the room (if using lighting); Place 2 “whisper” markers|pressure=+0|check=Will TN12|fail=pressure+1; Each hero suffers -1 Will until leaving the room|effect=If any enemy is defeated here, draw 1 extra event card immediately (once per scenario)
+
+R083|Defiled Shrine|description=What was once sacred has been smeared with ash and cruel symbols. The air tastes wrong.|size=medium|tag=room,shrine,curse,magic|rarity=uncommon|weight=0.7|entering=Place 1 altar feature; Place 2 desecration markers|pressure=+0|check=Faith/Will TN14 or ReadRunes TN12|fail=pressure+2; Spawn 1 [roll:unit:tag=magic]|effect=If the shrine is purified (pass check), heroes gain +1 Will for the next room
+
+R084|Labyrinth|description=Walls fold into walls. Paths double back. You can’t trust distance, and you can’t trust memory.|size=epic|tag=room,maze,exploration,pressure|rarity=rare|weight=0.6|entering=Place 6 wall/obstacle segments to create at least 3 turns; Mark 3 junction points; pressure+1|effect=Navigation: each round, roll d6, on 1-2, pressure+1 (lost); on 3-6, no change
+
+R085|Obelisk Chamber|description=A towering stone spire rises from the floor, etched with symbols that throb behind your eyes.|size=large|tag=room,setpiece,magic,objective|rarity=rare|weight=0.7|entering=Place 1 obelisk feature at center; Place 2 rune markers|pressure=+0|check=AncientLore TN14 or Will TN14|fail=pressure+1; Obelisk pulse: all heroes test Will TN10 or suffer -1 to next action|effect=If the check is passed, choose: pressure-1 or gain 1 [roll:item:rarity=uncommon]|obj_only=leader,ritual|flag=final,objective,boss
+
+R086|Statue Gallery|description=Stone figures line the hall, posed like frozen witnesses. Some faces feel... recent.|size=medium|tag=room,setpiece,trap,ambush|rarity=common|weight=0.9|entering=Place 4 statue obstacles as cover; Spawn 1 [roll:unit:tag=martial] “hidden” behind a statue|pressure=+0|check=Perception TN12|fail=pressure+1; Ambush: hidden enemy activates immediately after first hero enters
+
+R087|Crystalline Chamber|description=The towering walls, floor, and ceiling are made with exquisite, shining crystal. A gigantic natural crystal shard is in the center of the room.|size=large|tag=room,setpiece|rarity=uncommon|weight=0.8|entering=Place 1 large crystal obstacle in the center of the room.|pressure=+0|check=Will TN12|fail=pressure+2; Spawn 1 [roll:unit:tag=martial:tier=elite]|loot=Roll 1 [roll:item:rarity=rare]|obj_only=leader,ritual|flag=final,objective,boss
+
+R088|Tomb of the Hero|description=Carved stone slabs and grave-goods rest in deliberate silence. The dead were meant to stay honored, and still.|size=medium|tag=room,tomb,treasure,undead|only=undead,cultists,demons,soldiers,vikings|rarity=uncommon|weight=0.8|entering=Place 2 sarcophagus obstacles and 1 grave-goods marker|pressure=+0|check=Will TN12|fail=pressure+2; Spawn 1 [roll:unit:tag=martial]|loot=Roll 1 [roll:item:rarity=uncommon]|obj_only=leader,ritual|flag=final,objective,boss
+
+# ============================================================
+# TRANSITIONS
+# ============================================================
+
+T001|Split Path Junction|description=The corridor divides, each direction carrying a different smell and temperature. You have to choose, and the place feels like it knows.|size=small|tag=transition,exploration|rarity=common|weight=2.0|entering=Mark two exits clearly|pressure=+0|exit=branch2|flag=
+
+T002|Dead End Cache|description=The way ends abruptly, but not empty. Something was hidden here for a reason.|size=closet|tag=room,transition,treasure,deadend_risk|rarity=uncommon|weight=1.2|entering=Place 1 cache marker in the dead end|pressure=+0|loot=Roll 1 [roll:item:rarity=uncommon]|exit=deadend|flag=
+
+T003|Narrow Stairwell|description=Steps spiral up or down into darkness. Sound carries strangely here, and balance matters.|size=small|tag=room,transition,vertical,chokepoint|rarity=common|weight=1.5|entering=Place 1 stairwell feature|pressure=+0|effect=First model to move each round tests Strength TN10 or loses 2" of movement|exit=straight|flag=
+
+T004|Corner Hallway|description=A long hallway with a turn at the end.|size=small|tag=transition,chokepoint|rarity=common|weight=1.5|pressure=+0|entering=Place 1 obstacle near the corner to create a blind turn|exit=straight|flag=
+
+T005|Dead End|description=The way ends abruptly. You must turn around.|size=small|tag=transition,deadend_risk|rarity=uncommon|weight=1.2|pressure=+0|exit=deadend|flag=
+
+T006|Dead End Secret|description=The way ends abruptly, but something seems amiss...|size=small|tag=transition,secret,deadend_risk|rarity=rare|weight=1.0|pressure=+0|check=Perception TN10|fail=pressure+1; You must turn around.|exit=deadend|flag=secret
+
+T007|Elevator|description=This magic-powered room can ascend or descend.|size=small|tag=transition,vertical|rarity=rare|weight=1.0|pressure=+0|entering=Mark one exit as “up” and one as “down” (even if abstract)|exit=straight|flag=
+
+T008|Mirror Way|description=Panels of tarnished mirror line the passage, reflecting you at odd angles. For a moment, you’re not sure which way is forward.|size=small|tag=transition,magic,stealth|rarity=uncommon|weight=1.0|pressure=+0|check=Will TN12|fail=pressure+1; The party is disoriented (next room starts with enemies +3" reposition)|exit=straight|flag=
+
+T009|Portal|description=A rippling oval of light hangs in the air, humming softly. It feels like a shortcut with a price.|size=closet|tag=transition,magic|rarity=rare|weight=0.8|pressure=+0|entering=Choose a destination room ahead (skip 1 room)|check=Will TN13|fail=pressure+2; Instead, you arrive in a random room|exit=straight|flag=secret
+
+T010|Passageway|description=A plain connecting stretch of stone, worn by footsteps. Simple, functional, and a little too quiet.|size=small|tag=transition|rarity=common|weight=2.0|pressure=+0|entering=|exit=straight|flag=
+
+T011|Corridor|description=A straight corridor with alcoves and shadowed seams. It’s easy to imagine an ambush here.|size=small|tag=transition,chokepoint|rarity=common|weight=1.8|pressure=+0|entering=Place 1 obstacle to create partial cover|exit=straight|flag=
+
+T012|Aisle|description=Tall shelves or stacked crates create a long aisle. Sightlines are clean, but exits feel far away.|size=small|tag=transition,chokepoint,exploration|rarity=uncommon|weight=1.2|pressure=+0|entering=Place 2 obstacles along the sides|exit=straight|flag=
+
+T013|Alley|description=A narrow side-route between walls and clutter. It feels like a shortcut meant for someone else.|size=small|tag=transition,stealth|rarity=uncommon|weight=1.1|pressure=+0|check=Stealth TN12|fail=pressure+1; A patrol notices (Spawn 1 [roll:unit:tag=martial] at nearest entry)|exit=straight|flag=
+
+T014|Burrow Hole|description=A low, rough tunnel forces you to crouch. The air is warm, and the walls bear claw-marks.|size=closet|tag=transition,beasts,chokepoint|only=goblins,beasts,reptiles|rarity=uncommon|weight=1.1|pressure=+0|effect=All models move -2" here (tight squeeze)|exit=straight|flag=
+
+T015|Broken Wall|description=A collapsed section of wall opens into a jagged gap. It’s an entry point that looks accidental, maybe it wasn’t.|size=small|tag=transition,ruins,hazard|rarity=common|weight=1.3|pressure=+0|entering=Place 1 rough terrain patch (rubble) at the breach|check=Strength TN10|fail=Take 1 damage (scrapes/fall) and lose 2" movement next activation|exit=straight|flag=
+
+T016|Crossroads|description=Four ways meet in a worn knot of stone. Drafts tug at your torch from multiple directions at once.|size=small|tag=transition,exploration,junction|rarity=common|weight=2.0|entering=Mark three exits clearly (plus the one you came from)|pressure=+0|exit=branch3|flag=
+
+T017|Ferry / Barge Crossing|description=A low craft drifts in dark water, tethered by rope. Crossing will be slow, and visible.|size=small|tag=transition,water,travel,hazard|rarity=uncommon|weight=1.1|entering=Place a narrow water gap and 1 barge marker|pressure=+0|check=Strength TN12|fail=pressure+1; A random hero begins the next room with -2" Move for their first activation|exit=straight|flag=

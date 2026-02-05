@@ -1,0 +1,7 @@
+001|Scattered Farming Community|description=Less of a village proper, and more of an extended network of closely linked farms.|type=village,hamlet|effects=Upkeep Costs will not exceed 2 Gold Marks per campaign turn while you are here.
+002|Military Outpost|description=There are too few troops here to mount any concerted action but living behind a sturdy palisade does feel reassuring.|effects=Add +1 to the rolls when choosing the recruit campaign activity.|type=any
+003|Nomadic Camp|description=One of many roaming cultures has set up a long term camp here. They will be gone by the next season, but for now, they are happy to welcome you.|type=village,hamlet|effects=You can choose the Hunting Expedition campaign activity here.
+004|Monastery|description=A settlement has grown up around this place of prayer and contemplation.|effects=Add +1 to the roll when choosing the Study campaign activity.|type=any
+005|Manor|description=The community has gathered at the gates to the extensive manor of a local noble.|effects=If you visit the blacksmith here, you may pay to repair 2 items.|type=any
+006|Market Town|description=A established community of common folk, trying to live a peaceful existence in a world that is anything but.|effects=The first time you visit here during the campaign, add +1 Adventure Point.|type=town,village
+007|Trading Hub|description=The town is built along an important road or river, making it a natural pause for merchants.|effects=You may pay 1 Gold Mark to receive one additional Rare Goods roll once per campaign turn.|type=any

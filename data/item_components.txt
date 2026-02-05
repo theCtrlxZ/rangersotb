@@ -1,0 +1,93 @@
+# item_components.txt
+# Format: id|Name|group=<slot>|tag=<comma tags>|rarity=<tier>|weight=<num>|prefix=...|suffix=...|postfix=...|description=...
+#
+#
+# --- MATERIALS (prefix) ---
+100|Iron|tag=hand,twohand,ranged,armor|rarity=common|group=material|mech_tier=0|prefix=Iron|weight=10|skill=Rustable
+101|Steel|tag=hand,twohand,ranged,armor|rarity=common|group=material|mech_tier=2|prefix=Steel|weight=8|price_add=50|skill=Rustable|dur_add=+2
+102|Silver|description=Weapons made with this material gain +1 damage against undead and werewolves.|tag=hand,twohand,ranged,armor|rarity=uncommon|group=material|mech_tier=2|prefix=Silver|token=silver|weight=6|price_add=200
+103|Mithril|stat_mod=Speed+1|tag=hand,twohand,ranged,armor|rarity=rare|group=material|mech_tier=3|prefix=Mithril|token=mithril|weight=5|price_add=500|dur_add=+4
+104|Dragonscale|stat_mod=Armor+1|tag=hand,twohand,ranged,armor|rarity=legendary|group=material|mech_tier=5|prefix=Dragonscale|token=dragonscale|weight=2|price_add=1500|dur_add=+8
+105|Wooden|tag=hand,twohand,ranged,armor|rarity=common|group=material|mech_tier=1|prefix=Wooden|token=wooden|weight=6|skill=Flammable
+106|Leather|tag=armor|rarity=common|group=material|mech_tier=0|prefix=Leather|token=leather|weight=8|dur_add=-1
+107|Adamant|tag=hand,twohand,ranged,armor|rarity=rare|group=material|mech_tier=4|prefix=Adamant|token=adamant|weight=3|price_add=800|dur_add=+6
+
+# --- CONDITIONS (prefix) ---
+199|Standard|tag=hand,twohand,ranged,armor|rarity=common|group=condition|mech_tier=0|silent=1|weight=15
+200|Broken|tag=hand,twohand,ranged,armor|rarity=common|dur_mul=0.25|group=condition|mech_tier=0|prefix=Broken|weight=1|price_mul=0.7
+201|Crude|tag=hand,twohand,ranged,armor|rarity=common|dur_mul=0.8|group=condition|mech_tier=0|prefix=Crude|weight=3|price_mul=0.9
+202|Reinforced|tag=hand,twohand,ranged,armor|rarity=uncommon|dur_mul=1.1|group=condition|mech_tier=2|prefix=Fine|weight=4|price_mul=1.15
+203|Exquisite|tag=hand,twohand,ranged,armor|rarity=rare|dur_mul=1.5|group=condition|mech_tier=4|prefix=Exquisite|weight=4|price_mul=1.5
+204|Masterwork|tag=hand,twohand,ranged,armor|rarity=legendary|dur_mul=1.7|group=condition|mech_tier=5|prefix=Masterwork|weight=2|price_mul=1.7
+205|Fine|tag=hand,twohand,ranged,armor|rarity=uncommon|dur_mul=1.15|group=condition|mech_tier=3|prefix=Fine|weight=2|price_mul=1.3
+206|Poor|tag=hand,twohand,ranged,armor|rarity=common|dur_mul=0.6|group=condition|mech_tier=0|prefix=Poor|weight=3|price_mul=0.8
+
+# --- ELEMENTS (suffix) ---
+300|Fire|tag=hand,twohand,ranged,armor|rarity=rare|group=element|mech_tier=3|suffix=of Fire|token=fire|weight=3|damagetype=fire|price_add=200
+301|Ice|tag=hand,twohand,ranged,armor|rarity=rare|group=element|mech_tier=3|suffix=of Ice|token=ice|weight=3|damagetype=ice|price_add=200
+302|Earth|tag=hand,twohand,ranged,armor|rarity=rare|group=element|mech_tier=3|suffix=of Earth|token=earth|weight=2|damagetype=earth|price_add=200
+303|Lightning|tag=hand,twohand,ranged,armor|rarity=rare|group=element|mech_tier=3|suffix=of Lightning|token=lightning|weight=2|damagetype=lightning|price_add=200
+304|Shadow|tag=hand,twohand,ranged,armor|rarity=rare|group=element|mech_tier=4|suffix=of Shadow|token=shadow|weight=2|damagetype=shadow|price_add=300
+305|Holy|tag=hand,twohand,ranged,armor|rarity=rare|group=element|mech_tier=4|suffix=of Holy|token=holy|weight=2|damagetype=holy|price_add=300
+306|Regular|tag=hand,twohand,ranged,armor|rarity=common|group=element|mech_tier=0|weight=15|damagetype=physical|silent=1
+
+# --- ENCHANTMENTS (suffix) --- *not currently used
+400|None|tag=hand,twohand,ranged,armor|rarity=common|group=enchant|mech_tier=0|silent=1|weight=12
+401|the Bastion|description=The wearer feels planted, as if the ground itself wants them to hold.|tag=armor|rarity=rare|group=enchant|mech_tier=4|suffix=of the Bastion|weight=2
+402|the Reaper|description=It drinks in torchlight and leaves the air colder behind each swing.|tag=hand,twohand|rarity=rare|group=enchant|mech_tier=4|suffix=of the Reaper|weight=2
+403|the Dawn|description=In darkness, faint sun-motes orbit the blade or helm.|tag=hand,twohand,ranged,armor|rarity=legendary|group=enchant|mech_tier=5|suffix=of the Dawn|token=holy|weight=1
+404|the Hunter|description=Always feels warm to the touch when stalking prey.|tag=hand,twohand,ranged,armor|rarity=uncommon|group=enchant|mech_tier=3|suffix=of the Hunter|weight=3
+
+# --- QUIRKS (postfix) --- *not currently used
+500|Regular|tag=hand,twohand,ranged|rarity=common|group=quirk|mech_tier=0|weight=12|silent=1
+501|Thirsty|tag=hand,twohand|rarity=rare|group=quirk|mech_tier=3|description=seems to crave battle|weight=2
+502|Oathbound|tag=armor|rarity=rare|group=quirk|mech_tier=3|description=rejects cowardice|weight=2
+503|Star-marked|tag=hand,twohand,ranged,armor|rarity=legendary|group=quirk|mech_tier=4|description=bears a moving constellation along its edge|weight=1
+504|Humming|tag=hand,twohand,ranged|rarity=uncommon|group=quirk|mech_tier=3|description=hums softly|weight=3
+
+# --- POTION POTENCY (prefix) ---
+600|Minor|tag=potion|rarity=common|group=potency|mech_tier=0|prefix=Minor|uses_mul=0.75|weight=5
+601|Standard|tag=potion|rarity=common|group=potency|mech_tier=2|silent=1|weight=4|price_add=50
+602|Greater|tag=potion|rarity=rare|group=potency|mech_tier=3|prefix=Greater|uses_mul=1.25|weight=3|price_add=100
+603|Superior|tag=potion|rarity=legendary|group=potency|mech_tier=4|prefix=Superior|uses_mul=1.5|weight=2|price_add=250
+
+# --- INFUSION (prefix) ---
+700|Magic|tag=hand,twohand,ranged,armor,trinket|rarity=uncommon|group=infusion|mech_tier=3|skill=roll:spells:tag=weapon_spell:count=1|prefix=Magic|weight=3|damagetype=magic|charges_add=1d3|price_add=300
+701|Non-Magic|tag=hand,twohand,ranged,armor,trinket|rarity=common|group=infusion|mech_tier=0|silent=1|weight=14
+
+# --- WEAKNESS (suffix) ---
+054|Fire Vulnerability|description=Fire attacks made against this unit gain +2 Fight.|tag=skill,weakness,armor|rarity=uncommon|group=weakness|mech_tier=1|weight=2|suffix=, Weak to Fire
+055|Ice Vulnerability|description=Ice attacks made against this unit gain +2 Fight.|tag=skill,weakness,armor|rarity=uncommon|group=weakness|mech_tier=1|weight=2|suffix=, Weak to Ice
+056|Lightning Vulnerability|description=Lightning attacks made against this unit gain +2 Fight.|tag=skill,weakness,armor|rarity=uncommon|group=weakness|mech_tier=1|weight=2|suffix=, Weak to Lightning
+057|Earth Vulnerability|description=Earth attacks made against this unit gain +2 Fight.|tag=skill,weakness,armor|rarity=uncommon|group=weakness|mech_tier=1|weight=2|suffix=, Weak to Earth
+058|Shadow Vulnerability|description=Shadow attacks made against this unit gain +2 Fight.|tag=skill,weakness,armor|rarity=uncommon|group=weakness|mech_tier=1|weight=2|suffix=, Weak to Shadow
+059|Holy Vulnerability|description=Holy attacks made against this unit gain +2 Fight.|tag=skill,weakness,armor|rarity=uncommon|group=weakness|mech_tier=1|weight=2|suffix=, Weak to Holy
+060|Physical Vulnerability|description=Physical attacks made against this unit gain +2 Fight.|tag=skill,weakness,armor|rarity=uncommon|group=weakness|mech_tier=1|weight=2|suffix=, Weak to Physical
+061|Magic Vulnerability|description=Magic attacks made against this unit gain +2 Fight.|tag=skill,weakness,armor|rarity=uncommon|group=weakness|mech_tier=1|weight=2|suffix=, Weak to Magic
+062|Ranged Vulnerability|description=Ranged attacks made against this unit gain +2 Fight.|tag=skill,weakness,armor|rarity=uncommon|group=weakness|mech_tier=1|weight=2|suffix=, Weak to Ranged
+063|Healing Vulnerability|description=Healing items and spells deal damage to this unit equal to the HP they would have restored.|tag=skill,weakness,armor|rarity=uncommon|group=weakness|mech_tier=1|weight=1|suffix=, Resists Healing
+064|No Vulnerability|tag=skill,weakness,armor|rarity=common|silent=1|group=weakness|mech_tier=1|weight=15
+
+# --- BANE (prefix) ---
+164|Necrobane|description=Attacks made against the undead gain +2 Fight.|tag=bane|rarity=rare|group=bane|mech_tier=4|weight=2|price_add=700|prefix=Bane
+165|Dracobane|description=Attacks made against reptiles gain +2 Fight.|tag=bane|rarity=rare|group=bane|mech_tier=4|weight=2|price_add=700|prefix=Bane
+166|Goblinbane|description=Attacks made against goblins gain +2 Fight.|tag=bane|rarity=uncommon|group=bane|mech_tier=4|weight=3|price_add=300|prefix=Bane
+167|Bestiabane|description=Attacks made against beasts gain +2 Fight.|tag=bane|rarity=rare|group=bane|mech_tier=4|weight=3|price_add=700|prefix=Bane
+168|Monsterbane|description=Attacks made against monsters gain +2 Fight.|tag=bane|rarity=uncommon|group=bane|mech_tier=4|weight=4|price_add=300|prefix=Bane
+169|Hominesbane|description=Attacks made against humans gain +2 Fight.|tag=bane|rarity=legendary|group=bane|mech_tier=5|weight=1|price_add=1000|prefix=Bane
+170|Feybane|description=Attacks made against the fey, such as elves and fairies (but not treefolk) gain +2 Fight.|tag=bane|rarity=uncommon|group=bane|mech_tier=4|weight=2|price_add=500|prefix=Bane
+171|Demonbane|description=Attacks made against demons gain +2 Fight.|tag=bane|rarity=uncommon|group=bane|mech_tier=4|weight=3|price_add=500|prefix=Bane
+172|Normal|tag=bane|rarity=common|silent=1|group=bane|mech_tier=0|weight=35
+
+# --- WARDS --- (suffix)
+274|Fire Ward|description=Fire attacks made against this unit gain -2 Fight.|tag=armor|rarity=uncommon|group=ward|mech_tier=3|weight=3|price_add=300|suffix=with Fire Ward
+275|Ice Ward|description=Ice attacks made against this unit gain -2 Fight.|tag=armor|rarity=uncommon|group=ward|mech_tier=3|weight=3|price_add=300|suffix=with Ice Ward
+276|Lightning Ward|description=Lightning attacks made against this unit gain -2 Fight.|tag=armor|rarity=uncommon|group=ward|mech_tier=3|weight=3|price_add=300|suffix=with Lightning Ward
+277|Earth Ward|description=Earth attacks made against this unit gain -2 Fight.|tag=armor|rarity=uncommon|group=ward|mech_tier=3|weight=3|price_add=300|suffix=with Earth Ward
+278|Shadow Ward|description=Shadow attacks made against this unit gain -2 Fight.|tag=armor|rarity=uncommon|group=ward|mech_tier=3|weight=3|price_add=300|suffix=with Shadow Ward
+279|Holy Ward|description=Holy attacks made against this unit gain -2 Fight.|tag=armor|rarity=uncommon|group=ward|mech_tier=3|weight=3|price_add=300|suffix=with Holy Ward
+280|Blade Ward|description=Physical attacks made against this unit gain -2 Fight.|tag=armor|rarity=legendary|group=ward|mech_tier=5|weight=1|price_add=700|suffix=with Blade Ward
+281|Magic Ward|description=Magic attacks made against this unit gain -2 Fight.|tag=armor|rarity=legendary|group=ward|mech_tier=5|weight=1|price_add=700|suffix=with Magic Ward
+282|Ranged Ward|description=Ranged attacks made against this unit gain -2 Fight.|tag=armor|rarity=uncommon|group=ward|mech_tier=4|weight=2|price_add=500|suffix=with Arrow Ward
+283|Healing Ward|description=Healing items and spells heal half as much HP to this unit.|tag=armor|rarity=rare|group=ward|mech_tier=3|weight=1|price_add=300|suffix=with Healing Ward
+284|No Ward|tag=ward,armor|rarity=common|silent=1|group=ward|mech_tier=0|weight=20
