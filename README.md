@@ -20,7 +20,7 @@ Loot drops and settlement shopping lists (via rbtl_main_loot.py + rbtl_loot.py).
 
 Ready to start? Use the hub to access all of the above systems (via rbtl_hub.py)
 
-#Quickstart
+# Quickstart
 Requirements
 
 Python 3.9+ recommended (standard library only).
@@ -50,7 +50,7 @@ Most databases use a simple “pipe” format:
 
 id|Name|key=value|key=value|tag=comma,separated,tags|threat=comma,separated,threats|roll:<directive>
 
-#Notes
+# Notes
 
 Lines starting with # are comments.
 
@@ -66,7 +66,7 @@ leader when the entry has the leader tag, otherwise minion.
 
 Because these are plain text files, homebrew is as easy as adding new lines and tags.
 
-#Settings
+# Settings
 
 data/settings.txt is simple key=value pairs. The CLI reads settings to provide reasonable defaults and keep your generators consistent between runs.
 
@@ -89,7 +89,7 @@ Table-ready output: generators produce something you can print or paste straight
 
 Modular generators: scenario, campaign, companions, and loot can be used together or independently.
 
-#Troubleshooting
+# Troubleshooting
 
 “Data loaded: … items=0”
 Your data/items.txt path is missing, misnamed, or empty.
