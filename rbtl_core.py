@@ -16,6 +16,19 @@ from rbtl_data import (
     s_get_int,
     s_get_list,
 )
+from rbtl_shared import (
+    DIFF_IDX,
+    DIFFICULTY_ORDER,
+    eligible_enemy_unit,
+    leadership_rank,
+    max_leadership,
+    minlead_from_entry,
+    must_min_leadership,
+    normalize_leadership_value,
+    pick_scenario_type_id,
+    pick_weighted_tag,
+    threat_pool_from_settings,
+)
 
 # ============================================================
 # RBTL DEV RULES — IO + Architecture Guardrails (REFERENCE)
@@ -89,9 +102,6 @@ from rbtl_data import (
 # ============================================================
 
 RARITY_WEIGHTS = {"common": 60, "uncommon": 25, "rare": 10, "legendary": 5}
-
-DIFFICULTY_ORDER = ["Easy", "Normal", "Hard", "Brutal"]
-DIFF_IDX = {d: i for i, d in enumerate(DIFFICULTY_ORDER)}
 
 # BBEG never random (only forced by minlead / scenario type)
 LEADERSHIP_WEIGHTS = [("None", 50), ("Lieutenant", 35), ("Boss", 15)]
@@ -186,10 +196,6 @@ def find_scenario_type_by_id(scen_entries: List[Dict[str, Any]], st_id: str) -> 
 # ============================================================
 # #UNITS — Eligibility + leader identification
 # ============================================================
-
-def eligible_enemy_unit(e: Dict[str, Any]) -> bool:
-    return "xp" in e and str(e.get("xp", "")).strip() != ""
-
 
 def unit_tier(e: Dict[str, Any]) -> str:
     return str(e.get("tier", "")).strip().lower()
@@ -660,57 +666,6 @@ def enforce_role_model_caps(
 # #LEADERSHIP — selection + minimum requirements
 # ============================================================
 
-def normalize_leadership_value(s: str) -> str:
-    s = (s or "").strip()
-    if not s:
-        return "Random"
-    ss = s.lower()
-    if ss == "random":
-        return "Random"
-    if ss == "none":
-        return "None"
-    if ss in ("lieutenant", "lt"):
-        return "Lieutenant"
-    if ss == "boss":
-        return "Boss"
-    if ss == "bbeg":
-        return "BBEG"
-    return s.title()
-
-
-LEAD_RANK = {"None": 0, "Lieutenant": 1, "Boss": 2, "BBEG": 3}
-
-def leadership_rank(tier: str) -> int:
-    return LEAD_RANK.get(normalize_leadership_value(tier), 0)
-
-def max_leadership(*tiers: str) -> str:
-    best = "None"
-    best_r = -1
-    for t in tiers:
-        tt = normalize_leadership_value(t)
-        r = leadership_rank(tt)
-        if r > best_r:
-            best = tt
-            best_r = r
-    return best
-
-def minlead_from_entry(e: Optional[Dict[str, Any]]) -> str:
-    """
-    Read min leadership requirement from scenariotype/objective row.
-    Supports:
-      - minlead=Boss   (preferred)
-      - leadership=Boss
-      - leadrship=Boss (legacy typo)
-    """
-    if not e:
-        return "None"
-    raw = (e.get("minlead") or e.get("leadership") or e.get("leadrship") or "").strip()
-    if not raw:
-        return "None"
-    if raw.strip().lower() == "random":
-        return "None"
-    return normalize_leadership_value(raw)
-
 def choose_leadership_tier(requested: str, allies_total: int, scenario_min: str, footnotes: List[str]) -> str:
     tier = normalize_leadership_value(requested)
 
@@ -737,21 +692,6 @@ def choose_leadership_tier(requested: str, allies_total: int, scenario_min: str,
 # ============================================================
 # #SCENARIO TYPES — selection + hard objective rules
 # ============================================================
-
-def pick_scenario_type_id(scen_entries: List[Dict[str, Any]], settings: Dict[str, str]) -> str:
-    scenario_types = [e for e in scen_entries if "scenariotype" in (e.get("tags", set()) or set())]
-
-    enabled_ids = set(s_get_list(settings, "enabled.scenario_types"))
-    if enabled_ids:
-        scenario_types = [e for e in scenario_types if (e.get("ID") or "").strip() in enabled_ids]
-
-    if not scenario_types:
-        return ""
-
-    picked = weighted_choice_by_weight(scenario_types, settings=settings, prefix="scenariotype")
-    return (picked.get("ID") or "").strip()
-
-
 def objectives_allowed_for_scenario(picked_scen: Dict[str, Any], objectives_all: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
     """
     Scenario row: allow_obj_IDs=eliminate,leader,ritual
@@ -814,44 +754,6 @@ def objective_required_tags(obj: Optional[Dict[str, Any]]) -> Set[str]:
     return t
 
 
-def _parse_must_specs(obj: Optional[Dict[str, Any]]) -> List[str]:
-    if not obj:
-        return []
-    specs: List[str] = []
-    must_raw = str(obj.get("must", "") or "").strip()
-    if must_raw:
-        for part in must_raw.split(","):
-            part = part.strip()
-            if part:
-                specs.append(part)
-    for d in obj.get("directives", []) or []:
-        if d.lower().startswith("must-"):
-            specs.append(d.strip())
-    return specs
-
-
-def objective_requires_leader(obj: Optional[Dict[str, Any]]) -> bool:
-    if not obj:
-        return False
-
-    leadership_field = (obj.get("leadership") or "").strip().lower()
-    if leadership_field in ("lieutenant", "boss", "bbeg"):
-        return True
-
-    for s in _parse_must_specs(obj):
-        if "target:tier=leader" in s.strip().lower():
-            return True
-
-    return False
-
-
-def must_min_leadership(obj: Optional[Dict[str, Any]]) -> str:
-    """must=target:tier=leader => at least Lieutenant."""
-    if objective_requires_leader(obj):
-        return "Lieutenant"
-    return "None"
-
-
 def parse_objective_musts(obj: Optional[Dict[str, Any]]) -> List[str]:
     if not obj:
         return []
@@ -903,37 +805,6 @@ def must_clue_requirements(obj: Optional[Dict[str, Any]], footnotes: List[str]) 
 # ============================================================
 # #THREATS — settings filter + weighted selection
 # ============================================================
-
-def threat_pool_from_settings(all_threats: List[str], settings: Dict[str, str]) -> List[Tuple[str, float]]:
-    enabled = set(s_get_list(settings, "enabled.threats"))
-    disabled = set(s_get_list(settings, "disabled.threats"))
-
-    # legacy
-    enabled |= set(s_get_list(settings, "enable_threat"))
-    disabled |= set(s_get_list(settings, "disable_threat"))
-
-    pool = [t for t in all_threats if (not enabled or t in enabled)]
-    pool = [t for t in pool if t not in disabled]
-
-    weighted: List[Tuple[str, float]] = []
-    for t in pool:
-        w = s_get_float(settings, f"threat_weight.{t}", 1.0)
-        if w <= 0:
-            continue
-        weighted.append((t, w))
-    return weighted
-
-
-def pick_weighted_tag(weighted_pool: List[Tuple[str, float]], exclude: Optional[Set[str]] = None) -> Optional[str]:
-    exclude = exclude or set()
-    options = [(t, w) for (t, w) in weighted_pool if t not in exclude]
-    if not options:
-        return None
-    tags = [t for (t, _) in options]
-    weights = [w for (_, w) in options]
-    return random.choices(tags, weights=weights, k=1)[0]
-
-
 def sanitize_threat_tags(
     threat_tags: Set[str],
     all_threats: List[str],
