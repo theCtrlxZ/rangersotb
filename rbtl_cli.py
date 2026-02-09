@@ -1,7 +1,9 @@
 # rbtl_cli.py
-from typing import Any, Dict, List, Optional
+import hashlib
+import random
+from typing import Any, Dict, List, Optional, Tuple
 
-from rbtl_data import s_get, s_get_bool, s_get_int
+from rbtl_data import s_get, s_get_bool, s_get_float, s_get_int, s_get_list
 from rbtl_shared import (
     DIFFICULTY_ORDER,
     gather_threats_from_units,
@@ -24,6 +26,175 @@ def s_get_str(settings: Dict[str, str], key: str, default: str = "") -> str:
     """Return a stripped string for CLI prompts (wrapper around rbtl_data.s_get)."""
     return (s_get(settings, key, default) or "").strip()
 
+
+def _parse_campaign_key(raw: str) -> Optional[Dict[str, Any]]:
+    key = (raw or "").strip()
+    if not key:
+        return None
+    parts = [p for p in key.split("-") if p != ""]
+    if len(parts) < 8:
+        return None
+    if parts[0] != "RBTL" or parts[1] != "CAMP":
+        return None
+
+    seed = None
+    try:
+        seed = int(parts[2])
+    except (TypeError, ValueError):
+        seed = None
+
+    threats_blob = "-".join(parts[7:]).strip()
+    threat_ids = []
+    if threats_blob and threats_blob.lower() != "none":
+        threat_ids = [t for t in threats_blob.split(".") if t and t.lower() != "none"]
+
+    return {
+        "seed": seed,
+        "biome_id": parts[3],
+        "main_pressure_id": parts[4],
+        "sub_pressure_id": parts[5],
+        "intro_id": parts[6] if parts[6].lower() != "none" else "",
+        "threat_ids": threat_ids,
+    }
+
+
+def _entry_weight(entry: Dict[str, Any], settings: Dict[str, str], prefix: str) -> float:
+    ident = (entry.get("ID") or entry.get("id") or "").strip()
+    base = s_get_float(settings, f"{prefix}_weight.{ident}", 1.0)
+    raw_w = str(entry.get("weight", "")).strip()
+    try:
+        row_weight = float(raw_w) if raw_w else 1.0
+    except (TypeError, ValueError):
+        row_weight = 1.0
+    return max(0.0001, row_weight * base)
+
+
+def _rng_from_campaign_key(key: str) -> random.Random:
+    digest = hashlib.sha256(key.encode("utf-8")).digest()
+    seed_int = int.from_bytes(digest[:8], "big", signed=False)
+    return random.Random(seed_int)
+
+
+def _find_by_id(entries: List[Dict[str, Any]], entry_id: str) -> Optional[Dict[str, Any]]:
+    entry_id = (entry_id or "").strip()
+    if not entry_id:
+        return None
+    for e in entries:
+        if str(e.get("id", "")).strip() == entry_id:
+            return e
+    return None
+
+
+def _campaign_threat_tags(threat_entries: List[Dict[str, Any]], threat_ids: List[str]) -> List[str]:
+    tags: List[str] = []
+    for tid in threat_ids or []:
+        threat = _find_by_id(threat_entries, tid)
+        if not threat:
+            continue
+        for tag in sorted(threat.get("tags", set()) or set()):
+            if tag not in tags:
+                tags.append(tag)
+    return tags
+
+
+def _pick_threat_pair(rng: random.Random, tags: List[str]) -> Tuple[str, str]:
+    if not tags:
+        return "none", "none"
+    t1 = rng.choice(tags)
+    t2 = "none"
+    if len(tags) > 1 and rng.random() < 0.4:
+        remaining = [t for t in tags if t != t1]
+        if remaining:
+            t2 = rng.choice(remaining)
+    return t1, t2
+
+
+def _quest_board_entries(data: Any, key: str) -> Optional[List[Dict[str, Any]]]:
+    parsed = _parse_campaign_key(key)
+    if not parsed:
+        return None
+
+    settings: Dict[str, str] = dget(data, "settings", {}) or {}
+    scen_entries: List[Dict[str, Any]] = dget(data, "scenario_objectives", []) or dget(data, "scen_entries", []) or []
+    scenario_types = [e for e in scen_entries if "scenariotype" in (e.get("tags", set()) or set())]
+    objectives_all = [e for e in scen_entries if "objective" in (e.get("tags", set()) or set())]
+    if not scenario_types or not objectives_all:
+        return None
+
+    enabled_ids = set(s_get_list(settings, "enabled.scenario_types"))
+    if enabled_ids:
+        scenario_types = [e for e in scenario_types if (e.get("ID") or "").strip() in enabled_ids]
+        if not scenario_types:
+            return None
+
+    biomes = dget(data, "biomes", []) or []
+    pressures = dget(data, "campaign_pressures", []) or []
+    threats = dget(data, "campaign_threats", []) or []
+    intros = dget(data, "intro_starts", []) or []
+
+    biome = _find_by_id(biomes, parsed.get("biome_id", ""))
+    main_pressure = _find_by_id(pressures, parsed.get("main_pressure_id", ""))
+    sub_pressure = _find_by_id(pressures, parsed.get("sub_pressure_id", ""))
+    intro = _find_by_id(intros, parsed.get("intro_id", "")) if parsed.get("intro_id") else None
+    threat_names = []
+    for tid in parsed.get("threat_ids", []):
+        threat = _find_by_id(threats, tid)
+        if threat and threat.get("name"):
+            threat_names.append(str(threat.get("name")))
+    threat_tags = _campaign_threat_tags(threats, parsed.get("threat_ids", []))
+
+    rng = _rng_from_campaign_key(key)
+    templates = [
+        "A {scenario} request calls for {objective} amid the {biome}, where {main_pressure} is tightening.",
+        "Locals plead for {objective} in the {biome}; rumor says {main_pressure} and {sub_pressure} are worsening.",
+        "The board warns of {objective} tied to {threats}, with the {biome} already under strain.",
+        "You are asked to handle {objective} as {main_pressure} swells across the {biome}.",
+        "A sealed notice names {objective}; the {biome} and its {sub_pressure} grow unstable.",
+        "The posting hints at {objective} while whispers of {threats} spread through the {biome}.",
+    ]
+
+    entries: List[Dict[str, Any]] = []
+    for _ in range(6):
+        scen_weights = [_entry_weight(e, settings, "scenariotype") for e in scenario_types]
+        scenario = rng.choices(scenario_types, weights=scen_weights, k=1)[0]
+
+        allowed = objectives_allowed_for_scenario(scenario, objectives_all)
+        if not allowed:
+            allowed = objectives_all
+        obj_weights = [_entry_weight(e, settings, "objective") for e in allowed]
+        objective = rng.choices(allowed, weights=obj_weights, k=1)[0]
+
+        t1, t2 = _pick_threat_pair(rng, threat_tags)
+        threats_text = ", ".join(threat_names) if threat_names else "shadowed forces"
+        biome_name = biome.get("name") if biome else "frontier wilds"
+        main_name = main_pressure.get("name") if main_pressure else "a rising pressure"
+        sub_name = sub_pressure.get("name") if sub_pressure else "a secondary pressure"
+
+        flavor = rng.choice(templates).format(
+            scenario=scenario.get("name", "Scenario"),
+            objective=objective.get("name", "an urgent task"),
+            biome=biome_name,
+            main_pressure=main_name,
+            sub_pressure=sub_name,
+            threats=threats_text,
+        )
+
+        if intro and intro.get("name") and rng.random() < 0.35:
+            flavor = f"{intro.get('name')}. {flavor}"
+
+        entries.append(
+            {
+                "scenario_type_id": (scenario.get("ID") or "").strip(),
+                "scenario_type_name": scenario.get("name", "Scenario"),
+                "objective_id": (objective.get("ID") or "").strip(),
+                "objective_name": objective.get("name", "Objective"),
+                "threat_tag_1": t1,
+                "threat_tag_2": t2,
+                "flavor": flavor,
+            }
+        )
+
+    return entries
 def pick_class_filter_tag(data):
     # Collect tags from companion classes
     tag_to_classes = {}
@@ -485,6 +656,39 @@ def run_cli(data: Any) -> Dict[str, Any]:
     # Some gather functions return None/QUIT sentinels rather than a dict.
     if not isinstance(inputs, dict):
         raise SystemExit(0)
+
+    campaign_key = input("\nCampaign Key (optional; press Enter to skip): ").strip()
+    if campaign_key:
+        entries = _quest_board_entries(data, campaign_key)
+        if not entries:
+            print("Quest Board: could not parse campaign key or build entries; continuing without it.\n")
+        else:
+            print("\nQuest Board (choose one quest or press Enter to keep current inputs)")
+            for idx, entry in enumerate(entries, start=1):
+                scen = entry.get("scenario_type_name", "Scenario")
+                obj = entry.get("objective_name", "Objective")
+                flavor = entry.get("flavor", "")
+                print(f"{idx}) {scen} — {obj}")
+                if flavor:
+                    print(f"   {flavor}")
+            choice = input("\nSelect quest [1-6] (Enter to skip): ").strip()
+            if choice:
+                try:
+                    pick_idx = int(choice) - 1
+                except ValueError:
+                    pick_idx = -1
+                if 0 <= pick_idx < len(entries):
+                    pick = entries[pick_idx]
+                    inputs["campaign_key"] = campaign_key
+                    inputs["quest_board_entry"] = pick
+                    inputs["scenario_type_id"] = pick.get("scenario_type_id", "")
+                    inputs["scenario_type_name"] = pick.get("scenario_type_name", "")
+                    inputs["objective"] = pick.get("objective_name", "")
+                    inputs["threat_tag_1"] = pick.get("threat_tag_1", "none")
+                    inputs["threat_tag_2"] = pick.get("threat_tag_2", "none")
+                    inputs["encounter_kind"] = "Defensive Battle" if (inputs.get("scenario_type_id") or "").lower() == "defensive" else "Scenario"
+                else:
+                    print("Quest Board: invalid selection; continuing with original inputs.\n")
 
     # Hard enforcement: rooms-based scenarios always use Boss leadership
     scen_id = (inputs.get("scenario_type_id") or "").strip().lower()
