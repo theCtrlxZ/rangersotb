@@ -965,6 +965,113 @@ def _filter_require(it: Dict[str, Any], require: str) -> bool:
         return True
     return False
 
+def _base_has_roll_directive(b: Dict[str, Any]) -> bool:
+    # keys like "roll:spells:..." or values containing "roll:"
+    for k in b.keys():
+        if str(k).strip().lower().startswith("roll:"):
+            return True
+    for v in b.values():
+        sv = str(v or "").strip().lower()
+        if sv.startswith("roll:") or "roll:" in sv:
+            return True
+    return False
+
+def _is_fixed_base(b: Dict[str, Any]) -> bool:
+    # Fixed = no build= and no roll directives
+    has_build = bool(str(b.get("build", "") or "").strip())
+    if has_build:
+        return False
+    return not _base_has_roll_directive(b)
+
+def roll_built_items(
+    data: DataBundle,
+    *,
+    base_pool: List[Dict[str, Any]],
+    count: int,
+    rarity_req: str = "Random",
+    auto_build: bool = True,
+    unique: bool = True,
+    jitter_pct: float = 0.0,
+    merchant_level: Optional[int] = None,
+    used_final_names: Optional[Set[str]] = None,
+    used_fixed_base_names: Optional[Set[str]] = None,
+    used_component_ids: Optional[Set[str]] = None,
+    used_roll_ids: Optional[Set[str]] = None,
+) -> List[Dict[str, Any]]:
+    if count <= 0 or not base_pool:
+        return []
+
+    components = list(getattr(data, "item_components", []) or [])
+    used_final_names = used_final_names if used_final_names is not None else set()
+    used_fixed_base_names = used_fixed_base_names if used_fixed_base_names is not None else set()
+    used_component_ids = used_component_ids if used_component_ids is not None else set()
+    used_roll_ids = used_roll_ids if used_roll_ids is not None else set()
+
+    results: List[Dict[str, Any]] = []
+    for _ in range(count):
+        target_r = roll_rarity(rarity_req)
+
+        rar_pool = [it for it in base_pool if eligible_by_rarity(it, target_r)]
+        pick_pool = rar_pool if rar_pool else base_pool
+
+        if unique:
+            # Only prevent duplicates for FIXED bases (no build= and no roll directives).
+            uniq_pool: List[Dict[str, Any]] = []
+            for it in pick_pool:
+                nm = str(it.get("name", "")).strip()
+                if _is_fixed_base(it) and nm and nm in used_fixed_base_names:
+                    continue
+                uniq_pool.append(it)
+            if uniq_pool:
+                pick_pool = uniq_pool
+
+        base = weighted_choice(pick_pool)
+        if not base:
+            continue
+
+        built = build_up_item(
+            data,
+            base,
+            components=components,
+            target_rarity=target_r,
+            auto_build=auto_build,
+            merchant_level=merchant_level,
+        )
+
+        # best-effort uniqueness on final name
+        if unique:
+            guard = 0
+            while built["final_name"] in used_final_names and guard < 10:
+                built = build_up_item(
+                    data,
+                    base,
+                    components=components,
+                    target_rarity=target_r,
+                    auto_build=auto_build,
+                    merchant_level=merchant_level,
+                )
+                guard += 1
+
+        used_final_names.add(built["final_name"])
+        base_nm = str(base.get("name", "")).strip()
+        if unique and _is_fixed_base(base) and base_nm:
+            used_fixed_base_names.add(base_nm)
+
+        used_component_ids |= set(built.get("used_component_ids", []) or [])
+        for r in built.get("rolled", []) or []:
+            rid = str(r.get("id", "")).strip()
+            if rid:
+                used_roll_ids.add(rid)
+
+        if jitter_pct > 0:
+            built["price"] = max(1, int(round(float(built["price"]) * jitter_factor(jitter_pct))))
+            if built["dur"] is not None:
+                built["dur"] = max(1, int(round(float(built["dur"]) * jitter_factor(jitter_pct))))
+
+        results.append(built)
+
+    return results
+
 def generate_loot(data: DataBundle, inputs: Dict[str, Any]) -> Tuple[str, str]:
     """
     inputs:
@@ -1023,111 +1130,23 @@ def generate_loot(data: DataBundle, inputs: Dict[str, Any]) -> Tuple[str, str]:
     lines.append("")
 
     used_final_names: Set[str] = set()
-
     used_fixed_base_names: Set[str] = set()
-
     used_component_ids: Set[str] = set()
-
     used_roll_ids: Set[str] = set()
 
-    
-
-    def _base_has_roll_directive(b: Dict[str, Any]) -> bool:
-
-        # keys like "roll:spells:..." or values containing "roll:"
-
-        for k in b.keys():
-
-            if str(k).strip().lower().startswith("roll:"):
-
-                return True
-
-        for v in b.values():
-
-            sv = str(v or "").strip().lower()
-
-            if sv.startswith("roll:") or "roll:" in sv:
-
-                return True
-
-        return False
-
-    
-
-    def _is_fixed_base(b: Dict[str, Any]) -> bool:
-
-        # Fixed = no build= and no roll directives
-
-        has_build = bool(str(b.get("build", "") or "").strip())
-
-        if has_build:
-
-            return False
-
-        return not _base_has_roll_directive(b)
-
-    results: List[Dict[str, Any]] = []
-
-    for _ in range(count):
-        target_r = roll_rarity(rarity_req)
-
-        rar_pool = [it for it in base_pool if eligible_by_rarity(it, target_r)]
-        pick_pool = rar_pool if rar_pool else base_pool
-
-        if unique:
-
-            # Only prevent duplicates for FIXED bases (no build= and no roll directives).
-
-            uniq_pool: List[Dict[str, Any]] = []
-
-            for it in pick_pool:
-
-                nm = str(it.get("name", "")).strip()
-
-                if _is_fixed_base(it) and nm and nm in used_fixed_base_names:
-
-                    continue
-
-                uniq_pool.append(it)
-
-            if uniq_pool:
-
-                pick_pool = uniq_pool
-
-        base = weighted_choice(pick_pool)
-        if not base:
-            continue
-
-        built = build_up_item(data, base, components=components, target_rarity=target_r, auto_build=auto_build)
-
-        # best-effort uniqueness on final name
-        if unique:
-            guard = 0
-            while built["final_name"] in used_final_names and guard < 10:
-                built = build_up_item(data, base, components=components, target_rarity=target_r, auto_build=auto_build)
-                guard += 1
-
-        used_final_names.add(built["final_name"])
-        base_nm = str(base.get("name", "")).strip()
-
-
-        if unique and _is_fixed_base(base) and base_nm:
-
-
-            used_fixed_base_names.add(base_nm)
-        used_component_ids |= set(built.get("used_component_ids", []) or [])
-
-        for r in built.get("rolled", []) or []:
-            rid = str(r.get("id", "")).strip()
-            if rid:
-                used_roll_ids.add(rid)
-
-        # jitter price/dur for market feel
-        built["price"] = max(1, int(round(float(built["price"]) * jitter_factor(jitter_pct))))
-        if built["dur"] is not None:
-            built["dur"] = max(1, int(round(float(built["dur"]) * jitter_factor(jitter_pct))))
-
-        results.append(built)
+    results = roll_built_items(
+        data,
+        base_pool=base_pool,
+        count=count,
+        rarity_req=rarity_req,
+        auto_build=auto_build,
+        unique=unique,
+        jitter_pct=jitter_pct,
+        used_final_names=used_final_names,
+        used_fixed_base_names=used_fixed_base_names,
+        used_component_ids=used_component_ids,
+        used_roll_ids=used_roll_ids,
+    )
 
     lines.append("Results")
     lines.append("-" * 60)

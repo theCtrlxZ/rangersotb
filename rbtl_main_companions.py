@@ -60,8 +60,21 @@ def run():
 
         count = int(count)
 
+        merchant_level = prompt_int_nav("Merchant level for gear rolls? (0 = none)", default=0)
+        if merchant_level in (BACK, RESTART, QUIT):
+            if merchant_level == BACK:
+                continue
+            if merchant_level == RESTART:
+                continue
+            return
+
+        merchant_level = int(merchant_level)
+
         if mode.startswith("Quick"):
-            filename, text = generate_companions(data, {"count": count})
+            filename, text = generate_companions(
+                data,
+                {"count": count, "merchant_level": merchant_level},
+            )
             path = write_output(project_root, filename, text)
             print(f"\nWrote: {path}\n")
             continue
@@ -98,7 +111,11 @@ def run():
                 continue
             return
 
-        inputs = {"count": count, "allow_background_trait_rolls": True}
+        inputs = {
+            "count": count,
+            "allow_background_trait_rolls": True,
+            "merchant_level": merchant_level,
+        }
 
         if picked_tag != "Random":
             inputs["required_class_tags"] = [picked_tag]
