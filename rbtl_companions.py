@@ -306,7 +306,7 @@ def apply_roll_field(
                 ctx=ctx,
                 merchant_level=merchant_level,
             )
-            companion["items"].extend([p["final_name"] for p in picks])
+            companion["items"].extend(picks)
             if len(picks) < count:
                 ctx["warnings"].append(
                     f"[{source_label}] roll:{kind} requested {count} but got {len(picks)} "
@@ -323,7 +323,7 @@ def apply_roll_field(
                 ctx=ctx,
                 merchant_level=merchant_level,
             )
-            companion["items"].extend([p["final_name"] for p in picks])
+            companion["items"].extend(picks)
             if len(picks) < count:
                 ctx["warnings"].append(
                     f"[{source_label}] roll:{kind} requested {count} but got {len(picks)} "
@@ -359,9 +359,10 @@ def replace_placeholder_weapons(
     ctx: Dict[str, Any],
     merchant_level: Optional[int] = None,
 ) -> None:
-    out: List[str] = []
+    out: List[Dict[str, Any]] = []
     for item in companion["items"]:
-        if item == "Handweapon":
+        name = item.get("final_name") if isinstance(item, dict) else str(item)
+        if name == "Handweapon":
             pool = _pool_weapons(data, {"hand"})
             picks = _roll_companion_items(
                 data,
@@ -371,11 +372,11 @@ def replace_placeholder_weapons(
                 merchant_level=merchant_level,
             )
             if picks:
-                out.append(picks[0]["final_name"])
+                out.append(picks[0])
             else:
-                out.append(item)
+                out.append({"final_name": name})
                 ctx["warnings"].append("[Step5] Handweapon placeholder had no eligible unique hand weapons.")
-        elif item == "Twohandweapon":
+        elif name == "Twohandweapon":
             pool = _pool_weapons(data, {"twohand"})
             picks = _roll_companion_items(
                 data,
@@ -385,12 +386,15 @@ def replace_placeholder_weapons(
                 merchant_level=merchant_level,
             )
             if picks:
-                out.append(picks[0]["final_name"])
+                out.append(picks[0])
             else:
-                out.append(item)
+                out.append({"final_name": name})
                 ctx["warnings"].append("[Step5] Twohandweapon placeholder had no eligible unique twohand weapons.")
         else:
-            out.append(item)
+            if isinstance(item, dict):
+                out.append(item)
+            else:
+                out.append({"final_name": name})
     companion["items"] = out
 
 
@@ -415,6 +419,19 @@ def finalize_name(base: str, companion: Dict[str, Any]) -> str:
     if traits:
         return f"{base}, the {traits[0]['name']}"
     return base
+
+
+def _resolve_item_entry(name: str, data: DataBundle) -> Dict[str, Any]:
+    norm = name.strip().lower()
+    base = None
+    for it in data.items:
+        if str(it.get("name", "")).strip().lower() == norm:
+            base = it
+            break
+    entry: Dict[str, Any] = {"final_name": name}
+    if base:
+        entry["base"] = base
+    return entry
 
 
 # ============================================================
@@ -520,7 +537,7 @@ def generate_companion(
             else:
                 # NEW: prevent duplicate literal gear items too
                 if tok not in ctx["picked_items"]:
-                    companion["items"].append(tok)
+                    companion["items"].append(_resolve_item_entry(tok, data))
                     ctx["picked_items"].add(tok)
 
     # Step 5: placeholder replacement
@@ -568,6 +585,95 @@ def generate_companion(
 # ============================================================
 # #LABEL: OUTPUT FORMATTING
 # ============================================================
+
+def _item_name(item: Any) -> str:
+    if isinstance(item, dict):
+        return str(item.get("final_name") or item.get("name") or "").strip()
+    return str(item or "").strip()
+
+
+def _item_field(item: Any, field: str) -> Optional[Any]:
+    if not isinstance(item, dict):
+        return None
+    if field in item and item[field] not in (None, ""):
+        return item[field]
+    base = item.get("base")
+    if isinstance(base, dict):
+        return base.get(field)
+    return None
+
+
+def _format_numeric_mods(mod_str: Optional[str]) -> List[str]:
+    mods: List[str] = []
+    for chunk in (mod_str or "").split(","):
+        chunk = chunk.strip()
+        if not chunk:
+            continue
+        idx = None
+        for i, ch in enumerate(chunk):
+            if ch.isdigit() or ch in "+-":
+                idx = i
+                break
+        if idx is None:
+            continue
+        key = chunk[:idx].strip()
+        val = chunk[idx:].strip()
+        if not key:
+            continue
+        num = parse_int_maybe(val, None)
+        if num is None:
+            continue
+        sign = "+" if num >= 0 else ""
+        mods.append(f"{key} {sign}{num}")
+    return mods
+
+
+def _item_stat_line(item: Any) -> str:
+    stat_mod = _item_field(item, "stat_mod")
+    skill_mod = _item_field(item, "skill_mod")
+    parts: List[str] = []
+    parts.extend(_format_numeric_mods(str(stat_mod) if stat_mod is not None else ""))
+    parts.extend(_format_numeric_mods(str(skill_mod) if skill_mod is not None else ""))
+    return ", ".join(parts)
+
+
+def _item_skill_names(item: Any) -> List[str]:
+    names: List[str] = []
+    rolled = _item_field(item, "rolled") or []
+    for entry in rolled:
+        nm = str(entry.get("name", "") or "").strip()
+        if nm:
+            names.append(nm)
+    traits = _item_field(item, "traits") or []
+    for tr in traits:
+        nm = str(tr or "").strip()
+        if nm:
+            names.append(nm)
+    return names
+
+
+def _item_stats_detail_line(item: Any) -> str:
+    stats: List[str] = []
+    numeric = _item_stat_line(item)
+    if numeric:
+        stats.append(numeric)
+    dur = _item_field(item, "dur")
+    if dur is not None:
+        stats.append(f"durability={dur}")
+    uses = _item_field(item, "uses")
+    if uses is not None:
+        stats.append(f"uses={uses}")
+    charges = _item_field(item, "charges_max")
+    if charges is not None:
+        stats.append(f"charges_max={charges}")
+    dt = str(_item_field(item, "damagetype") or "").strip()
+    if dt and dt.lower() != "physical":
+        stats.append(f"damagetype={dt}")
+    skills = _item_skill_names(item)
+    if skills:
+        stats.append("skills: " + ", ".join(sorted(set(skills), key=str.lower)))
+    return "; ".join(stats)
+
 
 def format_companion(c: Dict[str, Any]) -> str:
     lines: List[str] = []
@@ -618,7 +724,12 @@ def format_companion(c: Dict[str, Any]) -> str:
         lines.append("")
         lines.append("Equipment:")
         for it in c["items"]:
-            lines.append(f"- {it}")
+            name = _item_name(it)
+            stat_line = _item_stat_line(it)
+            if stat_line:
+                lines.append(f"- {name} - {stat_line}")
+            else:
+                lines.append(f"- {name}")
 
     lines.append("")
     lines.append(f"Recruitment Cost: {c.get('rp', 0)} RP")
@@ -645,9 +756,8 @@ def generate_companions(data: DataBundle, inputs: Dict[str, Any]) -> Tuple[str, 
     companions: List[Dict[str, Any]] = []
 
     # For glossary grouping
-    used_items: Set[str] = set()
-    used_spells: Set[str] = set()
-    used_traits: Set[str] = set()
+    used_items: Dict[str, Dict[str, Any]] = {}
+    used_skill_status: Set[str] = set()
 
     # For debug footer (global)
     debug_warnings: List[str] = []
@@ -665,10 +775,14 @@ def generate_companions(data: DataBundle, inputs: Dict[str, Any]) -> Tuple[str, 
         )
         companions.append(c)
 
-        used_items.update(c.get("items", []))
-        used_spells.update(c.get("spells", []))
-        used_spells.update(c.get("abilities", []))  # abilities share section + glossary grouping
-        used_traits.update([t["name"] for t in c.get("traits", [])])
+        for it in c.get("items", []):
+            name = _item_name(it)
+            if name and name not in used_items:
+                used_items[name] = it
+            used_skill_status.update(_item_skill_names(it))
+
+        used_skill_status.update(c.get("spells", []))
+        used_skill_status.update(c.get("abilities", []))  # abilities share glossary grouping
 
         ctx = c.get("_ctx", {})
         debug_warnings.extend(ctx.get("warnings", []))
@@ -676,28 +790,44 @@ def generate_companions(data: DataBundle, inputs: Dict[str, Any]) -> Tuple[str, 
 
     body = ("\n" + "-" * 40 + "\n").join(format_companion(c) for c in companions)
 
-    item_lookup = {e["name"]: e for e in data.items}
     spell_lookup = {e["name"]: e for e in data.spells}
-    trait_lookup = {e["name"]: e for e in data.traits}
 
-    # --- Glossary ---
+    # --- Equipment Glossary ---
     gloss: List[str] = []
     gloss.append("")
     gloss.append("=" * 40)
-    gloss.append("GLOSSARY")
+    gloss.append("Equipment Glossary")
     gloss.append("=" * 40)
 
-    def _write_section(title: str, names: List[str], lookup: Dict[str, Dict[str, Any]]) -> None:
+    for name in sorted(used_items, key=str.lower):
+        item = used_items[name]
+        base = _item_field(item, "base") or {}
+        rarity = str(_item_field(item, "rarity") or base.get("rarity") or "common").strip().lower()
+        cat = str(base.get("cat") or base.get("slot") or "item").strip().lower()
+        desc = str(_item_field(item, "description") or base.get("description") or "").strip()
         gloss.append("")
-        gloss.append(title)
-        for name in names:
-            entry = lookup.get(name)
-            desc = (entry.get("description") or "").strip() if entry else ""
-            gloss.append(f"- {name}: {desc}" if desc else f"- {name}")
+        gloss.append(name)
+        line_two = f"{rarity.title()} {cat}"
+        if desc:
+            line_two = f"{line_two} — {desc}"
+        gloss.append(f"    {line_two}")
+        stats_line = _item_stats_detail_line(item)
+        if stats_line:
+            gloss.append(f"    {stats_line}")
 
-    _write_section("Items", sorted(used_items), item_lookup)
-    _write_section("Spells / Abilities", sorted(used_spells), spell_lookup)
-    _write_section("Traits", sorted(used_traits), trait_lookup)
+    # --- Skills & Status Glossary ---
+    gloss.append("")
+    gloss.append("Skills & Status Glossary")
+    gloss.append("-" * 60)
+    if used_skill_status:
+        for name in sorted(used_skill_status, key=str.lower):
+            entry = spell_lookup.get(name)
+            desc = (entry.get("description") or "").strip() if entry else ""
+            gloss.append(f"- {name}")
+            if desc:
+                gloss.append(f"  {desc}")
+    else:
+        gloss.append("- (none)")
 
     # --- Debug Footer ---
     dbg: List[str] = []
