@@ -45,6 +45,7 @@ from typing import Any, Dict, List, Optional, Set, Tuple
 
 from rbtl_data import DataBundle, parse_int_maybe
 from rbtl_core import weighted_choice, apply_stat_mods, parse_statline, STAT_KEYS
+from rbtl_loot import roll_built_items
 
 OUTPUT_DIR = "output"
 
@@ -178,6 +179,30 @@ def _pool_items(data: DataBundle, required: Optional[Set[str]]) -> List[Dict[str
     return [it for it in data.items if eligible_by_tags(it, required)]
 
 
+def _roll_companion_items(
+    data: DataBundle,
+    *,
+    base_pool: List[Dict[str, Any]],
+    count: int,
+    ctx: Dict[str, Any],
+    rarity_req: str = "Random",
+    merchant_level: Optional[int] = None,
+) -> List[Dict[str, Any]]:
+    if not base_pool or count <= 0:
+        return []
+    return roll_built_items(
+        data,
+        base_pool=base_pool,
+        count=count,
+        rarity_req=rarity_req,
+        auto_build=True,
+        unique=True,
+        jitter_pct=0.0,
+        merchant_level=merchant_level,
+        used_final_names=ctx["picked_items"],
+    )
+
+
 def _pool_spells(data: DataBundle, required: Optional[Set[str]]) -> List[Dict[str, Any]]:
     return [sp for sp in data.spells if eligible_by_tags(sp, required)]
 
@@ -219,6 +244,7 @@ def apply_roll_field(
     data: DataBundle,
     ctx: Dict[str, Any],
     source_label: str,
+    merchant_level: Optional[int] = None,
 ) -> None:
     """
     roll_field supports semicolon-separated directives:
@@ -273,10 +299,14 @@ def apply_roll_field(
 
         if kind in ("weapon", "weapons"):
             pool = _pool_weapons(data, req)
-            # items: prevent duplicates per companion
-            picks = _pick_unique(pool, count=count, exclude=ctx["picked_items"])
-            for p in picks:
-                companion["items"].append(p["name"])
+            picks = _roll_companion_items(
+                data,
+                base_pool=pool,
+                count=count,
+                ctx=ctx,
+                merchant_level=merchant_level,
+            )
+            companion["items"].extend([p["final_name"] for p in picks])
             if len(picks) < count:
                 ctx["warnings"].append(
                     f"[{source_label}] roll:{kind} requested {count} but got {len(picks)} "
@@ -286,9 +316,14 @@ def apply_roll_field(
 
         if kind in ("item", "items", "herb", "armor"):
             pool = _pool_items(data, req)
-            picks = _pick_unique(pool, count=count, exclude=ctx["picked_items"])
-            for p in picks:
-                companion["items"].append(p["name"])
+            picks = _roll_companion_items(
+                data,
+                base_pool=pool,
+                count=count,
+                ctx=ctx,
+                merchant_level=merchant_level,
+            )
+            companion["items"].extend([p["final_name"] for p in picks])
             if len(picks) < count:
                 ctx["warnings"].append(
                     f"[{source_label}] roll:{kind} requested {count} but got {len(picks)} "
@@ -317,24 +352,40 @@ def apply_roll_field(
 # #LABEL: STEP 5 — PLACEHOLDER WEAPONS
 # ============================================================
 
-def replace_placeholder_weapons(companion: Dict[str, Any], *, data: DataBundle, ctx: Dict[str, Any]) -> None:
+def replace_placeholder_weapons(
+    companion: Dict[str, Any],
+    *,
+    data: DataBundle,
+    ctx: Dict[str, Any],
+    merchant_level: Optional[int] = None,
+) -> None:
     out: List[str] = []
     for item in companion["items"]:
         if item == "Handweapon":
             pool = _pool_weapons(data, {"hand"})
-            pick = weighted_choice([e for e in pool if e["name"] not in ctx["picked_items"]]) or None
-            if pick:
-                out.append(pick["name"])
-                ctx["picked_items"].add(pick["name"])
+            picks = _roll_companion_items(
+                data,
+                base_pool=pool,
+                count=1,
+                ctx=ctx,
+                merchant_level=merchant_level,
+            )
+            if picks:
+                out.append(picks[0]["final_name"])
             else:
                 out.append(item)
                 ctx["warnings"].append("[Step5] Handweapon placeholder had no eligible unique hand weapons.")
         elif item == "Twohandweapon":
             pool = _pool_weapons(data, {"twohand"})
-            pick = weighted_choice([e for e in pool if e["name"] not in ctx["picked_items"]]) or None
-            if pick:
-                out.append(pick["name"])
-                ctx["picked_items"].add(pick["name"])
+            picks = _roll_companion_items(
+                data,
+                base_pool=pool,
+                count=1,
+                ctx=ctx,
+                merchant_level=merchant_level,
+            )
+            if picks:
+                out.append(picks[0]["final_name"])
             else:
                 out.append(item)
                 ctx["warnings"].append("[Step5] Twohandweapon placeholder had no eligible unique twohand weapons.")
@@ -377,6 +428,7 @@ def generate_companion(
     required_class_tags: Optional[Set[str]] = None,
     required_class_name: Optional[str] = None,
     allow_background_trait_rolls: bool = True,
+    merchant_level: Optional[int] = None,
     debug: bool = False,
 ) -> Dict[str, Any]:
     ctx = {
@@ -448,9 +500,23 @@ def generate_companion(
         for tok in [t.strip() for t in gear.split(",") if t.strip()]:
             low = tok.lower()
             if low.startswith("roll:"):
-                apply_roll_field(tok[5:].strip(), companion=companion, data=data, ctx=ctx, source_label=label)
+                apply_roll_field(
+                    tok[5:].strip(),
+                    companion=companion,
+                    data=data,
+                    ctx=ctx,
+                    source_label=label,
+                    merchant_level=merchant_level,
+                )
             elif low.startswith("roll="):
-                apply_roll_field(tok.split("=", 1)[1].strip(), companion=companion, data=data, ctx=ctx, source_label=label)
+                apply_roll_field(
+                    tok.split("=", 1)[1].strip(),
+                    companion=companion,
+                    data=data,
+                    ctx=ctx,
+                    source_label=label,
+                    merchant_level=merchant_level,
+                )
             else:
                 # NEW: prevent duplicate literal gear items too
                 if tok not in ctx["picked_items"]:
@@ -458,7 +524,7 @@ def generate_companion(
                     ctx["picked_items"].add(tok)
 
     # Step 5: placeholder replacement
-    replace_placeholder_weapons(companion, data=data, ctx=ctx)
+    replace_placeholder_weapons(companion, data=data, ctx=ctx, merchant_level=merchant_level)
 
     # Step 6: class/background roll directives from pipe segments
     for src, label in ((cls, "Class roll"), (bg, "Background roll")):
@@ -466,13 +532,27 @@ def generate_companion(
         if debug and label == "Class roll":
             print(f"DEBUG class={cls.get('name')} roll_fields={rolls}")
         for rf in rolls:
-            apply_roll_field(rf, companion=companion, data=data, ctx=ctx, source_label=label)
+            apply_roll_field(
+                rf,
+                companion=companion,
+                data=data,
+                ctx=ctx,
+                source_label=label,
+                merchant_level=merchant_level,
+            )
 
     # Optional: background extra trait roll field (future use)
     if allow_background_trait_rolls:
         tr = (bg.get("trait_roll") or "").strip()
         if tr:
-            apply_roll_field(tr, companion=companion, data=data, ctx=ctx, source_label="Background trait_roll")
+            apply_roll_field(
+                tr,
+                companion=companion,
+                data=data,
+                ctx=ctx,
+                source_label="Background trait_roll",
+                merchant_level=merchant_level,
+            )
 
     # Final name + RP
     companion["name"] = finalize_name(base_name, companion)
@@ -557,6 +637,8 @@ def generate_companions(data: DataBundle, inputs: Dict[str, Any]) -> Tuple[str, 
     required_class_name = (inputs.get("required_class_name") or "").strip() or None
 
     allow_bg_trait_rolls = bool(inputs.get("allow_background_trait_rolls", True))
+    merchant_level_raw = parse_int_maybe(inputs.get("merchant_level"), None)
+    merchant_level = merchant_level_raw if merchant_level_raw and merchant_level_raw > 0 else None
     debug = bool(inputs.get("debug", False))
 
     used_names: Set[str] = set()
@@ -578,6 +660,7 @@ def generate_companions(data: DataBundle, inputs: Dict[str, Any]) -> Tuple[str, 
             required_class_tags=required_class_tags,
             required_class_name=required_class_name,
             allow_background_trait_rolls=allow_bg_trait_rolls,
+            merchant_level=merchant_level,
             debug=debug,
         )
         companions.append(c)
