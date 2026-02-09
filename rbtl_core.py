@@ -3234,6 +3234,20 @@ def build_briefing(
             lines.append(f"  - {k}: {inputs[k]}")
     lines.append("")
 
+    quest_entry = inputs.get("quest_board_entry")
+    campaign_key = inputs.get("campaign_key")
+    if quest_entry:
+        lines.append("Quest Board Selection")
+        lines.append("-" * 60)
+        if campaign_key:
+            lines.append(f"Campaign Key: {campaign_key}")
+        lines.append(f"Scenario: {quest_entry.get('scenario_type_name', 'Scenario')}")
+        lines.append(f"Objective: {quest_entry.get('objective_name', 'Objective')}")
+        flavor = quest_entry.get("flavor")
+        if flavor:
+            lines.append(f"Flavor: {flavor}")
+        lines.append("")
+
     lines.append("Scenario Type")
     lines.append("-" * 60)
     if scenario_type:

@@ -1,7 +1,9 @@
 # rbtl_campaign.py
 from __future__ import annotations
 
+import os
 import random
+import secrets
 import textwrap
 from datetime import datetime
 from typing import Any, Dict, List, Optional, Set, Tuple
@@ -90,6 +92,12 @@ def pick_intro_start(intro_starts: List[Dict[str, Any]], main_threat_tags: Set[s
     return random.choice(intro_starts)
 
 
+def _intro_id(entry: Optional[Dict[str, Any]]) -> str:
+    if not entry:
+        return ""
+    return str(entry.get("id") or entry.get("ID") or "").strip()
+
+
 def _tags(entry: Dict[str, Any]) -> Set[str]:
     # DataBundle loader stores tags as a set, but doesn’t lowercase.
     return {_norm(t) for t in (entry.get("tags") or set()) if _norm(t)}
@@ -111,6 +119,28 @@ def _rarity(entry: Dict[str, Any]) -> str:
 
 def _fmt_tags(tags: Set[str]) -> str:
     return ", ".join(sorted(tags)) if tags else ""
+
+
+def _resolve_seed(inputs: Dict[str, Any]) -> int:
+    raw = inputs.get("seed")
+    if raw is None:
+        raw = os.environ.get("RBTL_SEED")
+    if raw is not None:
+        try:
+            return int(raw)
+        except (TypeError, ValueError):
+            pass
+    return secrets.randbits(31)
+
+
+def _build_campaign_key(truth_packet: Dict[str, Any]) -> str:
+    seed = str(truth_packet.get("seed", "")).strip()
+    biome_id = str(truth_packet.get("biome_id", "")).strip()
+    main_pressure_id = str(truth_packet.get("main_pressure_id", "")).strip()
+    sub_pressure_id = str(truth_packet.get("sub_pressure_id", "")).strip()
+    intro_id = str(truth_packet.get("intro_id", "")).strip() or "none"
+    threats = ".".join(str(t) for t in (truth_packet.get("threat_ids") or []) if str(t).strip()) or "none"
+    return f"RBTL-CAMP-{seed}-{biome_id}-{main_pressure_id}-{sub_pressure_id}-{intro_id}-{threats}"
 
 
 # ============================================================
@@ -932,9 +962,12 @@ def format_campaign_briefing(
     secondary_threats: List[Dict[str, Any]],
     layout: Dict[str, Any],
     intro_start: Optional[Dict[str, Any]] = None,
+    truth_packet: Optional[Dict[str, Any]] = None,
     footnotes: List[str],
 ) -> str:
     lines: List[str] = []
+    intro_title = ""
+    intro_desc = ""
 
     lines.append("RANGERS AT THE BORDERLANDS — CAMPAIGN BRIEFING")
     lines.append("=" * 60)
@@ -950,6 +983,22 @@ def format_campaign_briefing(
         if intro_desc:
             intro_desc = intro_desc.replace("[threat1]", str(main_threat.get("name", "the threat")))
             lines.extend(_wrap_paragraphs(intro_desc))
+        lines.append("")
+    if truth_packet:
+        key = _build_campaign_key(truth_packet)
+        lines.append("Campaign Truth Packet")
+        lines.append("-" * 60)
+        lines.append(f"Seed: {truth_packet.get('seed')}")
+        lines.append("Seed Scope: content-version only")
+        lines.append("Seed Does Not Lock: player count or difficulty")
+        lines.append(f"Campaign Key: {key}")
+        lines.append(f"Biome ID: {truth_packet.get('biome_id','')}")
+        lines.append(f"Main Pressure ID: {truth_packet.get('main_pressure_id','')}")
+        lines.append(f"Sub Pressure ID: {truth_packet.get('sub_pressure_id','')}")
+        intro_id = truth_packet.get("intro_id")
+        lines.append(f"Intro Reference ID: {intro_id if intro_id else '(none)'}")
+        threats = truth_packet.get("threat_ids") or []
+        lines.append(f"Threat IDs: {', '.join(str(t) for t in threats) if threats else '(none)'}")
         lines.append("")
     lines.append(f"Players: {players}")
     lines.append(f"Difficulty: {difficulty.title()}")
@@ -1076,6 +1125,9 @@ def format_campaign_briefing(
 # ============================================================
 
 def generate_campaign(data: DataBundle, inputs: Dict[str, Any]) -> Tuple[str, str]:
+    seed = _resolve_seed(inputs)
+    random.seed(seed)
+
     players = int(inputs.get("players", 1))
     difficulty = _norm(inputs.get("difficulty", "normal"))
     if difficulty not in DIFFICULTY_THREATS:
@@ -1110,6 +1162,7 @@ def generate_campaign(data: DataBundle, inputs: Dict[str, Any]) -> Tuple[str, st
     locked_biome_id = str(locked_ctx.get("biome_id", "")).strip()
     locked_main_pressure_id = str(locked_ctx.get("main_pressure_id", "")).strip()
     locked_sub_pressure_id = str(locked_ctx.get("sub_pressure_id", "")).strip()
+    locked_intro_id = str(inputs.get("locked_intro_id", "")).strip()
 
     biome = _find_by_id(biomes, locked_biome_id) if locked_biome_id else None
     if biome:
@@ -1229,7 +1282,24 @@ def generate_campaign(data: DataBundle, inputs: Dict[str, Any]) -> Tuple[str, st
     )
 
     
-    intro_start = pick_intro_start(intro_starts, set(main_threat.get("tags") or set()))
+    intro_start = None
+    if locked_intro_id:
+        intro_start = _find_by_id(intro_starts, locked_intro_id)
+        if intro_start:
+            footnotes.append(f"LOCKED: intro_id={locked_intro_id}")
+        else:
+            footnotes.append(f"LOCKED: intro_id not found: {locked_intro_id}")
+    if not intro_start:
+        intro_start = pick_intro_start(intro_starts, set(main_threat.get("tags") or set()))
+
+    truth_packet = {
+        "seed": seed,
+        "biome_id": str(biome.get("id", "")).strip(),
+        "main_pressure_id": str(main_pressure.get("id", "")).strip(),
+        "sub_pressure_id": str(sub_pressure.get("id", "")).strip(),
+        "intro_id": _intro_id(intro_start),
+        "threat_ids": [str(main_threat.get("id", "")).strip()] + [str(t.get("id", "")).strip() for t in secondary_threats],
+    }
     text = format_campaign_briefing(
         players=players,
         difficulty=difficulty,
@@ -1240,6 +1310,7 @@ def generate_campaign(data: DataBundle, inputs: Dict[str, Any]) -> Tuple[str, st
         secondary_threats=secondary_threats,
         layout=layout,
         intro_start=intro_start,
+        truth_packet=truth_packet,
         footnotes=footnotes,
     )
 
