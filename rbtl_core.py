@@ -183,6 +183,30 @@ def roll_from_list_hard_threat(
     return weighted_choice(pool)
 
 
+
+
+def _find_entry_by_id(entries: List[Dict[str, Any]], entry_id: str) -> Optional[Dict[str, Any]]:
+    entry_id = str(entry_id or "").strip()
+    if not entry_id:
+        return None
+    for e in entries or []:
+        if str(e.get("id", "")).strip() == entry_id:
+            return e
+    return None
+
+
+def _campaign_biome_id_from_key(raw_key: str) -> str:
+    key = (raw_key or "").strip()
+    if not key:
+        return ""
+    parts = [p for p in key.split("-") if p != ""]
+    if len(parts) < 8:
+        return ""
+    if parts[0] != "RBTL" or parts[1] != "CAMP":
+        return ""
+    return parts[3]
+
+
 def find_scenario_type_by_id(scen_entries: List[Dict[str, Any]], st_id: str) -> Optional[Dict[str, Any]]:
     st_id = (st_id or "").strip()
     if not st_id:
@@ -3194,6 +3218,7 @@ def build_briefing(
     timestamp: str,
     room_plan: Optional[List[Dict[str, Any]]] = None,
     inputs: Dict[str, Any],
+    biome: Optional[Dict[str, Any]] = None,
     scenario_type: Optional[Dict[str, Any]],
     scenario_setup: str,
     objective: Optional[Dict[str, Any]],
@@ -3264,8 +3289,24 @@ def build_briefing(
     lines.append(f"Objective: {objective['name'] if objective else 'Unknown Objective'}")
     if objective and objective.get("description"):
         lines.append(f"Brief: {objective['description']}")
-    lines.append(f"Threat Tags: {', '.join(threats) if threats else 'None'}")
+    if biome and biome.get("name"):
+        lines.append(f"Biome: {biome.get('name')}")
     lines.append("")
+
+    if biome:
+        lines.append("Biome Effects")
+        lines.append("-" * 60)
+        boon = str(biome.get("boon") or "").strip()
+        bane = str(biome.get("bane") or "").strip()
+        if boon:
+            lines.append(f"Boon: {boon}")
+        if bane:
+            lines.append(f"Bane: {bane}")
+        biome_tags = {str(t).strip().lower() for t in (biome.get("tags") or set()) if str(t).strip()}
+        matched_threats = [t for t in threats if str(t).strip().lower() in biome_tags]
+        for mt in matched_threats:
+            lines.append(f"[{mt}] may ignore bane effects.")
+        lines.append("")
 
     if room_plan:
         lines.append("Delve Layout")
@@ -3664,6 +3705,21 @@ def generate_scenario(data: DataBundle, user_inputs: Dict[str, Any]) -> Tuple[st
     st_id_norm = (scenario_type_id or "").strip().lower()
     rooms_based = ('rooms_based' in st_tags) or (st_id_norm in {"site", "lair"})
 
+    # Biome resolution by mode
+    mode_name = str(user_inputs.get("mode", "Custom")).strip().lower()
+    campaign_key = str(user_inputs.get("campaign_key") or "").strip()
+    biome_id = str(user_inputs.get("biome_id") or "").strip()
+    biome_entry: Optional[Dict[str, Any]] = None
+    if mode_name == "quick":
+        biome_id = ""
+    elif mode_name in ("custom", "questboard"):
+        if campaign_key and not biome_id:
+            biome_id = _campaign_biome_id_from_key(campaign_key)
+        if biome_id:
+            biome_entry = _find_entry_by_id(getattr(data, "biomes", []) or [], biome_id)
+            if not biome_entry:
+                footnotes.append(f"WARNING: biome_id={biome_id!r} not found in biomes.txt; biome effects omitted.")
+
     # Threat tags
     threat1 = (user_inputs.get("threat_tag_1") or "").strip()
     threat2 = (user_inputs.get("threat_tag_2") or "").strip()
@@ -3690,6 +3746,7 @@ def generate_scenario(data: DataBundle, user_inputs: Dict[str, Any]) -> Tuple[st
             encounter_kind="Scenario",
             timestamp=ts,
             inputs=user_inputs,
+            biome=biome_entry,
             scenario_type=selected_scenario_type,
             scenario_setup=(selected_scenario_type.get("setup") or selected_scenario_type.get("setup_hint") or "").strip()
                 if selected_scenario_type else "",
@@ -4065,6 +4122,7 @@ def generate_scenario(data: DataBundle, user_inputs: Dict[str, Any]) -> Tuple[st
         timestamp=ts,
         room_plan=room_plan,
         inputs=user_inputs,
+        biome=biome_entry,
         scenario_type=selected_scenario_type,
         scenario_setup=scenario_setup,
         objective=objective,

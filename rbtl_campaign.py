@@ -44,6 +44,11 @@ MAX_THREAT_ATTEMPTS_PER_SLOT = 250
 MAX_SETTLEMENT_COUNT_ATTEMPTS = 100
 MAX_MAP_PLACEMENT_ATTEMPTS = 500
 
+WATER_BIOME_ID = "013"
+COAST_BIOME_ID = "007"
+URBAN_BIOME_ID = "011"
+ROAD_BIOME_ID = "012"
+
 
 # ============================================================
 # #LABEL: NORMALIZATION HELPERS
@@ -960,12 +965,166 @@ def generate_sites(
     return sites
 
 
+def _paint_cluster(
+    grid: Dict[Tuple[int, int], str],
+    side: int,
+    biome_id: str,
+    target: int,
+    blocked: Set[Tuple[int, int]],
+) -> None:
+    if target <= 0:
+        return
+    starts = [c for c in all_cells(side) if c not in blocked and grid.get(c, "") == ""]
+    if not starts:
+        return
+    start = random.choice(starts)
+    frontier = [start]
+    while frontier and target > 0:
+        cell = frontier.pop(random.randrange(len(frontier)))
+        if cell in blocked or grid.get(cell, ""):
+            continue
+        grid[cell] = biome_id
+        target -= 1
+        x, y = cell
+        neighbors = [(x - 1, y), (x + 1, y), (x, y - 1), (x, y + 1)]
+        random.shuffle(neighbors)
+        for nx, ny in neighbors:
+            if 0 <= nx < side and 0 <= ny < side and (nx, ny) not in blocked and not grid.get((nx, ny), ""):
+                if random.random() < 0.85:
+                    frontier.append((nx, ny))
+
+
+def _generate_biome_grid(
+    *,
+    side: int,
+    biome_entries: List[Dict[str, Any]],
+    settlement_coords: List[Tuple[int, int]],
+    footnotes: List[str],
+) -> Dict[Tuple[int, int], str]:
+    biome_ids = {str(b.get("id", "")).strip() for b in biome_entries}
+    grid: Dict[Tuple[int, int], str] = {c: "" for c in all_cells(side)}
+
+    # Water body + coast band
+    water_target = max(2, int(round(side * side * 0.12)))
+    _paint_cluster(grid, side, WATER_BIOME_ID, water_target, blocked=set())
+    for x in range(side):
+        for y in range(side):
+            c = (x, y)
+            if grid[c] == WATER_BIOME_ID:
+                continue
+            n4 = [(x - 1, y), (x + 1, y), (x, y - 1), (x, y + 1)]
+            if any(0 <= nx < side and 0 <= ny < side and grid[(nx, ny)] == WATER_BIOME_ID for nx, ny in n4):
+                if random.random() < 0.65:
+                    grid[c] = COAST_BIOME_ID
+
+    blocked = {c for c in all_cells(side) if grid[c] in {WATER_BIOME_ID, COAST_BIOME_ID}}
+
+    # Primary clumps
+    primary = ["001", "002", "004", "006", "008"]
+    target_each = max(4, int(round((side * side * 0.45) / max(1, len(primary)))))
+    for bid in primary:
+        if bid in biome_ids:
+            _paint_cluster(grid, side, bid, target_each, blocked=blocked)
+
+    # Filler grassland/swamp
+    for c in all_cells(side):
+        if grid[c]:
+            continue
+        if "003" in biome_ids:
+            grid[c] = "003"
+        elif "005" in biome_ids and random.random() < 0.2:
+            grid[c] = "005"
+        else:
+            grid[c] = "001" if "001" in biome_ids else next(iter(biome_ids), "")
+
+    # Rare secondaries
+    for bid in ("009", "010"):
+        if bid not in biome_ids:
+            continue
+        for _ in range(max(1, side // 4)):
+            cand = random.choice(all_cells(side))
+            if cand in settlement_coords:
+                continue
+            if grid[cand] not in {WATER_BIOME_ID, COAST_BIOME_ID}:
+                grid[cand] = bid
+
+    # Urban on settlements only
+    for c in settlement_coords:
+        grid[c] = URBAN_BIOME_ID
+
+    # Lightweight roads connecting settlements to town center
+    if settlement_coords:
+        town = settlement_coords[0]
+        for sx, sy in settlement_coords[1:]:
+            x, y = sx, sy
+            while (x, y) != town:
+                if random.random() < 0.5 and x != town[0]:
+                    x += -1 if x > town[0] else 1
+                elif y != town[1]:
+                    y += -1 if y > town[1] else 1
+                elif x != town[0]:
+                    x += -1 if x > town[0] else 1
+                if grid[(x, y)] not in {WATER_BIOME_ID, URBAN_BIOME_ID}:
+                    grid[(x, y)] = ROAD_BIOME_ID
+
+    if WATER_BIOME_ID not in biome_ids:
+        footnotes.append("[WARN] Water biome id=013 missing from biomes.txt; map water generation may be inconsistent.")
+
+    return grid
+
+
+def _biome_symbol(biome_name: str, used: Set[str]) -> str:
+    letters = [ch for ch in (biome_name or "").upper() if "A" <= ch <= "Z"]
+    for ch in letters:
+        if ch not in used:
+            used.add(ch)
+            return ch
+    for ch in "ABCDEFGHIJKLMNOPQRSTUVWXYZ":
+        if ch not in used:
+            used.add(ch)
+            return ch
+    return "?"
+
+
+def _render_ascii_biome_map(
+    *,
+    side: int,
+    biome_grid: Dict[Tuple[int, int], str],
+    biome_name_by_id: Dict[str, str],
+) -> Tuple[List[str], List[str]]:
+    used_symbols: Set[str] = set()
+    ids_in_use: List[str] = []
+    for y in range(side):
+        for x in range(side):
+            bid = str(biome_grid.get((x, y), "") or "").strip()
+            if bid and bid not in ids_in_use:
+                ids_in_use.append(bid)
+
+    symbol_by_id: Dict[str, str] = {}
+    for bid in ids_in_use:
+        name = str(biome_name_by_id.get(bid, bid) or bid)
+        symbol_by_id[bid] = _biome_symbol(name, used_symbols)
+
+    header = "   " + " ".join(chr(ord('A') + x) for x in range(side))
+    lines = [header]
+    for y in range(side):
+        row_cells: List[str] = []
+        for x in range(side):
+            bid = str(biome_grid.get((x, y), "") or "").strip()
+            row_cells.append(symbol_by_id.get(bid, "?"))
+        lines.append(f"{y+1:>2} " + " ".join(row_cells))
+
+    legend = [f"{symbol_by_id[bid]} = {biome_name_by_id.get(bid, bid)}" for bid in ids_in_use]
+    return lines, legend
+
+
 def generate_map_layout(
     *,
     players: int,
     difficulty: str,
     settlements: List[Dict[str, Any]],
     threats_ordered: List[Dict[str, Any]],
+    biome_entries: List[Dict[str, Any]],
     footnotes: List[str],
 ) -> Dict[str, Any]:
     side = compute_map_side(players, difficulty, footnotes)
@@ -1030,7 +1189,30 @@ def generate_map_layout(
         footnotes=footnotes,
     )
 
-    return {"side": side, "settlements_with_coords": settlement_rows, "sites": sites}
+    biome_grid = _generate_biome_grid(
+        side=side,
+        biome_entries=biome_entries,
+        settlement_coords=settlement_coords_xy,
+        footnotes=footnotes,
+    )
+    biome_name_by_id = {str(b.get("id", "")).strip(): b.get("name", "") for b in biome_entries}
+    for s in settlement_rows:
+        cx = ord(str(s.get("coord", "A1"))[0:1].upper() or "A") - ord("A")
+        cy = int(str(s.get("coord", "A1"))[1:] or "1") - 1
+        s["biome_id"] = biome_grid.get((cx, cy), "")
+        s["biome_name"] = biome_name_by_id.get(s["biome_id"], "")
+
+    for site in sites:
+        if not site.get("reveal_coord"):
+            continue
+        xy = site.get("xy")
+        if not isinstance(xy, tuple):
+            continue
+        bid = biome_grid.get(xy, "")
+        site["biome_id"] = bid
+        site["biome_name"] = biome_name_by_id.get(bid, "")
+
+    return {"side": side, "settlements_with_coords": settlement_rows, "sites": sites, "biome_grid": biome_grid, "biome_name_by_id": biome_name_by_id}
 
 
 # ============================================================
@@ -1073,19 +1255,7 @@ def format_campaign_briefing(
         lines.append("")
     if truth_packet:
         key = _build_campaign_key(truth_packet)
-        lines.append("Campaign Truth Packet")
-        lines.append("-" * 60)
-        lines.append(f"Seed: {truth_packet.get('seed')}")
-        lines.append("Seed Scope: content-version only")
-        lines.append("Seed Does Not Lock: player count or difficulty")
         lines.append(f"Campaign Key: {key}")
-        lines.append(f"Biome ID: {truth_packet.get('biome_id','')}")
-        lines.append(f"Main Pressure ID: {truth_packet.get('main_pressure_id','')}")
-        lines.append(f"Sub Pressure ID: {truth_packet.get('sub_pressure_id','')}")
-        intro_id = truth_packet.get("intro_id")
-        lines.append(f"Intro Reference ID: {intro_id if intro_id else '(none)'}")
-        threats = truth_packet.get("threat_ids") or []
-        lines.append(f"Threat IDs: {', '.join(str(t) for t in threats) if threats else '(none)'}")
         lines.append("")
     lines.append(f"Players: {players}")
     lines.append(f"Difficulty: {difficulty.title()}")
@@ -1102,10 +1272,6 @@ def format_campaign_briefing(
         lines.append(f"Recommended Terrain: {str(biome['terrain']).strip()}")
     if biome.get("rough"):
         lines.append(f"Recommended Rough Terrain: {str(biome['rough']).strip()}")
-    if biome.get("tag") or biome.get("tags"):
-        btags = _tags(biome)
-        if btags:
-            lines.append(f"Biome Tags: {_fmt_tags(btags)}")
     lines.append("")
 
     # Pressures + Threats (combined)
@@ -1179,10 +1345,13 @@ def format_campaign_briefing(
         for aspect in aspects:
             name = str(aspect.get("name") or "").strip()
             desc = str(aspect.get("description") or "").strip()
+            effect = str(aspect.get("effects") or aspect.get("effect") or "").strip()
             if name:
                 lines.append(name)
             if desc:
                 lines.extend(_wrap_paragraphs(desc))
+            if effect:
+                lines.append(f"Effect: {effect}")
         open_segments = int(s.get("open_segments", 0) or 0)
         for _ in range(max(0, open_segments)):
             lines.append("______")
@@ -1198,6 +1367,23 @@ def format_campaign_briefing(
         else:
             lines.append(f"- {s.get('name', 'Site')}: ____________________")
     lines.append("")
+
+    biome_grid = layout.get("biome_grid") or {}
+    biome_name_by_id = layout.get("biome_name_by_id") or {}
+    if side > 0 and biome_grid and biome_name_by_id:
+        map_lines, legend_lines = _render_ascii_biome_map(
+            side=side,
+            biome_grid=biome_grid,
+            biome_name_by_id=biome_name_by_id,
+        )
+        lines.append("Biome Map")
+        lines.append("-" * 60)
+        lines.extend(map_lines)
+        lines.append("")
+        lines.append("Legend")
+        lines.append("-" * 60)
+        lines.extend([f"- {ln}" for ln in legend_lines])
+        lines.append("")
 
     # Footnotes
     lines.append("Footnotes")
@@ -1370,6 +1556,7 @@ def generate_campaign(data: DataBundle, inputs: Dict[str, Any]) -> Tuple[str, st
         difficulty=difficulty,
         settlements=settlements,
         threats_ordered=ordered_threats,
+        biome_entries=biomes,
         footnotes=footnotes,
     )
 
