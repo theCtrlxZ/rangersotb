@@ -1,8 +1,8 @@
-001|Forest|description=Grouped local flora and fauna are a natural nesting ground for mysterious evils|terrain=trees, logs|rough=mud, rocks|tag=goblins, bandits|not=military|rarity=common
+001|Forest|description=Grouped local flora and fauna are a natural nesting ground for mysterious evils|terrain=trees, logs|rough=mud, rocks|tag=goblins, bandits|rarity=common
 002|Desert|description=Rough, coarse sand as far as the eye can see. The overwhelming heat drives the wicked and desperate to nefarious purposes.|terrain=dunes, palm trees|rough=quicksand, oasis|tag=goblins, bandits|rarity=rare
 003|Grasslands|description=Rolling green hills as far as the eye can see. These farmlands are ripe for the picking.|terrain=trees, hills|rough=highgrass, river|rarity=common
 004|Mountains|description=There as many dangers that lay beneath the rocks as there are that prey from above.|terrain=cliff, boulder, pit|rough=rocks|rarity=common
-005|Swamp|description=Putrid fumes overwhelm the senses in these cursed marshlands.|terrain=trees, logs|rough=swamp|not=military|rarity=rare
+005|Swamp|description=Putrid fumes overwhelm the senses in these cursed marshlands.|terrain=trees, logs|rough=swamp|not=soldiers|rarity=rare
 006|Tundra|description=Harsh winds only embolden the bitter cold. Only the strongest survive.|terrain=snowbank, pinetrees|rough=deepsnow|not=goblins|rarity=rare
 007|Coast|description=The pleasant climate and ocean air mask an unseen evil waiting to strike.|terrain=palm trees, dunes|rough=sandtraps, tidepools|rarity=common
 008|Wasteland|description=This barren landscape has forced all creature and element of life to flee. Only evil remains.|terrain=dead tree, boulders|rough=rocks|rarity=uncommon
