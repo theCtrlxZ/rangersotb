@@ -716,6 +716,7 @@ def pick_settlement_types(
                     {
                         "name": name,
                         "description": str(pick.get("description") or "").strip(),
+                        "effects": str(pick.get("effects") or pick.get("effect") or "").strip(),
                         "segments": segments,
                     }
                 )
@@ -1070,6 +1071,36 @@ def _generate_biome_grid(
     if WATER_BIOME_ID not in biome_ids:
         footnotes.append("[WARN] Water biome id=013 missing from biomes.txt; map water generation may be inconsistent.")
 
+    # Policy update: tundra (006) cannot be orthogonally adjacent to desert (002).
+    if "006" in biome_ids and "002" in biome_ids:
+        tundra_desert_repairs = 0
+        for _ in range(8):
+            changed = False
+            for x in range(side):
+                for y in range(side):
+                    c = (x, y)
+                    here = grid.get(c, "")
+                    if here not in {"002", "006"}:
+                        continue
+                    other = "006" if here == "002" else "002"
+                    n4 = [(x - 1, y), (x + 1, y), (x, y - 1), (x, y + 1)]
+                    if not any(0 <= nx < side and 0 <= ny < side and grid.get((nx, ny), "") == other for nx, ny in n4):
+                        continue
+
+                    fallback = "003" if "003" in biome_ids else ("001" if "001" in biome_ids else "008")
+                    if fallback == here:
+                        fallback = "005" if "005" in biome_ids else fallback
+                    if fallback in {"002", "006", "", WATER_BIOME_ID, COAST_BIOME_ID, URBAN_BIOME_ID, ROAD_BIOME_ID}:
+                        continue
+
+                    grid[c] = fallback
+                    tundra_desert_repairs += 1
+                    changed = True
+            if not changed:
+                break
+        if tundra_desert_repairs > 0:
+            footnotes.append(f"Biome adjacency rule applied: separated tundra/desert at {tundra_desert_repairs} cell(s).")
+
     return grid
 
 
@@ -1142,7 +1173,7 @@ def generate_map_layout(
     def near_town_pool(max_dist: int) -> List[Tuple[int, int]]:
         return [c for c in cells if c not in used and manhattan(c, town_xy) <= max_dist]
 
-    # Place settlements with dist>=2 between settlements (no A1/B1 adjacency).
+    # Place settlements with dist>=3 between settlements.
     for s in settlements:
         stype = _norm(s.get("type"))
         if stype == "town" and not town_assigned:
@@ -1152,13 +1183,13 @@ def generate_map_layout(
             placed: Optional[Tuple[int, int]] = None
             for dist in (2, 3, 4, 5):
                 pool = near_town_pool(dist)
-                pool = [c for c in pool if all(manhattan(c, sc) >= 2 for sc in settlement_coords_xy)]
+                pool = [c for c in pool if all(manhattan(c, sc) >= 3 for sc in settlement_coords_xy)]
                 if pool:
                     placed = random.choice(pool)
                     break
 
             if placed is None:
-                pool = [c for c in cells if c not in used and all(manhattan(c, sc) >= 2 for sc in settlement_coords_xy)]
+                pool = [c for c in cells if c not in used and all(manhattan(c, sc) >= 3 for sc in settlement_coords_xy)]
                 if not pool:
                     pool = [c for c in cells if c not in used]
                     footnotes.append("[WARN] Settlement spacing softened due to tight map.")
