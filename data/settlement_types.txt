@@ -13,433 +13,117 @@ T007|Trading Hub|description=The town is built along an important road or river,
 #~~~~~~~~~~~~~~~~~~~~~
 001|Scattered Farming Community|description=Less of a village proper, and more of an extended network of closely linked farms.|effects=Upkeep Costs will not exceed 2 Gold Marks per campaign turn while you are here.|type=hamlet,village|segments=1|biome_not=desert,wasteland,underground|tags=economy,frontier,aspect
 
-002|Military Outpost
-description=There are too few troops here to mount any concerted action, but the palisade feels reassuring.
-effects=Recruit companions rolls gain +1.
-type=any
-segments=1
-biome_not=swamp
-tags=military,aspect
+002|Military Outpost|description=There are too few troops here to mount any concerted action, but the palisade feels reassuring.|effects=Recruit companions rolls gain +1.|type=any|segments=1|biome_not=swamp|tags=military,aspect
 
-003|Nomadic Camp
-description=A roaming culture has settled here for the season.
-effects=You may choose the Hunting Expedition activity here.
-type=any
-segments=1
-biome_not=underground
-tags=frontier,survival,aspect
+003|Nomadic Camp|description=A roaming culture has settled here for the season.|effects=You may choose the Hunting Expedition activity here.|type=any|segments=1|biome_not=underground|tags=frontier,survival,aspect
 
-004|Monastery
-description=A place of prayer and contemplation around which a settlement has formed.
-effects=Study rolls gain +1.
-type=any
-segments=1
-biome_not=wasteland
-tags=faith,knowledge,aspect
+004|Monastery|description=A place of prayer and contemplation around which a settlement has formed.|effects=Study rolls gain +1.|type=any|segments=1|biome_not=wasteland|tags=faith,knowledge,aspect
 
-005|Manor
-description=The extensive estate of a local noble dominates the area.
-effects=Blacksmith repairs may restore 2 items instead of 1.
-type=any
-segments=1
-biome_not=underground
-tags=social,economy,aspect
+005|Manor|description=The extensive estate of a local noble dominates the area.|effects=Blacksmith repairs may restore 2 items instead of 1.|type=any|segments=1|biome_not=underground|tags=social,economy,aspect
 
-007|Trading Hub
-description=Built along a major route, merchants are always passing through.
-effects=You may pay 10 Gold to gain +1 on a Rare Goods roll.
-type=any
-segments=1
-biome_not=underground
-tags=trade,economy,aspect
+007|Trading Hub|description=Built along a major route, merchants are always passing through.|effects=You may pay 10 Gold to gain +1 on a Rare Goods roll.|type=any|segments=1|biome_not=underground|tags=trade,economy,aspect
 
-008|Town Guard Barracks
-description=A permanent guard presence keeps order.
-effects=Helping the Town Guard also grants +1 on your next Recruit roll.
-type=town,city
-segments=1
-biome_not=swamp
-tags=military,social,aspect
+008|Town Guard Barracks|description=A permanent guard presence keeps order.|effects=Helping the Town Guard also grants +1 on your next Recruit roll.|type=town,city|segments=1|biome_not=swamp|tags=military,social,aspect
 
-009|Watchtower
-description=A tall structure surveys the surrounding land.
-effects=Scout checks gain +2.
-type=village,town,city
-segments=1
-biome_not=underground
-tags=military,survival,aspect
+009|Watchtower|description=A tall structure surveys the surrounding land.|effects=Scout checks gain +2.|type=village,town,city|segments=1|biome_not=underground|tags=military,survival,aspect
 
-010|Military Headquarters
-description=Regional defense is coordinated from here.
-effects=Recruit companions rolls gain +2.
-type=town,city
-segments=2
-requires=Town Guard Barracks
-biome_not=swamp
-tags=military,aspect
+010|Military Headquarters|description=Regional defense is coordinated from here.|effects=Recruit companions rolls gain +2.|type=town,city|segments=2|requires=Town Guard Barracks|biome_not=swamp|tags=military,aspect
 
-011|Open-Air Market
-description=Stalls crowd the streets on most days.
-effects=Purchase goods rolls gain +1.
-type=village,town,city
-segments=1
-biome_not=wasteland
-tags=economy,trade,aspect
+011|Open-Air Market|description=Stalls crowd the streets on most days.|effects=Purchase goods rolls gain +1.|type=village,town,city|segments=1|biome_not=wasteland|tags=economy,trade,aspect
 
-012|Merchant Guildhouse
-description=Traders coordinate prices and caravans here.
-effects=You may spend 10 Gold to gain +2 on a Rare Goods roll.
-type=town,city
-segments=1
-biome_not=wasteland
-tags=economy,trade,aspect
+012|Merchant Guildhouse|description=Traders coordinate prices and caravans here.|effects=You may spend 10 Gold to gain +2 on a Rare Goods roll.|type=town,city|segments=1|biome_not=wasteland|tags=economy,trade,aspect
 
-013|Grand Market
-description=A permanent center of regional trade.
-effects=Rare Goods rolls gain +2.
-type=city
-segments=3
-requires=Open-Air Market
-biome_not=wasteland
-tags=economy,trade,aspect
+013|Grand Market|description=A permanent center of regional trade.|effects=Rare Goods rolls gain +2.|type=city|segments=3|requires=Open-Air Market|biome_not=wasteland|tags=economy,trade,aspect
 
-014|Scribe’s Archive
-description=Scrolls, maps, and records are meticulously kept.
-effects=Study rolls gain +1.
-type=town,city
-segments=1
-biome_not=wasteland
-tags=knowledge,aspect
+014|Scribe’s Archive|description=Scrolls, maps, and records are meticulously kept.|effects=Study rolls gain +1.|type=town,city|segments=1|biome_not=wasteland|tags=knowledge,aspect
 
-015|Shrine of the Old Gods
-description=A weathered shrine tended by locals.
-effects=Train may heal 1 HP instead of granting experience.
-type=any
-segments=1
-biome_not=underground
-tags=faith,survival,aspect
+015|Shrine of the Old Gods|description=A weathered shrine tended by locals.|effects=Train may heal 1 HP instead of granting experience.|type=any|segments=1|biome_not=underground|tags=faith,survival,aspect
 
-016|Scholar Academy
-description=Libraries and lecture halls dominate this sector.
-effects=Study rolls gain +2.
-type=city
-segments=2
-requires=Scribe’s Archive
-biome_not=wasteland
-tags=knowledge,aspect
+016|Scholar Academy|description=Libraries and lecture halls dominate this sector.|effects=Study rolls gain +2.|type=city|segments=2|requires=Scribe’s Archive|biome_not=wasteland|tags=knowledge,aspect
 
-017|Hunting Lodge
-description=A timber lodge used by hunters and trappers.
-effects=Hunting Expedition rolls gain +1.
-type=hamlet,village
-segments=1
-biome_req=forest
-tags=survival,frontier,aspect
+017|Hunting Lodge|description=A timber lodge used by hunters and trappers.|effects=Hunting Expedition rolls gain +1.|type=hamlet,village|segments=1|biome_req=forest|tags=survival,frontier,aspect
 
-018|Ancient Grove
-description=Old trees form a place of quiet reverence.
-effects=Chat with locals rolls gain +1.
-type=any
-segments=1
-biome_req=forest
-tags=faith,social,aspect
+018|Ancient Grove|description=Old trees form a place of quiet reverence.|effects=Chat with locals rolls gain +1.|type=any|segments=1|biome_req=forest|tags=faith,social,aspect
 
-019|Caravan Waystation
-description=A vital rest stop between long journeys.
-effects=Scout automatically succeeds on a 9+ roll.
-type=village,town
-segments=1
-biome_req=desert
-tags=trade,survival,aspect
+019|Caravan Waystation|description=A vital rest stop between long journeys.|effects=Scout automatically succeeds on a 9+ roll.|type=village,town|segments=1|biome_req=desert|tags=trade,survival,aspect
 
-020|Spice Exchange
-description=Salt and spices are weighed and guarded carefully.
-effects=Purchase goods rolls gain +1.
-type=town,city
-segments=1
-biome_req=desert
-tags=economy,trade,aspect
+020|Spice Exchange|description=Salt and spices are weighed and guarded carefully.|effects=Purchase goods rolls gain +1.|type=town,city|segments=1|biome_req=desert|tags=economy,trade,aspect
 
-021|Stone Citadel
-description=A fortress carved directly into the mountain.
-effects=Help the Town Guard reduces upkeep by 2 Gold.
-type=town,city
-segments=2
-biome_req=mountains
-tags=military,aspect
+021|Stone Citadel|description=A fortress carved directly into the mountain.|effects=Help the Town Guard reduces upkeep by 2 Gold.|type=town,city|segments=2|biome_req=mountains|tags=military,aspect
 
-022|Mining Consortium
-description=Ore extraction drives the local economy.
-effects=Hard Work grants +20 Gold on a success.
-type=village,town,city
-segments=1
-biome_req=mountains
-tags=economy,aspect
+022|Mining Consortium|description=Ore extraction drives the local economy.|effects=Hard Work grants +20 Gold on a success.|type=village,town,city|segments=1|biome_req=mountains|tags=economy,aspect
 
-023|Fishing Pier
-description=Boats leave port daily with the tide.
-effects=Hard Work always succeeds here.
-type=village,town,city
-segments=1
-biome_req=coast
-tags=economy,survival,aspect
+023|Fishing Pier|description=Boats leave port daily with the tide.|effects=Hard Work always succeeds here.|type=village,town,city|segments=1|biome_req=coast|tags=economy,survival,aspect
 
-024|Harbor Authority
-description=Dock traffic is tightly regulated.
-effects=Rare Goods rolls gain +1.
-type=town,city
-segments=1
-biome_req=coast
-tags=trade,social,aspect
+024|Harbor Authority|description=Dock traffic is tightly regulated.|effects=Rare Goods rolls gain +1.|type=town,city|segments=1|biome_req=coast|tags=trade,social,aspect
 
-025|Herbalist Commune
-description=Rare plants are cultivated in the mire.
-effects=Forage grants 3 doses instead of 2.
-type=any
-segments=1
-biome_req=swamp
-tags=survival,knowledge,aspect
+025|Herbalist Commune|description=Rare plants are cultivated in the mire.|effects=Forage grants 3 doses instead of 2.|type=any|segments=1|biome_req=swamp|tags=survival,knowledge,aspect
 
-026|Hidden Causeways
-description=Raised paths known only to locals.
-effects=Scout grants +1 and avoids dangerous terrain.
-type=hamlet,village
-segments=1
-biome_req=swamp
-tags=frontier,survival,aspect
+026|Hidden Causeways|description=Raised paths known only to locals.|effects=Scout grants +1 and avoids dangerous terrain.|type=hamlet,village|segments=1|biome_req=swamp|tags=frontier,survival,aspect
 
-027|Veteran Hunting Bands
-description=Only the hardened survive long here.
-effects=Recruited companions start with +2 experience.
-type=hamlet,village
-segments=1
-biome_req=tundra
-tags=military,survival,aspect
+027|Veteran Hunting Bands|description=Only the hardened survive long here.|effects=Recruited companions start with +2 experience.|type=hamlet,village|segments=1|biome_req=tundra|tags=military,survival,aspect
 
-028|Icebound Storehouses
-description=Food and supplies are frozen solid for preservation.
-effects=Upkeep Costs will not exceed 1 Gold per campaign turn while you are here.
-type=village,town,city
-segments=1
-biome_req=tundra
-tags=economy,survival,aspect
+028|Icebound Storehouses|description=Food and supplies are frozen solid for preservation.|effects=Upkeep Costs will not exceed 1 Gold per campaign turn while you are here.|type=village,town,city|segments=1|biome_req=tundra|tags=economy,survival,aspect
 
-029|Hall of the Winter Oath
-description=Oaths sworn here are never forgotten.
-effects=Train grants +2 experience on a successful 9TN check.
-type=town,city
-segments=2
-biome_req=tundra
-tags=social,knowledge,aspect
+029|Hall of the Winter Oath|description=Oaths sworn here are never forgotten.|effects=Train grants +2 experience on a successful 9TN check.|type=town,city|segments=2|biome_req=tundra|tags=social,knowledge,aspect
 
-030|Scavenger Enclave
-description=Locals specialize in reclaiming lost relics.
-effects=Forage may instead roll on the Rare Goods table.
-type=hamlet,village,town
-segments=1
-biome_req=ruins
-tags=knowledge,trade,aspect
+030|Scavenger Enclave|description=Locals specialize in reclaiming lost relics.|effects=Forage may instead roll on the Rare Goods table.|type=hamlet,village,town|segments=1|biome_req=ruins|tags=knowledge,trade,aspect
 
-031|Ancient Archive
-description=Fragments of a forgotten civilization remain.
-effects=Questboard rolls gain +2.
-type=town,city
-segments=2
-biome_req=ruins
-tags=knowledge,aspect
+031|Ancient Archive|description=Fragments of a forgotten civilization remain.|effects=Questboard rolls gain +2.|type=town,city|segments=2|biome_req=ruins|tags=knowledge,aspect
 
-032|Collapsed Forum
-description=Old plazas still draw people together.
-effects=Chat with locals rolls gain +1 and may reveal hidden contracts.
-type=any
-segments=1
-biome_req=ruins
-tags=social,aspect
+032|Collapsed Forum|description=Old plazas still draw people together.|effects=Chat with locals rolls gain +1 and may reveal hidden contracts.|type=any|segments=1|biome_req=ruins|tags=social,aspect
 
-033|Deep Mine Shafts
-description=Ore is pulled from the depths at great risk.
-effects=Hard Work grants +30 Gold on a success.
-type=village,town,city
-segments=1
-biome_req=underground
-tags=economy,aspect
+033|Deep Mine Shafts|description=Ore is pulled from the depths at great risk.|effects=Hard Work grants +30 Gold on a success.|type=village,town,city|segments=1|biome_req=underground|tags=economy,aspect
 
-034|Subterranean Bazaar
-description=Trade thrives in torchlit caverns.
-effects=Purchase goods rolls gain +1 and Rare Goods rolls gain +1.
-type=town,city
-segments=2
-biome_req=underground
-tags=trade,economy,aspect
+034|Subterranean Bazaar|description=Trade thrives in torchlit caverns.|effects=Purchase goods rolls gain +1 and Rare Goods rolls gain +1.|type=town,city|segments=2|biome_req=underground|tags=trade,economy,aspect
 
-035|Hidden Transit Tunnels
-description=Secret routes bypass surface dangers.
-effects=Scout automatically succeeds when departing this settlement.
-type=any
-segments=1
-biome_req=underground
-tags=survival,frontier,aspect
+035|Hidden Transit Tunnels|description=Secret routes bypass surface dangers.|effects=Scout automatically succeeds when departing this settlement.|type=any|segments=1|biome_req=underground|tags=survival,frontier,aspect
 
-036|Relic Water Cistern
-description=Ancient technology still provides clean water.
-effects=Town Healer services cost no Gold here.
-type=any
-segments=1
-biome_req=wasteland
-tags=survival,knowledge,aspect
+036|Relic Water Cistern|description=Ancient technology still provides clean water.|effects=Town Healer services cost no Gold here.|type=any|segments=1|biome_req=wasteland|tags=survival,knowledge,aspect
 
-037|Scrap Bastion
-description=Walls of scavenged metal form a brutal defense.
-effects=Help the Town Guard reduces upkeep to 0 Gold.
-type=town,city
-segments=2
-biome_req=wasteland
-tags=military,aspect
+037|Scrap Bastion|description=Walls of scavenged metal form a brutal defense.|effects=Help the Town Guard reduces upkeep to 0 Gold.|type=town,city|segments=2|biome_req=wasteland|tags=military,aspect
 
-038|Ash Market
-description=Trade is harsh but necessary.
-effects=Rare Goods rolls gain +2.
-type=city
-segments=3
-biome_req=wasteland
-tags=economy,trade,aspect
+038|Ash Market|description=Trade is harsh but necessary.|effects=Rare Goods rolls gain +2.|type=city|segments=3|biome_req=wasteland|tags=economy,trade,aspect
 
-039|Statue of the Hero
-description=A legendary figure stands immortalized in stone.
-effects=Train grants +1 additional experience.
-type=any
-segments=1
-biome_not=underground
-tags=social,faith,aspect
+039|Statue of the Hero|description=A legendary figure stands immortalized in stone.|effects=Train grants +1 additional experience.|type=any|segments=1|biome_not=underground|tags=social,faith,aspect
 
-040|Oasis
-description=Fresh water and shade draw travelers from afar.
-effects=Upkeep Costs will not exceed 1 Gold while here.
-type=hamlet,village,town
-segments=1
-biome_req=desert
-tags=survival,trade,aspect
+040|Oasis|description=Fresh water and shade draw travelers from afar.|effects=Upkeep Costs will not exceed 1 Gold while here.|type=hamlet,village,town|segments=1|biome_req=desert|tags=survival,trade,aspect
 
-041|Fighting Pits
-description=Combat is a form of entertainment and justice.
-effects=Recruit companions rolls gain +1 and recruited companions start with +1 experience.
-type=town,city
-segments=1
-biome_not=underground
-tags=military,social,aspect
+041|Fighting Pits|description=Combat is a form of entertainment and justice.|effects=Recruit companions rolls gain +1 and recruited companions start with +1 experience.|type=town,city|segments=1|biome_not=underground|tags=military,social,aspect
 
-042|Gladiatorial Arena
-description=Grand spectacles draw crowds and champions alike.
-effects=Recruit companions rolls gain +2.
-type=city
-segments=3
-requires=Fighting Pits
-biome_not=underground
-tags=military,social,aspect
+042|Gladiatorial Arena|description=Grand spectacles draw crowds and champions alike.|effects=Recruit companions rolls gain +2.|type=city|segments=3|requires=Fighting Pits|biome_not=underground|tags=military,social,aspect
 
-043|Ancient Pyramid
-description=A massive structure older than recorded history.
-effects=Study rolls gain +2 and may reveal a special contract.
-type=town,city
-segments=2
-biome_req=desert
-tags=knowledge,faith,aspect
+043|Ancient Pyramid|description=A massive structure older than recorded history.|effects=Study rolls gain +2 and may reveal a special contract.|type=town,city|segments=2|biome_req=desert|tags=knowledge,faith,aspect
 
-044|The King’s Road
-description=A perfectly maintained road stretches onward.
-effects=Travel speed is doubled for the first day after departing.
-type=any
-segments=1
-biome_not=underground
-tags=trade,frontier,aspect
+044|The King’s Road|description=A perfectly maintained road stretches onward.|effects=Travel speed is doubled for the first day after departing.|type=any|segments=1|biome_not=underground|tags=trade,frontier,aspect
 
-045|Stables
-description=Well-kept mounts are always available.
-effects=Scout checks gain +1 and travel never suffers delays.
-type=village,town,city
-segments=1
-biome_not=underground
-tags=survival,trade,aspect
+045|Stables|description=Well-kept mounts are always available.|effects=Scout checks gain +1 and travel never suffers delays.|type=village,town,city|segments=1|biome_not=underground|tags=survival,trade,aspect
 
-046|Local Tavern
-description=A place to drink, gossip, and find work.
-effects=Chat with locals rolls gain +2.
-type=any
-segments=1
-biome_not=underground
-tags=social,aspect
+046|Local Tavern|description=A place to drink, gossip, and find work.|effects=Chat with locals rolls gain +2.|type=any|segments=1|biome_not=underground|tags=social,aspect
 
-047|Moneylender
-description=Coin flows freely, for a price.
-effects=You may ignore the Gold cost of one settlement activity. Until you leave, all checks here suffer -1.
-type=town,city
-tags=economy,social
+047|Moneylender|description=Coin flows freely, for a price.|effects=You may ignore the Gold cost of one settlement activity. Until you leave, all checks here suffer -1.|type=town,city|segments=1|tags=economy,social
 
-048|River Docks
-description=Boats and barges come and go with the tide.
-effects=Hard Work generates an additional 10 Gold on a success.
-type=town,city
-tags=economy,trade
+048|River Docks|description=Boats and barges come and go with the tide.|effects=Hard Work generates an additional 10 Gold on a success.|type=town,city|segments=1|tags=economy,trade
 
-049|Pilgrimage Site
-description=Faithful travelers arrive daily.
-effects=Chat with locals rolls of 01–20 instead grant 1 Adventure Point.
-type=village,town,city
-tags=faith,social
+049|Pilgrimage Site|description=Faithful travelers arrive daily.|effects=Chat with locals rolls of 01–20 instead grant 1 Adventure Point.|type=village,town,city|segments=2|tags=faith,social
 
-050|Funerary Grounds
-description=The dead are honored, and feared.
-effects=Town Healer costs are reduced by 5 Gold.
-type=any
-tags=faith,survival
+050|Funerary Grounds|description=The dead are honored, and feared.|effects=Town Healer costs are reduced by 5 Gold.|type=any|segments=1|tags=faith,survival
 
-051|Bell Tower
-description=Its ringing marks danger, prayer, and time.
-effects=Scout and Recruit checks gain +1.
-type=village,town,city
-tags=faith,military
+051|Bell Tower|description=Its ringing marks danger, prayer, and time.|effects=Scout and Recruit checks gain +1.|type=village,town,city|segments=1|tags=faith,military
 
-052|Tanner’s Yard
-description=The stench carries far, but the work is steady.
-effects=Hard Work generates an additional 10 Gold.
-type=village,town
-tags=survival,economy
+052|Tanner’s Yard|description=The stench carries far, but the work is steady.|effects=Hard Work generates an additional 10 Gold.|type=village,town|segments=1|tags=survival,economy
 
-053|Festival Grounds
-description=The people know how to celebrate.
-effects=Train grants +1 Experience without requiring a check.
-type=village,town,city
-tags=social
+053|Festival Grounds|description=The people know how to celebrate.|effects=Train grants +1 Experience without requiring a check.|type=village,town,city|segments=1|tags=social
 
-054|Council Hall
-description=Local leaders argue endlessly inside.
-effects=Chat with locals checks gain +2.
-type=town,city
-tags=social,political
+054|Council Hall|description=Local leaders argue endlessly inside.|effects=Chat with locals checks gain +2.|type=town,city|segments=2|tags=social,political
 
-055|Foreign Embassy
-description=Strange customs and alliances abound.
-effects=Chat with locals may roll twice and choose one result.
-type=city
-tags=social,trade
+055|Foreign Embassy|description=Strange customs and alliances abound.|effects=Chat with locals may roll twice and choose one result.|type=city|tags=social,trade
 
-056|Grand Cathedral
-description=Faith and power intertwine here.
-effects=Town Healer heals all injuries without additional cost.
-type=city
-tags=faith,social
+056|Grand Cathedral|description=Faith and power intertwine here.|effects=Town Healer heals all injuries without additional cost.|type=city|segments=3|tags=faith,social
 
-057|Arcane Collegium
-description=Magic is studied openly.
-effects=Study checks gain +2. You may choose to Study instead of Train this visit.
-type=city
-tags=knowledge
+057|Arcane Collegium|description=Magic is studied openly.|effects=Study checks gain +2. You may choose to Study instead of Train this visit.|type=city|segments=2|tags=knowledge
 
-058|Criminal Underworld
-description=Everyone knows, no one admits it.
-effects=Purchase goods checks gain +1, but Recruit checks suffer -1.
-type=town,city
-tags=social,economy
+058|Criminal Underworld|description=Everyone knows, no one admits it.|effects=Purchase goods checks gain +1, but Recruit checks suffer -1.|type=town,city|segments=1|tags=social,economy
 
 
 
