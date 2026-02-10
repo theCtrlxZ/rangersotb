@@ -109,7 +109,7 @@ def _not_tokens(entry: Dict[str, Any]) -> Set[str]:
 
 
 def _types(entry: Dict[str, Any]) -> Set[str]:
-    # settlement_types uses type=village,hamlet,town,any
+    # settlement entries use type=village,hamlet,town,city,any
     return _csv_set(entry.get("type", ""))
 
 
@@ -549,7 +549,7 @@ def pick_threats(
 
 # ============================================================
 # #LABEL: SETTLEMENT GENERATION
-# What this section does: Picks a Town + 0–2 Villages + 0–2 Hamlets, and assigns variants.
+# What this section does: Picks a Town + 0–2 Villages + 0–2 Hamlets, and assigns aspects.
 # ============================================================
 
 def choose_settlement_counts(footnotes: List[str], override_total: Optional[int] = None) -> Dict[str, int]:
@@ -581,58 +581,146 @@ def choose_settlement_counts(footnotes: List[str], override_total: Optional[int]
     _abort(footnotes, f"Could not generate settlement counts within constraints after {MAX_SETTLEMENT_COUNT_ATTEMPTS} attempts.")
 
 
+def _aspect_segments(entry: Dict[str, Any]) -> int:
+    raw = entry.get("segments")
+    try:
+        return max(1, int(raw))
+    except (TypeError, ValueError):
+        return 1
+
+
+def _aspect_requires(entry: Dict[str, Any]) -> Set[str]:
+    return _csv_set(entry.get("requires", ""))
+
+
+def _aspect_name(entry: Dict[str, Any]) -> str:
+    return str(entry.get("name") or "").strip()
+
+
+def _is_aspect_entry(entry: Dict[str, Any]) -> bool:
+    entry_id = str(entry.get("id") or "").strip().upper()
+    if entry_id.startswith("T"):
+        return False
+    return True
+
+
+def _settlement_segment_capacity(settlement_type: str) -> int:
+    return {
+        "hamlet": 3,
+        "village": 5,
+        "town": 8,
+        "city": 12,
+    }.get(_norm(settlement_type), 3)
+
+
+def _settlement_random_aspect_count(settlement_type: str) -> int:
+    return {
+        "hamlet": 1,
+        "village": 2,
+        "town": 3,
+        "city": 4,
+    }.get(_norm(settlement_type), 1)
+
+
+def _biome_ignores_constraints(biome: Dict[str, Any]) -> bool:
+    name = _norm(biome.get("name"))
+    return name in {"urban", "road"}
+
+
+def _biome_allows_aspect(biome: Dict[str, Any], entry: Dict[str, Any]) -> bool:
+    if _biome_ignores_constraints(biome):
+        return True
+    biome_name = _norm(biome.get("name"))
+    biome_req = _csv_set(entry.get("biome_req", ""))
+    biome_not = _csv_set(entry.get("biome_not", ""))
+    if biome_req and biome_name not in biome_req:
+        return False
+    if biome_not and biome_name in biome_not:
+        return False
+    return True
+
+
 def pick_settlement_types(
     settlement_types: List[Dict[str, Any]],
     counts: Dict[str, int],
+    biome: Dict[str, Any],
     footnotes: List[str],
 ) -> List[Dict[str, Any]]:
-    """Picks specific settlement variants. Supports type=any and prefers exact matches."""
+    """Picks settlement aspects. Enforces size, biome, and segment constraints."""
 
     results: List[Dict[str, Any]] = []
     if not settlement_types:
         for stype, n in counts.items():
             for _ in range(n):
-                results.append({"type": stype, "variant": None, "variant_description": "", "effect": ""})
+                capacity = _settlement_segment_capacity(stype)
+                results.append({"type": stype, "aspects": [], "open_segments": capacity})
         return results
 
-    used_ids: Set[str] = set()
-
-    def matches(entry: Dict[str, Any], settlement_type: str) -> bool:
-        want = _norm(settlement_type)
-        types = _types(entry)
-        tags = _csv_set(entry.get("tag", "")) | _tags(entry)
-        return ("any" in types) or (want in types) or ("any" in tags) or (want in tags)
-
-    def is_exact(entry: Dict[str, Any], settlement_type: str) -> bool:
-        want = _norm(settlement_type)
-        types = _types(entry)
-        tags = _csv_set(entry.get("tag", "")) | _tags(entry)
-        return (want in types) or (want in tags)
+    aspects_pool = [e for e in settlement_types if _is_aspect_entry(e)]
+    if not aspects_pool:
+        footnotes.append("[WARN] No settlement aspects found (check settlement_types.txt).")
 
     for settlement_type, n in counts.items():
         for _ in range(n):
-            candidates_all = [e for e in settlement_types if e.get("id") not in used_ids and matches(e, settlement_type)]
-            if not candidates_all:
-                footnotes.append(f"[WARN] No settlement variants for '{_norm(settlement_type)}' (check type=... or type=any).")
-                results.append({"type": settlement_type, "variant": None, "variant_description": "", "effect": ""})
-                continue
+            size_norm = _norm(settlement_type)
+            capacity = _settlement_segment_capacity(settlement_type)
+            random_count = _settlement_random_aspect_count(settlement_type)
+            picked_aspects: List[Dict[str, Any]] = []
+            used_ids: Set[str] = set()
+            picked_names: Set[str] = set()
+            used_segments = 0
 
-            exact = [e for e in candidates_all if is_exact(e, settlement_type)]
-            candidates = exact if exact else candidates_all
+            def eligible(entry: Dict[str, Any], remaining: int) -> bool:
+                if entry.get("id") in used_ids:
+                    return False
+                types = _types(entry)
+                if types and ("any" not in types) and (size_norm not in types):
+                    return False
+                if not _biome_allows_aspect(biome, entry):
+                    return False
+                segments = _aspect_segments(entry)
+                if segments >= 3:
+                    return False
+                if segments > remaining:
+                    return False
+                if segments == 2 and size_norm not in {"town", "city"}:
+                    return False
+                requires = _aspect_requires(entry)
+                if requires and not requires.issubset(picked_names):
+                    return False
+                if segments == 2 and requires:
+                    return False
+                return True
 
-            pick = weighted_choice(candidates)
-            if not pick:
-                results.append({"type": settlement_type, "variant": None, "variant_description": "", "effect": ""})
-                continue
+            for _ in range(random_count):
+                remaining = capacity - used_segments
+                candidates = [e for e in aspects_pool if eligible(e, remaining)]
+                if not candidates:
+                    footnotes.append(f"[WARN] Not enough eligible aspects for {size_norm} settlement in biome '{_norm(biome.get('name'))}'.")
+                    break
+                pick = weighted_choice(candidates)
+                if not pick:
+                    break
+                used_ids.add(pick.get("id"))
+                name = _aspect_name(pick)
+                if name:
+                    picked_names.add(_norm(name))
+                segments = _aspect_segments(pick)
+                used_segments += segments
+                picked_aspects.append(
+                    {
+                        "name": name,
+                        "description": str(pick.get("description") or "").strip(),
+                        "segments": segments,
+                    }
+                )
 
-            used_ids.add(pick["id"])
-            effect_text = (pick.get("effect") or pick.get("effects") or "").strip()
+            open_segments = max(0, capacity - used_segments)
             results.append(
                 {
                     "type": settlement_type,
-                    "variant": pick.get("name"),
-                    "variant_description": (pick.get("description") or "").strip(),
-                    "effect": effect_text,
+                    "aspects": picked_aspects,
+                    "open_segments": open_segments,
                 }
             )
 
@@ -924,9 +1012,8 @@ def generate_map_layout(
         settlement_rows.append(
             {
                 "type": s.get("type", ""),
-                "variant": s.get("variant"),
-                "variant_description": s.get("variant_description", ""),
-                "effect": s.get("effect", ""),
+                "aspects": s.get("aspects", []),
+                "open_segments": s.get("open_segments", 0),
                 "coord": coord_str(coord[0], coord[1]),
             }
         )
@@ -1084,16 +1171,21 @@ def format_campaign_briefing(
     lines.append("Settlements")
     for s in layout.get("settlements_with_coords", []):
         lines.append("Settlement Name: __________________________")
-        lines.append(f"Category: {s.get('type', '')}  @ {s.get('coord', '')}")
-        lines.append(f"Variant: {s.get('variant') or '(none)'}")
-        desc = (s.get("variant_description") or "").strip()
-        if desc:
-            lines.append(f"About: {desc}")
-        eff = (s.get("effect") or "").strip()
-        if eff:
-            lines.append(f"Effect: {eff}")
-        else:
-            lines.append("Effect: (none)")
+        category = _norm(s.get("type", ""))
+        if category:
+            category = category.lower()
+        lines.append(f"Category: {category}  @ {s.get('coord', '')}")
+        aspects = s.get("aspects", []) or []
+        for aspect in aspects:
+            name = str(aspect.get("name") or "").strip()
+            desc = str(aspect.get("description") or "").strip()
+            if name:
+                lines.append(name)
+            if desc:
+                lines.extend(_wrap_paragraphs(desc))
+        open_segments = int(s.get("open_segments", 0) or 0)
+        for _ in range(max(0, open_segments)):
+            lines.append("______")
         lines.append("")
 
     lines.append("Sites")
@@ -1269,7 +1361,7 @@ def generate_campaign(data: DataBundle, inputs: Dict[str, Any]) -> Tuple[str, st
 
     # Step 5: Settlements
     settlement_counts = choose_settlement_counts(footnotes, override_total=override_settlements)
-    settlements = pick_settlement_types(settlement_types, settlement_counts, footnotes)
+    settlements = pick_settlement_types(settlement_types, settlement_counts, biome, footnotes)
 
     # Step 6: Map + Sites
     ordered_threats = [main_threat] + list(secondary_threats)
