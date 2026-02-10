@@ -747,6 +747,9 @@ def run_cli(data: Any) -> Dict[str, Any]:
     if pick == BACK or pick == RESTART:
         pick = "Now"
 
+    campaign_key = ""
+    campaign_key_parsed = None
+
     if pick == "Now":
         inputs = gather_inputs_now(data)
     elif pick == "Quick":

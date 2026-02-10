@@ -1341,6 +1341,8 @@ def format_campaign_briefing(
         if category:
             category = category.lower()
         lines.append(f"Category: {category}  @ {s.get('coord', '')}")
+        if s.get("biome_name"):
+            lines.append(f"Biome: {s.get('biome_name')}")
         aspects = s.get("aspects", []) or []
         for aspect in aspects:
             name = str(aspect.get("name") or "").strip()
@@ -1363,7 +1365,10 @@ def format_campaign_briefing(
     sites_sorted = sorted(layout.get("sites", []), key=lambda s: order.get(s.get("kind", ""), 99))
     for s in sites_sorted:
         if s.get("reveal_coord"):
-            lines.append(f"- {s.get('name', 'Site')} @ {s.get('coord', '')}")
+            lbl = f"- {s.get('name', 'Site')} @ {s.get('coord', '')}"
+            if s.get("biome_name"):
+                lbl += f" [{s.get('biome_name')}]"
+            lines.append(lbl)
         else:
             lines.append(f"- {s.get('name', 'Site')}: ____________________")
     lines.append("")
