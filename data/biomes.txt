@@ -10,4 +10,4 @@
 010|Underground|description=Pitch black caves, tunnels, and catacombs that have never seen the light of day.|terrain=stalagmite, cliff, waterfall|rough=rocks,puddles,river|rarity=uncommon|boon=Natural Fortification - Armor+1|bane=Pitch Darkness - Shoot-1,Perception-1|tag=monsters,goblins
 011|Urban|description=Man-made communities such as villages, towns, and cities.|terrain=building, trees|rough=rocks, highgrass|rarity=common|boon=Command Presence - Leadership+1,Armory+1|bane=Sensory Overload - Perception-1|tag=cultists,bandits
 012|Road|description=The main road that reaches through the countryside.|terrain=trees, hills|rough=highgrass, river|rarity=common|boon=Clear Passage - Move+1|bane=No Cover - Armor-1|tag=soldiers
-
+013|Water|description=Ocean, Lakes, Rivers, Ponds.|rarity=uncommon| 
