@@ -3302,10 +3302,10 @@ def build_briefing(
             lines.append(f"Boon: {boon}")
         if bane:
             lines.append(f"Bane: {bane}")
-        biome_tags = {str(t).strip().lower() for t in (biome.get("tags") or set()) if str(t).strip()}
-        matched_threats = [t for t in threats if str(t).strip().lower() in biome_tags]
-        for mt in matched_threats:
-            lines.append(f"[{mt}] may ignore bane effects.")
+        for threat in threats:
+            threat = str(threat or "").strip().lower()
+            if threat and threat != "none":
+                lines.append(f"[{threat}] may ignore bane effects.")
         lines.append("")
 
     if room_plan:
