@@ -441,7 +441,7 @@ def gather_inputs_quick(data: Any) -> Dict[str, Any]:
     return inputs
 
 
-def gather_inputs_custom(data: Any) -> Dict[str, Any]:
+def gather_inputs_custom(data: Any, campaign_biome_id: str = "") -> Dict[str, Any]:
     settings: Dict[str, str] = dget(data, "settings", {}) or {}
     units: List[Dict[str, Any]] = dget(data, "enemy_units", []) or []
     scen_entries: List[Dict[str, Any]] = dget(data, "scenario_objectives", []) or dget(data, "scen_entries", []) or []
@@ -456,7 +456,13 @@ def gather_inputs_custom(data: Any) -> Dict[str, Any]:
     weighted_pool = threat_pool_from_settings(all_threats, settings)
     display_threats = [t for (t, w) in weighted_pool if w > 0] or all_threats[:]
 
-    steps = ["scenario", "players", "allies", "difficulty", "threats", "objective", "leadership"]
+    biomes: List[Dict[str, Any]] = dget(data, "biomes", []) or []
+    biome_locked = bool((campaign_biome_id or "").strip())
+
+    steps = ["scenario", "players", "allies", "difficulty"]
+    if not biome_locked:
+        steps.append("biome")
+    steps.extend(["threats", "objective", "leadership"])
     i = 0
 
     picked_scen: Optional[Dict[str, Any]] = None
@@ -534,6 +540,31 @@ def gather_inputs_custom(data: Any) -> Dict[str, Any]:
                 raise SystemExit(0)
 
             inputs["difficulty"] = pick
+            i += 1
+            continue
+
+        # ---- Threats ----
+        if step == "biome":
+            biome_names = [b.get("name", "") for b in biomes if b.get("name")]
+            if not biome_names:
+                print("No biome entries were loaded from biomes.txt. Cannot continue Custom mode without a biome.")
+                raise SystemExit(1)
+
+            cur = (inputs.get("biome_name") or "").strip()
+            pick = prompt_choice_nav("Biome:", biome_names, default_idx=_idx_or_zero(biome_names, cur))
+
+            if pick == BACK:
+                i = max(0, i - 1); continue
+            if pick == RESTART:
+                inputs = {"mode": "Custom"}; picked_scen = None; picked_obj = None; i = 0; continue
+            if pick == QUIT:
+                raise SystemExit(0)
+
+            biome = next((b for b in biomes if b.get("name") == pick), None)
+            if biome:
+                inputs["biome_id"] = (biome.get("id") or "").strip()
+                inputs["biome_name"] = biome.get("name", "")
+
             i += 1
             continue
 
@@ -645,19 +676,34 @@ def run_cli(data: Any) -> Dict[str, Any]:
         # treat as Now
         pick = "Now"
 
+    campaign_key = ""
+    campaign_key_parsed = None
+
     if pick == "Now":
         inputs = gather_inputs_now(data)
     elif pick == "Quick":
         inputs = gather_inputs_quick(data)
     else:
-        inputs = gather_inputs_custom(data)
+        campaign_key = input("\nCampaign Key (optional; press Enter to skip): ").strip()
+        if campaign_key:
+            campaign_key_parsed = _parse_campaign_key(campaign_key)
+            if campaign_key_parsed is None:
+                print("Campaign Key: invalid format; continuing without campaign context.\n")
+                campaign_key = ""
+        campaign_biome_id = (campaign_key_parsed or {}).get("biome_id", "") if campaign_key_parsed else ""
+        inputs = gather_inputs_custom(data, campaign_biome_id=campaign_biome_id)
+        if campaign_key:
+            inputs["campaign_key"] = campaign_key
+            if campaign_biome_id:
+                inputs["biome_id"] = campaign_biome_id
 
     # If the user backed out/cancelled inside a gather_inputs_* flow, exit cleanly.
     # Some gather functions return None/QUIT sentinels rather than a dict.
     if not isinstance(inputs, dict):
         raise SystemExit(0)
 
-    campaign_key = input("\nCampaign Key (optional; press Enter to skip): ").strip()
+    if pick != "Custom":
+        campaign_key = input("\nCampaign Key (optional; press Enter to skip): ").strip()
     if campaign_key:
         entries = _quest_board_entries(data, campaign_key)
         if not entries:
