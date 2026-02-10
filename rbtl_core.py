@@ -3289,7 +3289,6 @@ def build_briefing(
     lines.append(f"Objective: {objective['name'] if objective else 'Unknown Objective'}")
     if objective and objective.get("description"):
         lines.append(f"Brief: {objective['description']}")
-    lines.append(f"Threat Tags: {', '.join(threats) if threats else 'None'}")
     if biome and biome.get("name"):
         lines.append(f"Biome: {biome.get('name')}")
     lines.append("")
@@ -3306,7 +3305,7 @@ def build_briefing(
         biome_tags = {str(t).strip().lower() for t in (biome.get("tags") or set()) if str(t).strip()}
         matched_threats = [t for t in threats if str(t).strip().lower() in biome_tags]
         for mt in matched_threats:
-            lines.append(f"Note: {mt.title()} are naturally adapted to {biome.get('name')} environments and may ignore the listed bane at the player's discretion.")
+            lines.append(f"[{mt}] may ignore bane effects.")
         lines.append("")
 
     if room_plan:
@@ -3713,7 +3712,7 @@ def generate_scenario(data: DataBundle, user_inputs: Dict[str, Any]) -> Tuple[st
     biome_entry: Optional[Dict[str, Any]] = None
     if mode_name == "quick":
         biome_id = ""
-    elif mode_name == "custom":
+    elif mode_name in ("custom", "questboard"):
         if campaign_key and not biome_id:
             biome_id = _campaign_biome_id_from_key(campaign_key)
         if biome_id:

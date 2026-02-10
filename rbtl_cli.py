@@ -660,20 +660,91 @@ def gather_inputs_custom(data: Any, campaign_biome_id: str = "") -> Dict[str, An
 
 
 
+def gather_inputs_questboard(data: Any) -> Dict[str, Any]:
+    settings: Dict[str, str] = dget(data, "settings", {}) or {}
+    inputs: Dict[str, Any] = {"mode": "Questboard"}
+
+    while True:
+        campaign_key = input("\nCampaign Key (required for Questboard): ").strip()
+        if not campaign_key:
+            print("Quest Board: campaign key is required.\n")
+            continue
+        entries = _quest_board_entries(data, campaign_key)
+        if not entries:
+            print("Quest Board: could not parse campaign key or build entries. Try again.\n")
+            continue
+
+        inputs["campaign_key"] = campaign_key
+
+        players = prompt_int_nav("Players (Rangers)", s_get_int(settings, "default.players", 2))
+        if players in (BACK, RESTART, QUIT):
+            if players == QUIT:
+                raise SystemExit(0)
+            continue
+        inputs["players"] = int(players)
+
+        allies = prompt_int_nav("Allied combatants", s_get_int(settings, "default.allied_combatants", 2))
+        if allies in (BACK, RESTART, QUIT):
+            if allies == QUIT:
+                raise SystemExit(0)
+            continue
+        inputs["allied_combatants"] = int(allies)
+
+        default_diff = s_get_str(settings, "default.difficulty", "Normal")
+        diff = prompt_choice_nav("Difficulty:", DIFFICULTY_ORDER, default_idx=_idx_or_zero(DIFFICULTY_ORDER, default_diff if default_diff in DIFFICULTY_ORDER else "Normal"))
+        if diff in (BACK, RESTART, QUIT):
+            if diff == QUIT:
+                raise SystemExit(0)
+            continue
+        inputs["difficulty"] = diff
+
+        print("\nQuest Board (choose one quest)")
+        for idx, entry in enumerate(entries, start=1):
+            scen = entry.get("scenario_type_name", "Scenario")
+            obj = entry.get("objective_name", "Objective")
+            flavor = entry.get("flavor", "")
+            print(f"{idx}) {scen} — {obj}")
+            if flavor:
+                print(f"   {flavor}")
+
+        choice = input("\nSelect quest [1-6]: ").strip()
+        try:
+            pick_idx = int(choice) - 1
+        except ValueError:
+            print("Quest Board: invalid selection.\n")
+            continue
+        if not (0 <= pick_idx < len(entries)):
+            print("Quest Board: invalid selection.\n")
+            continue
+
+        pick = entries[pick_idx]
+        inputs["quest_board_entry"] = pick
+        inputs["scenario_type_id"] = pick.get("scenario_type_id", "")
+        inputs["scenario_type_name"] = pick.get("scenario_type_name", "")
+        inputs["objective"] = pick.get("objective_name", "")
+        inputs["threat_tag_1"] = pick.get("threat_tag_1", "none")
+        inputs["threat_tag_2"] = pick.get("threat_tag_2", "none")
+        inputs["encounter_kind"] = "Defensive Battle" if (inputs.get("scenario_type_id") or "").lower() == "defensive" else "Scenario"
+
+        parsed = _parse_campaign_key(campaign_key)
+        if parsed and parsed.get("biome_id"):
+            inputs["biome_id"] = parsed.get("biome_id", "")
+
+        return inputs
+
+
 # ----------------------------
 # Public entry point
 # ----------------------------
 def run_cli(data: Any) -> Dict[str, Any]:
     """Return an inputs dict for generate_scenario()."""
-    settings = dget(data, "settings", {}) or {}
 
     # Choose top-level mode
-    mode_opts = ["Now", "Quick", "Custom"]
+    mode_opts = ["Now", "Quick", "Custom", "Questboard"]
     pick = prompt_choice_nav("Mode:", mode_opts, default_idx=0)
     if pick == QUIT:
         raise SystemExit(0)
     if pick == BACK or pick == RESTART:
-        # treat as Now
         pick = "Now"
 
     campaign_key = ""
@@ -683,8 +754,11 @@ def run_cli(data: Any) -> Dict[str, Any]:
         inputs = gather_inputs_now(data)
     elif pick == "Quick":
         inputs = gather_inputs_quick(data)
+    elif pick == "Questboard":
+        inputs = gather_inputs_questboard(data)
     else:
         campaign_key = input("\nCampaign Key (optional; press Enter to skip): ").strip()
+        campaign_key_parsed = None
         if campaign_key:
             campaign_key_parsed = _parse_campaign_key(campaign_key)
             if campaign_key_parsed is None:
@@ -697,44 +771,9 @@ def run_cli(data: Any) -> Dict[str, Any]:
             if campaign_biome_id:
                 inputs["biome_id"] = campaign_biome_id
 
-    # If the user backed out/cancelled inside a gather_inputs_* flow, exit cleanly.
-    # Some gather functions return None/QUIT sentinels rather than a dict.
     if not isinstance(inputs, dict):
         raise SystemExit(0)
 
-    if pick != "Custom":
-        campaign_key = input("\nCampaign Key (optional; press Enter to skip): ").strip()
-    if campaign_key:
-        entries = _quest_board_entries(data, campaign_key)
-        if not entries:
-            print("Quest Board: could not parse campaign key or build entries; continuing without it.\n")
-        else:
-            print("\nQuest Board (choose one quest or press Enter to keep current inputs)")
-            for idx, entry in enumerate(entries, start=1):
-                scen = entry.get("scenario_type_name", "Scenario")
-                obj = entry.get("objective_name", "Objective")
-                flavor = entry.get("flavor", "")
-                print(f"{idx}) {scen} — {obj}")
-                if flavor:
-                    print(f"   {flavor}")
-            choice = input("\nSelect quest [1-6] (Enter to skip): ").strip()
-            if choice:
-                try:
-                    pick_idx = int(choice) - 1
-                except ValueError:
-                    pick_idx = -1
-                if 0 <= pick_idx < len(entries):
-                    pick = entries[pick_idx]
-                    inputs["campaign_key"] = campaign_key
-                    inputs["quest_board_entry"] = pick
-                    inputs["scenario_type_id"] = pick.get("scenario_type_id", "")
-                    inputs["scenario_type_name"] = pick.get("scenario_type_name", "")
-                    inputs["objective"] = pick.get("objective_name", "")
-                    inputs["threat_tag_1"] = pick.get("threat_tag_1", "none")
-                    inputs["threat_tag_2"] = pick.get("threat_tag_2", "none")
-                    inputs["encounter_kind"] = "Defensive Battle" if (inputs.get("scenario_type_id") or "").lower() == "defensive" else "Scenario"
-                else:
-                    print("Quest Board: invalid selection; continuing with original inputs.\n")
 
     # Hard enforcement: rooms-based scenarios always use Boss leadership
     scen_id = (inputs.get("scenario_type_id") or "").strip().lower()

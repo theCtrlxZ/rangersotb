@@ -1073,6 +1073,51 @@ def _generate_biome_grid(
     return grid
 
 
+def _biome_symbol(biome_name: str, used: Set[str]) -> str:
+    letters = [ch for ch in (biome_name or "").upper() if "A" <= ch <= "Z"]
+    for ch in letters:
+        if ch not in used:
+            used.add(ch)
+            return ch
+    for ch in "ABCDEFGHIJKLMNOPQRSTUVWXYZ":
+        if ch not in used:
+            used.add(ch)
+            return ch
+    return "?"
+
+
+def _render_ascii_biome_map(
+    *,
+    side: int,
+    biome_grid: Dict[Tuple[int, int], str],
+    biome_name_by_id: Dict[str, str],
+) -> Tuple[List[str], List[str]]:
+    used_symbols: Set[str] = set()
+    ids_in_use: List[str] = []
+    for y in range(side):
+        for x in range(side):
+            bid = str(biome_grid.get((x, y), "") or "").strip()
+            if bid and bid not in ids_in_use:
+                ids_in_use.append(bid)
+
+    symbol_by_id: Dict[str, str] = {}
+    for bid in ids_in_use:
+        name = str(biome_name_by_id.get(bid, bid) or bid)
+        symbol_by_id[bid] = _biome_symbol(name, used_symbols)
+
+    header = "   " + " ".join(chr(ord('A') + x) for x in range(side))
+    lines = [header]
+    for y in range(side):
+        row_cells: List[str] = []
+        for x in range(side):
+            bid = str(biome_grid.get((x, y), "") or "").strip()
+            row_cells.append(symbol_by_id.get(bid, "?"))
+        lines.append(f"{y+1:>2} " + " ".join(row_cells))
+
+    legend = [f"{symbol_by_id[bid]} = {biome_name_by_id.get(bid, bid)}" for bid in ids_in_use]
+    return lines, legend
+
+
 def generate_map_layout(
     *,
     players: int,
@@ -1167,7 +1212,7 @@ def generate_map_layout(
         site["biome_id"] = bid
         site["biome_name"] = biome_name_by_id.get(bid, "")
 
-    return {"side": side, "settlements_with_coords": settlement_rows, "sites": sites, "biome_grid": biome_grid}
+    return {"side": side, "settlements_with_coords": settlement_rows, "sites": sites, "biome_grid": biome_grid, "biome_name_by_id": biome_name_by_id}
 
 
 # ============================================================
@@ -1210,19 +1255,7 @@ def format_campaign_briefing(
         lines.append("")
     if truth_packet:
         key = _build_campaign_key(truth_packet)
-        lines.append("Campaign Truth Packet")
-        lines.append("-" * 60)
-        lines.append(f"Seed: {truth_packet.get('seed')}")
-        lines.append("Seed Scope: content-version only")
-        lines.append("Seed Does Not Lock: player count or difficulty")
         lines.append(f"Campaign Key: {key}")
-        lines.append(f"Biome ID: {truth_packet.get('biome_id','')}")
-        lines.append(f"Main Pressure ID: {truth_packet.get('main_pressure_id','')}")
-        lines.append(f"Sub Pressure ID: {truth_packet.get('sub_pressure_id','')}")
-        intro_id = truth_packet.get("intro_id")
-        lines.append(f"Intro Reference ID: {intro_id if intro_id else '(none)'}")
-        threats = truth_packet.get("threat_ids") or []
-        lines.append(f"Threat IDs: {', '.join(str(t) for t in threats) if threats else '(none)'}")
         lines.append("")
     lines.append(f"Players: {players}")
     lines.append(f"Difficulty: {difficulty.title()}")
@@ -1239,10 +1272,6 @@ def format_campaign_briefing(
         lines.append(f"Recommended Terrain: {str(biome['terrain']).strip()}")
     if biome.get("rough"):
         lines.append(f"Recommended Rough Terrain: {str(biome['rough']).strip()}")
-    if biome.get("tag") or biome.get("tags"):
-        btags = _tags(biome)
-        if btags:
-            lines.append(f"Biome Tags: {_fmt_tags(btags)}")
     lines.append("")
 
     # Pressures + Threats (combined)
@@ -1318,10 +1347,13 @@ def format_campaign_briefing(
         for aspect in aspects:
             name = str(aspect.get("name") or "").strip()
             desc = str(aspect.get("description") or "").strip()
+            effect = str(aspect.get("effects") or aspect.get("effect") or "").strip()
             if name:
                 lines.append(name)
             if desc:
                 lines.extend(_wrap_paragraphs(desc))
+            if effect:
+                lines.append(f"Effect: {effect}")
         open_segments = int(s.get("open_segments", 0) or 0)
         for _ in range(max(0, open_segments)):
             lines.append("______")
@@ -1340,6 +1372,23 @@ def format_campaign_briefing(
         else:
             lines.append(f"- {s.get('name', 'Site')}: ____________________")
     lines.append("")
+
+    biome_grid = layout.get("biome_grid") or {}
+    biome_name_by_id = layout.get("biome_name_by_id") or {}
+    if side > 0 and biome_grid and biome_name_by_id:
+        map_lines, legend_lines = _render_ascii_biome_map(
+            side=side,
+            biome_grid=biome_grid,
+            biome_name_by_id=biome_name_by_id,
+        )
+        lines.append("Biome Map")
+        lines.append("-" * 60)
+        lines.extend(map_lines)
+        lines.append("")
+        lines.append("Legend")
+        lines.append("-" * 60)
+        lines.extend([f"- {ln}" for ln in legend_lines])
+        lines.append("")
 
     # Footnotes
     lines.append("Footnotes")
