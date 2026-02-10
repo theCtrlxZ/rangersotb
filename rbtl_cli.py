@@ -702,12 +702,15 @@ def gather_inputs_questboard(data: Any) -> Dict[str, Any]:
         for idx, entry in enumerate(entries, start=1):
             scen = entry.get("scenario_type_name", "Scenario")
             obj = entry.get("objective_name", "Objective")
+            t1 = entry.get("threat_tag_1", "none")
+            t2 = entry.get("threat_tag_2", "none")
+            threat_text = t1 if (t2 or "none").lower() == "none" else f"{t1}, {t2}"
             flavor = entry.get("flavor", "")
-            print(f"{idx}) {scen} — {obj}")
+            print(f"{idx}) Scenario Type: {scen} | Threats: {threat_text} | Objective: {obj}")
             if flavor:
                 print(f"   {flavor}")
 
-        choice = input("\nSelect quest [1-6]: ").strip()
+        choice = input(f"\nSelect quest [1-{len(entries)}]: ").strip()
         try:
             pick_idx = int(choice) - 1
         except ValueError:
@@ -731,8 +734,6 @@ def gather_inputs_questboard(data: Any) -> Dict[str, Any]:
             inputs["biome_id"] = parsed.get("biome_id", "")
 
         return inputs
-
-
 # ----------------------------
 # Public entry point
 # ----------------------------
@@ -740,7 +741,7 @@ def run_cli(data: Any) -> Dict[str, Any]:
     """Return an inputs dict for generate_scenario()."""
 
     # Choose top-level mode
-    mode_opts = ["Now", "Quick", "Custom", "Questboard"]
+    mode_opts = ["Now", "Quick", "Custom", "Questboard (Campaign)"]
     pick = prompt_choice_nav("Mode:", mode_opts, default_idx=0)
     if pick == QUIT:
         raise SystemExit(0)
@@ -754,7 +755,7 @@ def run_cli(data: Any) -> Dict[str, Any]:
         inputs = gather_inputs_now(data)
     elif pick == "Quick":
         inputs = gather_inputs_quick(data)
-    elif pick == "Questboard":
+    elif pick == "Questboard (Campaign)":
         inputs = gather_inputs_questboard(data)
     else:
         campaign_key = input("\nCampaign Key (optional; press Enter to skip): ").strip()
