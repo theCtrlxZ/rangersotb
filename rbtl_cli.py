@@ -45,10 +45,12 @@ def _parse_campaign_key(raw: str) -> Optional[Dict[str, Any]]:
 
     post_intro = parts[7:]
     biome_ids: List[str] = []
-    if post_intro and post_intro[0].startswith("biomes="):
-        biome_blob = post_intro[0].split("=", 1)[1].strip()
-        if biome_blob and biome_blob.lower() != "none":
-            biome_ids = [b for b in biome_blob.split(".") if b and b.lower() != "none"]
+    if post_intro:
+        biome_blob_raw = post_intro[0].strip()
+        if biome_blob_raw.startswith("biomes="):
+            biome_blob_raw = biome_blob_raw.split("=", 1)[1].strip()
+        if biome_blob_raw and biome_blob_raw.lower() != "none":
+            biome_ids = [b for b in biome_blob_raw.split(".") if b and b.lower() != "none"]
         post_intro = post_intro[1:]
 
     threats_blob = "-".join(post_intro).strip()
@@ -106,6 +108,29 @@ def _campaign_threat_tags(threat_entries: List[Dict[str, Any]], threat_ids: List
     return tags
 
 
+def _enemy_text_from_tags(tags: List[str]) -> str:
+    clean = [str(t).strip().lower() for t in (tags or []) if str(t).strip()]
+    if not clean:
+        return "unknown enemies"
+    if len(clean) == 1:
+        return clean[0]
+    if len(clean) == 2:
+        return f"{clean[0]} and {clean[1]}"
+    return f"{', '.join(clean[:-1])}, and {clean[-1]}"
+
+
+def _camp_from_threat(threat: Optional[Dict[str, Any]]) -> str:
+    return str((threat or {}).get("camp") or "unknown camp").strip() or "unknown camp"
+
+
+def _threat_slot(threat_details: List[Dict[str, str]], idx: int) -> Dict[str, str]:
+    if threat_details:
+        if 0 <= idx < len(threat_details):
+            return threat_details[idx]
+        return threat_details[0]
+    return {"name": "the threat", "enemy": "unknown enemies", "camp": "unknown camp"}
+
+
 def _norm_token(value: Any) -> str:
     return str(value or "").strip().lower().replace(" ", "_")
 
@@ -139,15 +164,16 @@ def _render_questboard_intro(
     main_name: str,
     sub_name: str,
     threats_text: str,
-    threat_names: List[str],
+    threat_details: List[Dict[str, str]],
     rng: random.Random,
 ) -> str:
     text = str(intro.get("description") or intro.get("name") or "").strip()
     if not text:
         return ""
 
-    t1 = threat_names[0] if threat_names else "the threat"
-    t2 = threat_names[1] if len(threat_names) > 1 else t1
+    s1 = _threat_slot(threat_details, 0)
+    s2 = _threat_slot(threat_details, 1)
+    s3 = _threat_slot(threat_details, 2)
     biome_token = biome_name
     if biome_names:
         biome_token = rng.choice(biome_names)
@@ -159,8 +185,15 @@ def _render_questboard_intro(
         "[main_pressure]": main_name,
         "[sub_pressure]": sub_name,
         "[threats]": threats_text,
-        "[threat1]": t1,
-        "[threat2]": t2,
+        "[threat1]": s1["name"],
+        "[threat2]": s2["name"],
+        "[threat3]": s3["name"],
+        "[enemy1]": s1["enemy"],
+        "[enemy2]": s2["enemy"],
+        "[enemy3]": s3["enemy"],
+        "[camp1]": s1["camp"],
+        "[camp2]": s2["camp"],
+        "[camp3]": s3["camp"],
     }
     for token, value in replacements.items():
         text = text.replace(token, value)
@@ -217,11 +250,23 @@ def _quest_board_entries(data: Any, key: str) -> Optional[List[Dict[str, Any]]]:
     main_pressure = _find_by_id(pressures, parsed.get("main_pressure_id", ""))
     sub_pressure = _find_by_id(pressures, parsed.get("sub_pressure_id", ""))
     intro = _find_by_id(intros, parsed.get("intro_id", "")) if parsed.get("intro_id") else None
-    threat_names = []
+    threat_details: List[Dict[str, str]] = []
     for tid in parsed.get("threat_ids", []):
         threat = _find_by_id(threats, tid)
-        if threat and threat.get("name"):
-            threat_names.append(str(threat.get("name")))
+        if not threat:
+            continue
+        tname = str(threat.get("name") or "").strip()
+        if not tname:
+            continue
+        tags = sorted(threat.get("tags", set()) or set())
+        threat_details.append(
+            {
+                "name": tname,
+                "enemy": _enemy_text_from_tags(tags),
+                "camp": _camp_from_threat(threat),
+            }
+        )
+    threat_names = [t["name"] for t in threat_details]
     threat_tags = _campaign_threat_tags(threats, parsed.get("threat_ids", []))
 
     threat_tokens = set(threat_tags)
@@ -286,7 +331,7 @@ def _quest_board_entries(data: Any, key: str) -> Optional[List[Dict[str, Any]]]:
                 main_name,
                 sub_name,
                 threats_text,
-                threat_names,
+                threat_details,
                 rng,
             ) or flavor
         elif intro and intro.get("name") and rng.random() < 0.35:
@@ -296,6 +341,7 @@ def _quest_board_entries(data: Any, key: str) -> Optional[List[Dict[str, Any]]]:
         if not entry_name:
             entry_name = f"{objective.get('name', 'Contract')}"
 
+        enemy_types_text = _enemy_text_from_tags([t for t in (t1, t2) if t and t != "none"])
         entries.append(
             {
                 "entry_name": entry_name,
@@ -305,11 +351,27 @@ def _quest_board_entries(data: Any, key: str) -> Optional[List[Dict[str, Any]]]:
                 "objective_name": objective.get("name", "Objective"),
                 "threat_tag_1": t1,
                 "threat_tag_2": t2,
+                "enemy_types": enemy_types_text,
                 "flavor": flavor,
             }
         )
 
-    return entries
+    deduped: List[Dict[str, Any]] = []
+    seen: set = set()
+    for e in entries:
+        sig = (
+            str(e.get("scenario_type_id", "")).lower(),
+            str(e.get("objective_id", "")).lower(),
+            str(e.get("threat_tag_1", "")).lower(),
+            str(e.get("threat_tag_2", "")).lower(),
+            str(e.get("entry_name", "")).lower(),
+        )
+        if sig in seen:
+            continue
+        seen.add(sig)
+        deduped.append(e)
+
+    return deduped
 def pick_class_filter_tag(data):
     # Collect tags from companion classes
     tag_to_classes = {}
@@ -834,7 +896,7 @@ def gather_inputs_questboard(data: Any) -> Dict[str, Any]:
             title = str(entry.get("entry_name") or obj)
             flavor = str(entry.get("flavor") or "").strip()
             print(f"  {idx}. {title}")
-            print(f"     {scen}, {threat_text}, {obj}")
+            print(f"     {scen}-{obj}, {entry.get('enemy_types', threat_text)}")
             if flavor:
                 print(f"     {flavor}")
 
@@ -873,7 +935,7 @@ def run_cli(data: Any) -> Dict[str, Any]:
     """Return an inputs dict for generate_scenario()."""
 
     # Choose top-level mode
-    mode_opts = ["Now", "Quick", "Custom", "Questboard (Campaign)"]
+    mode_opts = ["Now", "Quick", "Custom", "Quest Board"]
     pick = prompt_choice_nav("Mode:", mode_opts, default_idx=0)
     if pick == QUIT:
         raise SystemExit(0)
@@ -887,7 +949,7 @@ def run_cli(data: Any) -> Dict[str, Any]:
         inputs = gather_inputs_now(data)
     elif pick == "Quick":
         inputs = gather_inputs_quick(data)
-    elif pick == "Questboard (Campaign)":
+    elif pick == "Quest Board":
         inputs = gather_inputs_questboard(data)
     else:
         campaign_key = input("\nCampaign Key (optional; press Enter to skip): ").strip()

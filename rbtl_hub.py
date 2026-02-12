@@ -274,10 +274,10 @@ class _Entry:
 
 
 ENTRIES: list[_Entry] = [
-    _Entry("Scenario / Encounter", lambda d, root: run_scenario(d, root), needs_data=True),
     _Entry("Campaign", run_campaign),
+    _Entry("Scenario / Encounter", lambda d, root: run_scenario(d, root), needs_data=True),
     _Entry("Companions", run_companions),
-    _Entry("Loot / Shop", run_loot_shop),
+    _Entry("Shop / Loot", run_loot_shop),
 ]
 
 
@@ -348,7 +348,7 @@ def main() -> None:
             print(f"\n[RBTL Hub] {subtitle}{seed_note}")
 
             options = [e.label for e in ENTRIES] + [
-                "Validate + Reload data",
+                "Validate & Reload Data",
                 "Quit",
             ]
 
@@ -362,7 +362,7 @@ def main() -> None:
                 return
             if choice in (RESTART, BACK):
                 continue
-            if choice == "Validate + Reload data":
+            if choice == "Validate & Reload Data":
                 try:
                     data = _validate_and_reload(data, project_root)
                 except Exception:
