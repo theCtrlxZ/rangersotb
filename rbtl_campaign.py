@@ -148,8 +148,32 @@ def _build_campaign_key(truth_packet: Dict[str, Any]) -> str:
     main_pressure_id = str(truth_packet.get("main_pressure_id", "")).strip()
     sub_pressure_id = str(truth_packet.get("sub_pressure_id", "")).strip()
     intro_id = str(truth_packet.get("intro_id", "")).strip() or "none"
+    biome_ids = [str(b).strip() for b in (truth_packet.get("biome_ids") or []) if str(b).strip()]
+    biome_blob = ".".join(biome_ids) if biome_ids else "none"
     threats = ".".join(str(t) for t in (truth_packet.get("threat_ids") or []) if str(t).strip()) or "none"
-    return f"RBTL-CAMP-{seed}-{biome_id}-{main_pressure_id}-{sub_pressure_id}-{intro_id}-{threats}"
+    return f"RBTL-CAMP-{seed}-{biome_id}-{main_pressure_id}-{sub_pressure_id}-{intro_id}-biomes={biome_blob}-{threats}"
+
+
+def _dominant_region_biome_id(
+    biome_grid: Dict[Tuple[int, int], str],
+    *,
+    excluded_ids: Optional[Set[str]] = None,
+) -> str:
+    excluded = {WATER_BIOME_ID}
+    if excluded_ids:
+        excluded |= {str(x).strip() for x in excluded_ids if str(x).strip()}
+
+    counts: Dict[str, int] = {}
+    for bid in biome_grid.values():
+        norm = str(bid or "").strip()
+        if not norm or norm in excluded:
+            continue
+        counts[norm] = counts.get(norm, 0) + 1
+
+    if not counts:
+        return ""
+
+    return max(sorted(counts.keys()), key=lambda bid: counts[bid])
 
 
 # ============================================================
@@ -1606,9 +1630,19 @@ def generate_campaign(data: DataBundle, inputs: Dict[str, Any]) -> Tuple[str, st
     if not intro_start:
         intro_start = pick_intro_start(intro_starts, set(main_threat.get("tags") or set()))
 
+    region_biome_id = _dominant_region_biome_id(layout.get("biome_grid", {}), excluded_ids={ROAD_BIOME_ID})
+    if not region_biome_id:
+        region_biome_id = str(biome.get("id", "")).strip()
+        footnotes.append("[WARN] Could not determine dominant region biome from map; falling back to rolled biome.")
+
     truth_packet = {
         "seed": seed,
-        "biome_id": str(biome.get("id", "")).strip(),
+        "biome_id": region_biome_id,
+        "biome_ids": sorted({
+            str(bid).strip()
+            for bid in (layout.get("biome_grid", {}) or {}).values()
+            if str(bid).strip() and str(bid).strip() != WATER_BIOME_ID
+        }),
         "main_pressure_id": str(main_pressure.get("id", "")).strip(),
         "sub_pressure_id": str(sub_pressure.get("id", "")).strip(),
         "intro_id": _intro_id(intro_start),
