@@ -8,3 +8,38 @@
 008|Cursed Warscape|description=A brutal war from long ago has left a curse upon the land.|tag=soldiers,undead|camp=Forgotten Burial Pits|rarity=uncommon
 009|Faceless Kingdom|description=An invading army, advancing under cruel beast-totems.|tag=soldiers,vikings|camp=Military Encampment|rarity=uncommon
 010|Demonic Scourge|description=Infernal powers of Hell stir to reap the souls of the surface world.|tag=demons,cultists|camp=Hellmouth|rarity=rare
+011|Ashen Pact|description=Fanatical goblins bound by infernal oaths, wielding hellfire beyond their station.|tag=goblins,demons|camp=Charred Shrine|rarity=uncommon
+012|Graverobbers|description=Bandit clans that trail battlefields, harvesting corpses for darker purposes.|tag=bandits,undead|camp=Plundered Ossuary|rarity=common
+013|Verdant Reavers|description=Elf-led raiders striking from forest shadows with brutal efficiency.|tag=elves,bandits|camp=Hidden Woodland Hold|rarity=uncommon
+014|Scale-Crushers|description=Heavily armored soldiers trained to hunt and break reptilian war-beasts.|tag=soldiers,reptiles|camp=Stone Barracks|rarity=common
+015|Moon-Eaters|description=Savage beasts twisted by demonic influence, roaming under blood-red skies.|tag=beasts,demons|camp=Blighted Hunting Grounds|rarity=rare
+016|Feral Converts|description=Cultists who have abandoned humanity, embracing bestial forms and instincts.|tag=cultists,beasts|camp=Ritual Kennels|rarity=uncommon
+017|Cold-Wake Raiders|description=Viking dead risen from icy waters, still driven by conquest.|tag=vikings,undead|camp=Frozen Shipwreck|rarity=rare
+018|Sunken Legion|description=Soldiers lost beneath the earth, now guarding forgotten tunnels as living stone.|tag=soldiers,beasts|camp=Collapsed Garrison|rarity=uncommon
+019|Rootbound Heresy|description=Elf cultists performing ancient rites to awaken slumbering forest powers.|tag=elves,cultists|camp=Overgrown Circle|rarity=rare
+020|Wyrmcall Host|description=Reptilian armies answering the call of ancient battle-horns.|tag=reptiles,soldiers|camp=Drakewatch Citadel|rarity=uncommon
+021|Black-Tithe Brotherhood|description=Cult-backed bandits extorting settlements in the name of dark gods.|tag=bandits,cultists|camp=Desecrated Chapel|rarity=common
+022|Carrion March|description=Undead beasts driven forward by relentless hunger.|tag=undead,beasts|camp=Rotting Migratory Grounds|rarity=common
+023|Ironfang Pack|description=War-beasts bred and armed by disciplined soldiers.|tag=beasts,soldiers|camp=Training Pits|rarity=uncommon
+024|Bloodfjord Covenant|description=Viking warbands sworn to demonic patrons of fire and storm.|tag=vikings,demons|camp=Volcanic Longhall|rarity=rare
+025|Nightleaf Exiles|description=Elves who consort with demons after being cast out from their kind.|tag=elves,demons|camp=Twilight Bastion|rarity=rare
+026|Bone-Skinners|description=Reptilian scavengers thriving among the restless dead.|tag=reptiles,undead|camp=Grave-Mire|rarity=uncommon
+027|Chainbreak Apostles|description=Cultists who incite goblin uprisings with promises of divine chaos.|tag=goblins,cultists|camp=Riotous Shrine|rarity=common
+028|Salt-Cursed Reavers|description=Bandits twisted by sea-spirits and Viking blood-rites.|tag=bandits,vikings|camp=Coastal Stronghold|rarity=uncommon
+029|Stormscale Marauders|description=Vikings riding massive reptiles into coastal settlements.|tag=vikings,reptiles|camp=Cliffside Eyrie|rarity=rare
+030|Funeral Banner Host|description=Undead soldiers marching beneath banners that never rot.|tag=soldiers,undead|camp=Field of Fallen Standards|rarity=uncommon
+031|Hellbound Menagerie|description=Demonic forces driving enslaved beasts into battle.|tag=demons,beasts|camp=Infernal Pens|rarity=rare
+032|Twilight Wardens|description=Elf soldiers enforcing ancient border laws with lethal resolve.|tag=elves,soldiers|camp=Border Bastion|rarity=common
+033|Gravelord Conspiracy|description=Undead agents manipulating bandit networks to destabilize regions.|tag=undead,bandits|camp=Hidden Mausoleum|rarity=rare
+034|Serpent Creed|description=Cultists venerating ancient reptile-gods beneath the earth.|tag=cultists,reptiles|camp=Subterranean Temple|rarity=uncommon
+035|Blood-Pyre Host|description=Undead raised through infernal rites, burning without decay.|tag=undead,demons|camp=Cinder Crypt|rarity=rare
+036|Frostbound Thralls|description=Beasts enslaved and driven by Viking war-masters.|tag=vikings,beasts|camp=Icebound Pens|rarity=common
+037|Crownless Court|description=Elven nobles returned from death, ruling in bitter mockery of life.|tag=elves,undead|camp=Shattered Spire|rarity=rare
+038|Ashroad Legion|description=Soldiers marching alongside cult zealots toward a prophesied ruin.|tag=soldiers,cultists|camp=Pilgrims’ Warcamp|rarity=uncommon
+039|Warpclaw Clans|description=Goblins warped by exposure to hellish energies.|tag=goblins,demons|camp=Warped Warrens|rarity=rare
+040|Wild-Tithe Raiders|description=Bandits guided by feral spirits and predatory beasts.|tag=bandits,beasts|camp=Ravager’s Grove|rarity=common
+041|Infernal Dominion|description=Pure demonic forces spill into the world, unrestrained by mortal servants.|tag=demons|camp=Burning Expanse|rarity=rare
+042|Hidden Orthodoxy|description=A widespread, secretive cult operating through doctrine, coercion, and quiet sacrifice.|tag=cultists|camp=Sanctified Compound|rarity=common
+043|March of the Crown|description=A disciplined standing army enforcing law, tribute, and order through force.|tag=soldiers|camp=Imperial Field Camp|rarity=common
+044|Sea-King’s Host|description=Independent Viking clans united under a single warlord’s banner.|tag=vikings|camp=Great Mead-Hall|rarity=uncommon
+

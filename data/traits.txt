@@ -1,19 +1,201 @@
-001|Brave|description=Courageous in the face of danger.|stat_mod=Fight+1|tag=minor|rp=5|rarity=common
-002|Agile|description=Just a bit faster than their comrades.|stat_mod=Move+1|tag=minor,physical|rp=5|rarity=common
-003|Strong|description=Just a bit stronger than their comrades.|skill=Strength+1|tag=minor,physical|rp=5|rarity=common
-004|Eagle-eyed|description=Their vision is a bit better than their comrades'.|stat_mod=Shoot+1|tag=minor,physical|rp=5|rarity=common
-005|Wise|description=Experience has granted them clarity.|stat_mod=Will+1|tag=minor,physical|rp=5|rarity=common
-006|Tough|description=Takes a lickin' and keeps on tickin'|stat_mod=Health+2|tag=minor,physical|rp=5|rarity=common
-007|Hardened|description=Trained to take a hit from a young age.|stat_mod=Armor+1|tag=minor,physical|rp=5|rarity=common
-008|Fierce|description=Determined to take down their enemies or go down trying.|stat_mod=Fight+1,Shoot+1,Health-2|tag=minor,physical|rp=5|rarity=common
-009|Mad|description=Are they inspired or are they insane?|stat_mod=Will-2,Fight+2|tag=minor,physical|rp=5|rarity=common
-010|Giant|description=Towers above the rest, easy to find from a distance.|stat_mod=Armor+1,Health+5,Move-2|tag=minor,physical|rp=5|rarity=common
-011|Swift|description=Quickly dispatches foes with ease.|stat_mod=Move+1,Fight+1,Armor-2|tag=minor,physical|rp=5|rarity=common
-012|True|description=Their aim is renown across the region.|stat_mod=Shoot+1,Will+1,Armor-1|tag=minor,physical|rp=5|rarity=common
-013|Valiant|description=Honorable and true, their loyalty is their strength.|stat_mod=Armor+1,Fight+2,Shoot-2|tag=minor,physical|rp=5|rarity=common
-014|Arcane|description=Born with a touch of magical essence.|stat_mod=Will+2,Health-2|tag=minor,magic|rp=5|rarity=common
-015|Unlucky|description=A dark cloud of gloom seems to follow him, wherever he goes.|stat_mod=Move-1,Health-1,Fight-1,Shoot-1,Armor-1,Will-1|tag=minor,physical|rp=5|rarity=rare
-016|Lucky|description=Fortune smiles for this individual.|stat_mod=Move+1,Health+1,Fight+1,Shoot+1,Armor+1,Will+1|tag=minor,physical|rp=5|rarity=rare
+001|Brave|description=Courageous in the face of danger.|stat_mod=Fight+1|tag=minor|xp=5|rarity=common
+002|Agile|description=Just a bit faster than their comrades.|stat_mod=Move+1|tag=minor,physical|xp=5|rarity=common
+003|Strong|description=Just a bit stronger than their comrades.|skill=Strength+1|tag=minor,physical|xp=5|rarity=common
+004|Eagle-eyed|description=Their vision is a bit better than their comrades'.|stat_mod=Shoot+1|tag=minor,physical|xp=5|rarity=common
+005|Wise|description=Experience has granted them clarity.|stat_mod=Will+1|tag=minor,physical|xp=5|rarity=common
+006|Tough|description=Takes a lickin' and keeps on tickin'|stat_mod=Health+2|tag=minor,physical|xp=5|rarity=common
+007|Hardened|description=Trained to take a hit from a young age.|stat_mod=Armor+1|tag=minor,physical|xp=5|rarity=common
+008|Fierce|description=Determined to take down their enemies or go down trying.|stat_mod=Fight+1,Shoot+1,Health-2|tag=minor,physical|xp=5|rarity=common
+009|Mad|description=Are they inspired or are they insane?|stat_mod=Will-2,Fight+2|tag=minor,physical|xp=5|rarity=common
+010|Giant|description=Towers above the rest, easy to find from a distance.|stat_mod=Armor+1,Health+5,Move-2|tag=minor,physical|xp=5|rarity=common
+011|Swift|description=Quickly dispatches foes with ease.|stat_mod=Move+1,Fight+1,Armor-2|tag=minor,physical|xp=5|rarity=common
+012|True|description=Their aim is renown across the region.|stat_mod=Shoot+1,Will+1,Armor-1|tag=minor,physical|xp=5|rarity=common
+013|Valiant|description=Honorable and true, their loyalty is their strength.|stat_mod=Armor+1,Fight+2,Shoot-2|tag=minor,physical|xp=5|rarity=common
+014|Arcane|description=Born with a touch of magical essence.|stat_mod=Will+2,Health-2|tag=minor,magic|xp=5|rarity=common
+015|Unlucky|description=A dark cloud of gloom seems to follow him, wherever he goes.|stat_mod=Move-1,Health-1,Fight-1,Shoot-1,Armor-1,Will-1|tag=minor,physical|xp=5|rarity=rare
+016|Lucky|description=Fortune smiles for this individual.|stat_mod=Move+1,Health+1,Fight+1,Shoot+1,Armor+1,Will+1|tag=minor,physical|xp=5|rarity=rare
 017|Corrupted|description=A dark metamorphosis has taken place, leaving them more powerful but mentally, a shell of what they used to be.|stat_mod=Move+1,Health+1,Fight+1,Shoot+1,Armor+2,Will-2|tag=boss_only,major|xp=+10|rarity=uncommon
 018|Toxic|description=Dark sludge oozes out of their mouth and fingers.|stat_mod=Fight+1,Will+1|tag=minor,enemy_only|skill=venom|xp=+5|rarity=uncommon
-019|Possessed|description=Their unnatural movements are due to unseen forces.|stat_mod=Move+1,Fight+2|skill=possessed|tag=minor,enemy_only|xp=+5|rarity=rare
+019|Alert|description=Rarely caught off guard.|skill=Perception+1|tag=minor,physical|xp=5|rarity=common
+020|Steady|description=Keeps calm under pressure.|stat_mod=Will+1,Armor+1|tag=minor|xp=5|rarity=common
+021|Nimble|description=Moves easily through tight spaces.|skill=Acrobatics+1|tag=minor,physical|xp=5|rarity=common
+022|Enduring|description=Pushes through pain others would succumb to.|stat_mod=Health+3,Move-1|tag=minor,physical|xp=5|rarity=common
+023|Climber|description=At home on walls and cliffs.|skill=Climb+2|tag=minor,physical|xp=5|rarity=common
+024|Swimmer|description=Strong and confident in water.|skill=Swim+2|tag=minor,physical|xp=5|rarity=common
+025|Tracker|description=Reads signs others miss.|skill=Tracking+2|tag=minor|xp=5|rarity=common
+026|Watchful|description=Always scanning the horizon.|skill=Perception+1,Tracking+1|tag=minor|xp=5|rarity=common
+027|Quick Reflexes|description=Reacts before danger fully strikes.|stat_mod=Move+1,Armor-1|tag=minor|xp=5|rarity=common
+028|Sure-Footed|description=Rarely slips or stumbles.|skill=Acrobatics+1,Move+1|tag=minor|xp=5|rarity=common
+029|Disciplined|description=Fights with structure and control.|stat_mod=Fight+1,Will+1|tag=minor|xp=5|rarity=common
+030|Reckless|description=Throws themselves into danger without hesitation.|stat_mod=Fight+2,Armor-2|tag=minor|xp=5|rarity=common
+031|Marksman|description=Trained to strike at distance.|skill=Shoot+1|tag=minor|xp=5|rarity=common
+032|Shielded|description=Carries protection instinctively.|stat_mod=Armor+2,Move-1|tag=minor|xp=5|rarity=common
+033|Battle-Tested|description=Has survived more fights than most.|stat_mod=Health+2,Will+1|tag=minor|xp=5|rarity=common
+034|Opportunist|description=Strikes when foes falter.|stat_mod=Fight+1,Shoot+1|tag=minor|xp=5|rarity=uncommon
+035|Relentless|description=Does not know when to stop.|stat_mod=Health+2,Fight+1,Move-1|tag=minor|xp=5|rarity=uncommon
+036|Defiant|description=Refuses to yield ground.|stat_mod=Will+2,Move-1|tag=minor|xp=5|rarity=uncommon
+037|Veteran|description=Knows when to press and when to pull back.|stat_mod=Fight+1,Armor+1|tag=minor|xp=5|rarity=uncommon
+038|Intimidating|description=Presence alone unsettles foes.|skill=Leadership+1|tag=minor,social|xp=5|rarity=uncommon
+039|Stealthy|description=Moves unseen and unheard.|skill=Stealth+2|tag=minor|xp=5|rarity=common
+040|Lockwise|description=Knows the secrets of tumblers and pins.|skill=Lock Pick+2|tag=minor|xp=5|rarity=common
+041|Trap-Savvy|description=Spots danger before it snaps shut.|skill=Traps+2|tag=minor|xp=5|rarity=common
+042|Armorer|description=Maintains gear with care and knowledge.|skill=Armory+2|tag=minor|xp=5|rarity=common
+043|Athletic|description=Strong, fast, and coordinated.|skill=Strength+1,Move+1|tag=minor|xp=5|rarity=common
+044|Scout|description=Excels at moving ahead of the group.|skill=Stealth+1,Tracking+1|tag=minor|xp=5|rarity=common
+045|Courier|description=Used to long journeys at speed.|stat_mod=Move+2,Health-1|tag=minor|xp=5|rarity=common
+046|Observer|description=Quietly absorbs details others miss.|skill=Perception+2|tag=minor|xp=5|rarity=common
+047|Clandestine|description=Lives a life of quiet movement.|skill=Stealth+1,Lock Pick+1|tag=minor|xp=5|rarity=uncommon
+048|Pathfinder|description=Finds routes where none seem to exist.|skill=Tracking+1,Climb+1|tag=minor|xp=5|rarity=uncommon
+049|Inspiring|description=Bolsters allies through words and deeds.|skill=Leadership+2|tag=minor,social|xp=5|rarity=uncommon
+050|Resolute|description=Unshaken by fear or doubt.|stat_mod=Will+2|tag=minor|xp=5|rarity=common
+051|Tactician|description=Understands the flow of battle.|stat_mod=Will+1,Fight+1|tag=minor|xp=5|rarity=uncommon
+052|Learned|description=Educated beyond the common folk.|skill=Ancient Lore+1,Read Runes+1|tag=minor|xp=5|rarity=common
+053|Rune-Keeper|description=Handles ancient symbols with care.|skill=Read Runes+2|tag=minor,magic|xp=5|rarity=uncommon
+054|Lorebound|description=Carries forgotten stories in memory.|skill=Ancient Lore+2|tag=minor|xp=5|rarity=uncommon
+055|Focused|description=Maintains clarity amid chaos.|stat_mod=Will+1,Shoot+1|tag=minor|xp=5|rarity=common
+056|Commanding|description=Others naturally listen.|skill=Leadership+1,Will+1|tag=minor|xp=5|rarity=uncommon
+057|Patient|description=Waits for the right moment.|stat_mod=Will+1,Move-1|tag=minor|xp=5|rarity=common
+058|Iron-Willed|description=Mind fortified against intrusion.|stat_mod=Will+3,Health-1|tag=minor|xp=5|rarity=rare
+059|Mage-Touched|description=Faint magic lingers in their blood.|stat_mod=Will+1|tag=minor,magic|xp=5|rarity=uncommon
+060|Spell-Scarred|description=Marked by past arcane exposure.|stat_mod=Will+2,Armor-1|tag=minor,magic|xp=5|rarity=uncommon
+061|Attuned|description=Sensitive to magical currents.|skill=Read Runes+1,Perception+1|tag=minor,magic|xp=5|rarity=uncommon
+062|Channeler|description=Can safely carry arcane force.|stat_mod=Will+2,Health-2|tag=minor,magic|xp=5|rarity=uncommon
+063|Warded|description=Protected by subtle enchantments.|stat_mod=Armor+1,Will+1|tag=minor,magic|xp=5|rarity=uncommon
+064|Echo-Touched|description=Whispers of the past linger nearby.|skill=Ancient Lore+1,Will+1|tag=minor,magic|xp=5|rarity=rare
+065|Mystic Calm|description=Emotion rarely clouds judgment.|stat_mod=Will+2,Move-1|tag=minor,magic|xp=5|rarity=rare
+066|Arcane Resilience|description=Magic hardens body and mind.|stat_mod=Health+2,Will+1|tag=minor,magic|xp=5|rarity=rare
+067|Clumsy|description=Coordination is not their strength.|stat_mod=Move-1,Armor-1|tag=minor|xp=5|rarity=common
+068|Frail|description=Physically weaker than most.|stat_mod=Health-3,Will+1|tag=minor|xp=5|rarity=common
+069|Slow|description=Methodical, but plodding.|stat_mod=Move-2,Armor+1|tag=minor|xp=5|rarity=common
+070|Overconfident|description=Believes victory is inevitable.|stat_mod=Fight+1,Will-1|tag=minor|xp=5|rarity=common
+071|Scarred|description=Old wounds still ache.|stat_mod=Health-2,Armor+1|tag=minor|xp=5|rarity=common
+072|Tunnel-Vision|description=Focus comes at the cost of awareness.|skill=Perception-1,Shoot+1|tag=minor|xp=5|rarity=common
+073|Jaded|description=Little surprises them anymore.|stat_mod=Will+1,Leadership-1|tag=minor|xp=5|rarity=uncommon
+074|Haunted|description=Memories weigh heavily.|stat_mod=Will-1,Ancient Lore+1|tag=minor|xp=5|rarity=uncommon
+075|Champion|description=Stands above peers in combat.|stat_mod=Fight+2,Health+2|tag=major|xp=+5|rarity=uncommon
+076|Bulwark|description=A living wall on the battlefield.|stat_mod=Armor+3,Move-2|tag=major|xp=+5|rarity=uncommon
+077|Blademaster|description=Weapon skill honed to perfection.|stat_mod=Fight+3|tag=major|xp=+5|rarity=rare
+078|Deadeye|description=Rarely misses their mark.|stat_mod=Shoot+3|tag=major|xp=+5|rarity=rare
+079|Unbreakable|description=Almost impossible to bring down.|stat_mod=Health+5,Move-2|tag=major|xp=+5|rarity=rare
+080|Warlord|description=Commands through strength and presence.|skill=Leadership+3|tag=major|xp=+5|rarity=rare
+081|Archmage-Touched|description=Deeply suffused with magic.|stat_mod=Will+4,Health-2|tag=major,magic|xp=+5|rarity=rare
+082|Paragon|description=An exemplar others aspire to.|stat_mod=Fight+1,Shoot+1,Will+1,Armor+1|tag=major|xp=+10|rarity=rare
+083|Savage|description=Fights with little regard for safety.|stat_mod=Fight+2,Armor-1|tag=enemy_only|xp=+5|rarity=uncommon
+084|Skulking|description=Prefers ambush and retreat.|skill=Stealth+2|tag=enemy_only|xp=+5|rarity=uncommon
+085|Broodguard|description=Conditioned to protect something greater.|stat_mod=Armor+2,Will-1|tag=enemy_only|xp=+5|rarity=uncommon
+086|Fanatical|description=Driven by unshakable belief.|stat_mod=Will+2,Health-1|tag=enemy_only|xp=+5|rarity=uncommon
+087|Nomadic|description=Raised on the road.|stat_mod=Move+1,Tracking+1|tag=minor|xp=5|rarity=common
+088|Urban-Bred|description=Knows the rhythms of cities.|skill=Perception+1,Stealth+1|tag=minor|xp=5|rarity=common
+089|Frontiersman|description=Life on the edge hardens the soul.|stat_mod=Health+2,Tracking+1|tag=minor|xp=5|rarity=common
+090|Craftwise|description=Hands shaped by tools.|skill=Armory+1,Strength+1|tag=minor|xp=5|rarity=common
+091|Light-Footed|description=Barely leaves a trace.|skill=Stealth+1,Move+1|tag=minor|xp=5|rarity=common
+092|Deep Thinker|description=Slow to act, quick to understand.|stat_mod=Will+1,Move-1|tag=minor|xp=5|rarity=common
+093|Battle Singer|description=Fights with rhythm and voice.|skill=Leadership+1,Fight+1|tag=minor|xp=5|rarity=uncommon
+094|Weathered|description=Time has etched itself deeply.|stat_mod=Armor+1,Health+1|tag=minor|xp=5|rarity=uncommon
+095|Oathbound|description=Lives by a sworn promise.|stat_mod=Will+2,Leadership+1|tag=minor|xp=5|rarity=uncommon
+096|Fearless|description=Fear holds no power here.|stat_mod=Will+2,Fight+1|tag=minor|xp=5|rarity=uncommon
+097|Vigilant|description=Sleeps lightly, watches always.|skill=Perception+2|tag=minor|xp=5|rarity=uncommon
+098|Stoic|description=Pain and loss are met with silence.|stat_mod=Health+1,Will+1|tag=minor|xp=5|rarity=common
+099|Bound Survivor|description=Has endured worse than this.|stat_mod=Health+2,Will+2|tag=major|xp=+5|rarity=rare
+100|Destined|description=Stories already cling to their name.|stat_mod=Fight+1,Shoot+1,Will+1|tag=major|xp=+10|rarity=rare
+101|Hesitant|description=Often second-guesses decisions.|stat_mod=Move-1|tag=negative,minor|xp=5|rarity=common
+102|Soft-Spoken|description=Rarely asserts themselves.|stat_mod=Will-1|tag=negative,minor|xp=5|rarity=common
+103|Near-Sighted|description=Struggles with distant details.|stat_mod=Shoot-1|tag=negative,minor|xp=5|rarity=common
+104|Heavy-Footed|description=Moves with little subtlety.|stat_mod=Move-1,Armor-1|tag=negative,minor|xp=5|rarity=common
+105|Skittish|description=Easily startled.|stat_mod=Will-1,Move-1|tag=negative,minor|xp=5|rarity=common
+106|Untrained|description=Lacks formal combat experience.|stat_mod=Fight-1|tag=negative,minor|xp=5|rarity=common
+107|Frazzle-Nerved|description=Pressure builds quickly.|stat_mod=Will-1,Health-1|tag=negative,minor|xp=5|rarity=common
+108|Thin-Skinned|description=Bruises easily.|stat_mod=Armor-1,Health-1|tag=negative,minor|xp=5|rarity=common
+109|Slow Learner|description=Adapts poorly to change.|stat_mod=Will-1|tag=negative,minor|xp=5|rarity=common
+110|Distracted|description=Attention drifts at key moments.|stat_mod=Shoot-1,Fight-1|tag=negative,minor|xp=5|rarity=common
+111|Short-Winded|description=Endurance is lacking.|stat_mod=Health-2|tag=negative,minor|xp=5|rarity=common
+112|Unsteady Grip|description=Hands sometimes fail them.|stat_mod=Shoot-1|tag=negative,minor|xp=5|rarity=common
+113|Rusty|description=Out of practice.|stat_mod=Fight-1,Move-1|tag=negative,minor|xp=5|rarity=common
+114|Jumpy|description=Reacts poorly to surprises.|stat_mod=Will-1|tag=negative,minor|xp=5|rarity=common
+115|Battered|description=Old injuries linger.|stat_mod=Health-2|tag=negative,minor|xp=5|rarity=common
+116|Slouched|description=Poor posture weakens defense.|stat_mod=Armor-1|tag=negative,minor|xp=5|rarity=common
+117|Dull Reflexes|description=Just a moment too slow.|stat_mod=Move-1,Fight-1|tag=negative,minor|xp=5|rarity=common
+118|Timid|description=Avoids confrontation.|stat_mod=Fight-1,Will-1|tag=negative,minor|xp=5|rarity=common
+119|Unfocused Aim|description=Accuracy suffers under stress.|stat_mod=Shoot-1,Will-1|tag=negative,minor|xp=5|rarity=common
+120|Weary|description=Fatigue sets in early.|stat_mod=Health-1,Move-1|tag=negative,minor|xp=5|rarity=common
+121|Clumsy Swing|description=Overextends in combat.|stat_mod=Fight-1,Armor-1|tag=negative,minor|xp=5|rarity=common
+122|Stiff|description=Body lacks flexibility.|stat_mod=Move-1|tag=negative,minor|xp=5|rarity=common
+123|Overcautious|description=Hesitation costs momentum.|stat_mod=Move-1,Shoot-1|tag=negative,minor|xp=5|rarity=common
+124|Doubter|description=Confidence falters.|stat_mod=Will-1|tag=negative,minor|xp=5|rarity=common
+125|Awkward Fighter|description=Poor form limits strikes.|stat_mod=Fight-1|tag=negative,minor|xp=5|rarity=common
+126|Exposed|description=Leaves openings unconsciously.|stat_mod=Armor-1|tag=negative,minor|xp=5|rarity=common
+127|Lagging|description=Falls behind quickly.|stat_mod=Move-2|tag=negative,minor|xp=5|rarity=common
+128|Overloaded|description=Carries too much, too often.|stat_mod=Move-1,Health-1|tag=negative,minor|xp=5|rarity=common
+129|Frail Resolve|description=Resolve cracks under pressure.|stat_mod=Will-2|tag=negative,minor|xp=5|rarity=common
+130|Worn Gear|description=Equipment offers little protection.|stat_mod=Armor-2|tag=negative,minor|xp=5|rarity=common
+131|Reckless Courage|description=Bold but careless.|stat_mod=Fight+1,Armor-1|tag=minor|xp=5|rarity=common
+132|Tunnel Focus|description=Locks onto a single task.|stat_mod=Shoot+1,Perception-1|tag=minor|xp=5|rarity=common
+133|Stooped Giant|description=Strong but slow.|stat_mod=Health+2,Move-2|tag=minor|xp=5|rarity=common
+134|Hot-Blooded|description=Quick to anger, quick to act.|stat_mod=Fight+1,Will-1|tag=minor|xp=5|rarity=common
+135|Calculated|description=Precise but hesitant.|stat_mod=Shoot+1,Move-1|tag=minor|xp=5|rarity=common
+136|Weathered Veteran|description=Scarred but steady.|stat_mod=Armor+1,Health-1|tag=minor|xp=5|rarity=common
+137|Overtrained|description=Skill at the cost of flexibility.|stat_mod=Fight+1,Move-1|tag=minor|xp=5|rarity=common
+138|Watchful Coward|description=Sees danger early but avoids it.|stat_mod=Perception+1,Will-1|tag=minor|xp=5|rarity=common
+139|Berserker Leanings|description=Power rises as control slips.|stat_mod=Fight+2,Will-2|tag=minor|xp=5|rarity=uncommon
+140|Armored Shell|description=Protected but sluggish.|stat_mod=Armor+2,Move-2|tag=minor|xp=5|rarity=common
+141|Sharp but Fragile|description=Deadly yet vulnerable.|stat_mod=Shoot+2,Health-2|tag=minor|xp=5|rarity=common
+142|Iron Focus|description=Unwavering but inflexible.|stat_mod=Will+2,Move-2|tag=minor|xp=5|rarity=common
+143|Desperate Speed|description=Moves fast, tires fast.|stat_mod=Move+2,Health-2|tag=minor|xp=5|rarity=common
+144|Battle Sense|description=Reads fights instinctively.|stat_mod=Fight+1,Will-1|tag=minor|xp=5|rarity=common
+145|Glass Guard|description=Blocks well, breaks easily.|stat_mod=Armor+2,Health-2|tag=minor|xp=5|rarity=common
+146|Single-Minded|description=Fixated to a fault.|stat_mod=Will+1,Shoot-1|tag=minor|xp=5|rarity=common
+147|Measured Strikes|description=Accuracy over power.|stat_mod=Shoot+1,Fight-1|tag=minor|xp=5|rarity=common
+148|Stubborn|description=Hard to move, hard to lead.|stat_mod=Will+1,Move-1|tag=minor|xp=5|rarity=common
+149|Wiry|description=Lean and resilient.|stat_mod=Move+1,Health-1|tag=minor|xp=5|rarity=common
+150|Overprepared|description=Plans too much.|stat_mod=Armor+1,Move-1|tag=minor|xp=5|rarity=common
+151|Adrenalized|description=Bursts of strength.|stat_mod=Fight+1,Health-1|tag=minor|xp=5|rarity=common
+152|Sharp Nerves|description=Alert but strained.|stat_mod=Perception+1,Will-1|tag=minor|xp=5|rarity=common
+153|Bulky Frame|description=Large but slow.|stat_mod=Health+2,Move-2|tag=minor|xp=5|rarity=common
+154|Battle Calm|description=Emotionless in combat.|stat_mod=Will+1,Fight-1|tag=minor|xp=5|rarity=common
+155|Edge Walker|description=Balances risk constantly.|stat_mod=Move+1,Armor-1|tag=minor|xp=5|rarity=common
+156|Blunt Force|description=Hits hard, misses often.|stat_mod=Fight+2,Shoot-2|tag=minor|xp=5|rarity=common
+157|Alert but Weak|description=Aware yet fragile.|stat_mod=Perception+1,Health-1|tag=minor|xp=5|rarity=common
+158|Driven|description=Pushes past limits.|stat_mod=Will+1,Health-1|tag=minor|xp=5|rarity=common
+159|Overextended|description=Reaches too far.|stat_mod=Move+1,Armor-1|tag=minor|xp=5|rarity=common
+160|Tense|description=Always on edge.|stat_mod=Will+1,Health-1|tag=minor|xp=5|rarity=common
+161|Blood-Fueled|description=Thrives in violence.|stat_mod=Fight+3,Will-2|tag=major|xp=+5|rarity=uncommon
+162|Iron Hide|description=Nearly impervious, barely mobile.|stat_mod=Armor+4,Move-3|tag=major|xp=+5|rarity=uncommon
+163|Glass Cannon|description=Devastating but fragile.|stat_mod=Shoot+4,Health-3|tag=major|xp=+5|rarity=rare
+164|Unstoppable|description=Nothing slows them.|stat_mod=Move+3,Armor-3|tag=major|xp=+5|rarity=rare
+165|War-Frenzied|description=Combat awakens something primal.|stat_mod=Fight+4,Will-3|tag=major|xp=+5|rarity=rare
+166|Spellbound|description=Power flows freely, at a cost.|stat_mod=Will+4,Health-3|tag=major,magic|xp=+5|rarity=rare
+167|Living Fortress|description=A wall of flesh and steel.|stat_mod=Armor+5,Move-4|tag=major|xp=+5|rarity=rare
+168|Death-Driven|description=Fights like there is no tomorrow.|stat_mod=Fight+3,Health-3|tag=major|xp=+5|rarity=rare
+169|Hyper-Aware|description=Sees everything, sleeps never.|stat_mod=Perception+3,Will-2|tag=major|xp=+5|rarity=rare
+170|Burning Soul|description=Inner fire consumes the body.|stat_mod=Will+3,Health-3|tag=major|xp=+5|rarity=rare
+171|Juggernaut|description=Momentum is everything.|stat_mod=Health+6,Move-3|tag=major|xp=+10|rarity=rare
+172|Executioner|description=Built for killing blows.|stat_mod=Fight+3,Shoot+1,Will-2|tag=major|xp=+10|rarity=rare
+173|Phase-Touched|description=Moves unnaturally fast.|stat_mod=Move+4,Armor-3|tag=major,magic|xp=+10|rarity=rare
+174|Iron Will, Weak Flesh|description=Mind unbreakable, body not.|stat_mod=Will+4,Health-4|tag=major|xp=+10|rarity=rare
+175|Perfect Shot|description=Every attack is measured.|stat_mod=Shoot+4,Move-2|tag=major|xp=+10|rarity=rare
+176|Last Stand|description=Harder to kill the closer to death.|stat_mod=Health+4,Armor-2|tag=major|xp=+10|rarity=rare
+177|Blood Knight|description=Armor feeds on violence.|stat_mod=Armor+3,Fight+2,Will-3|tag=major|xp=+10|rarity=rare
+178|Unyielding|description=Pain no longer registers.|stat_mod=Health+5,Will-3|tag=major|xp=+10|rarity=rare
+179|Void-Touched|description=Reality bends slightly.|stat_mod=Will+3,Armor-2|tag=major,magic|xp=+10|rarity=rare
+180|Relentless Hunter|description=Never stops pursuing.|stat_mod=Move+3,Will-2|tag=major|xp=+10|rarity=rare
+181|Colossus|description=A towering force of destruction.|stat_mod=Health+7,Move-4|tag=major|xp=+10|rarity=rare
+182|Unnatural Precision|description=Mechanically perfect strikes.|stat_mod=Shoot+3,Will-2|tag=major|xp=+10|rarity=rare
+183|Berserk Engine|description=Cannot stop once started.|stat_mod=Fight+4,Armor-3|tag=major|xp=+10|rarity=rare
+184|Battle Prophet|description=Sees outcomes before they happen.|stat_mod=Will+3,Fight+1,Health-3|tag=major|xp=+10|rarity=rare
+185|Storm Runner|description=Speed beyond endurance.|stat_mod=Move+4,Health-3|tag=major|xp=+10|rarity=rare
+186|Living Weapon|description=Purpose-built for war.|stat_mod=Fight+3,Armor+1,Will-3|tag=major|xp=+10|rarity=rare
+187|Soul Anchor|description=Impossible to mentally sway.|stat_mod=Will+5,Move-3|tag=major|xp=+10|rarity=rare
+188|Flesh Reaver|description=Violence sustains them.|stat_mod=Fight+3,Health+2,Will-3|tag=major|xp=+10|rarity=rare
+189|Adamant Frame|description=Body resists all harm.|stat_mod=Armor+5,Health-2,Move-3|tag=major|xp=+10|rarity=rare
+190|Predator Prime|description=Built to dominate the battlefield.|stat_mod=Fight+2,Move+2,Will-3|tag=major|xp=+10|rarity=rare
+191|Void Walker|description=Steps between moments.|stat_mod=Move+3,Armor-2|tag=major,magic|xp=+10|rarity=rare
+192|Final Breath|description=Strongest when near death.|stat_mod=Fight+3,Health-3|tag=major|xp=+10|rarity=rare
+193|Iron Mind|description=Thoughts sharpened to blades.|stat_mod=Will+4,Armor-2|tag=major|xp=+5|rarity=rare
+194|Cataclysmic Force|description=Every blow carries devastation.|stat_mod=Fight+4,Health-4|tag=major|xp=+5|rarity=rare
+195|Overcharged|description=Power burns constantly.|stat_mod=Shoot+3,Will-3|tag=major|xp=+10|rarity=rare
+196|Immovable|description=Cannot be displaced.|stat_mod=Armor+4,Move-4|tag=major|xp=+5|rarity=rare
+197|Bloodbound Champion|description=Victory demands sacrifice.|stat_mod=Fight+3,Health+3,Will-4|tag=major|xp=+5|rarity=rare
+198|Arcane Vessel|description=Magic flows uncontrollably.|stat_mod=Will+5,Health-4|tag=major,magic|xp=+5|rarity=rare
+199|Mythic Frame|description=Body beyond mortal norms.|stat_mod=Health+8,Move-4|tag=major|xp=+5|rarity=rare
+200|Cursed Legend|description=Destined for greatness and ruin.|stat_mod=Fight+2,Shoot+2,Will+2,Health-6|tag=major|xp=+5|rarity=rare
+201|Possessed|description=Their unnatural movements are due to unseen forces.|stat_mod=Move+1,Fight+2|skill=possessed|tag=minor,enemy_only|xp=+5|rarity=rare
