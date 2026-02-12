@@ -151,7 +151,7 @@ def _build_campaign_key(truth_packet: Dict[str, Any]) -> str:
     biome_ids = [str(b).strip() for b in (truth_packet.get("biome_ids") or []) if str(b).strip()]
     biome_blob = ".".join(biome_ids) if biome_ids else "none"
     threats = ".".join(str(t) for t in (truth_packet.get("threat_ids") or []) if str(t).strip()) or "none"
-    return f"RBTL-CAMP-{seed}-{biome_id}-{main_pressure_id}-{sub_pressure_id}-{intro_id}-biomes={biome_blob}-{threats}"
+    return f"RBTL-CAMP-{seed}-{biome_id}-{main_pressure_id}-{sub_pressure_id}-{intro_id}-{biome_blob}-{threats}"
 
 
 def _dominant_region_biome_id(
