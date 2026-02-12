@@ -43,7 +43,15 @@ def _parse_campaign_key(raw: str) -> Optional[Dict[str, Any]]:
     except (TypeError, ValueError):
         seed = None
 
-    threats_blob = "-".join(parts[7:]).strip()
+    post_intro = parts[7:]
+    biome_ids: List[str] = []
+    if post_intro and post_intro[0].startswith("biomes="):
+        biome_blob = post_intro[0].split("=", 1)[1].strip()
+        if biome_blob and biome_blob.lower() != "none":
+            biome_ids = [b for b in biome_blob.split(".") if b and b.lower() != "none"]
+        post_intro = post_intro[1:]
+
+    threats_blob = "-".join(post_intro).strip()
     threat_ids = []
     if threats_blob and threats_blob.lower() != "none":
         threat_ids = [t for t in threats_blob.split(".") if t and t.lower() != "none"]
@@ -54,6 +62,7 @@ def _parse_campaign_key(raw: str) -> Optional[Dict[str, Any]]:
         "main_pressure_id": parts[4],
         "sub_pressure_id": parts[5],
         "intro_id": parts[6] if parts[6].lower() != "none" else "",
+        "biome_ids": biome_ids,
         "threat_ids": threat_ids,
     }
 
@@ -102,8 +111,7 @@ def _norm_token(value: Any) -> str:
 
 
 def _questboard_intro_candidates(intros: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-    tagged = [i for i in intros if "questboard" in (set(i.get("tags") or set()))]
-    return tagged or intros
+    return [i for i in intros if "questboard" in (set(i.get("tags") or set()))]
 
 
 def _intro_matches_obj(intro: Dict[str, Any], objective: Dict[str, Any]) -> bool:
@@ -127,10 +135,12 @@ def _render_questboard_intro(
     scenario: Dict[str, Any],
     objective: Dict[str, Any],
     biome_name: str,
+    biome_names: List[str],
     main_name: str,
     sub_name: str,
     threats_text: str,
     threat_names: List[str],
+    rng: random.Random,
 ) -> str:
     text = str(intro.get("description") or intro.get("name") or "").strip()
     if not text:
@@ -138,10 +148,14 @@ def _render_questboard_intro(
 
     t1 = threat_names[0] if threat_names else "the threat"
     t2 = threat_names[1] if len(threat_names) > 1 else t1
+    biome_token = biome_name
+    if biome_names:
+        biome_token = rng.choice(biome_names)
+
     replacements = {
         "[scenario]": str(scenario.get("name", "Scenario")),
         "[objective]": str(objective.get("name", "an urgent task")),
-        "[biome]": biome_name,
+        "[biome]": biome_token,
         "[main_pressure]": main_name,
         "[sub_pressure]": sub_name,
         "[threats]": threats_text,
@@ -183,12 +197,23 @@ def _quest_board_entries(data: Any, key: str) -> Optional[List[Dict[str, Any]]]:
         if not scenario_types:
             return None
 
+    # Questboard should never assign the Final Showdown / BBEG scenario type.
+    scenario_types = [e for e in scenario_types if (e.get("ID") or "").strip().lower() != "bbeg"]
+    if not scenario_types:
+        return None
+
     biomes = dget(data, "biomes", []) or []
     pressures = dget(data, "campaign_pressures", []) or []
     threats = dget(data, "campaign_threats", []) or []
     intros = dget(data, "intro_starts", []) or []
 
     biome = _find_by_id(biomes, parsed.get("biome_id", ""))
+    biome_ids = [str(bid).strip() for bid in parsed.get("biome_ids", []) if str(bid).strip()]
+    biome_names = [
+        str((resolved or {}).get("name") or "").strip()
+        for resolved in (_find_by_id(biomes, bid) for bid in biome_ids)
+        if str((resolved or {}).get("name") or "").strip()
+    ]
     main_pressure = _find_by_id(pressures, parsed.get("main_pressure_id", ""))
     sub_pressure = _find_by_id(pressures, parsed.get("sub_pressure_id", ""))
     intro = _find_by_id(intros, parsed.get("intro_id", "")) if parsed.get("intro_id") else None
@@ -250,22 +275,30 @@ def _quest_board_entries(data: Any, key: str) -> Optional[List[Dict[str, Any]]]:
             i for i in candidate_intros
             if _intro_matches_obj(i, objective) and _intro_matches_threat(i, threat_tokens)
         ]
-        if matching_intros:
+        picked_intro = rng.choice(matching_intros) if matching_intros else None
+        if picked_intro:
             flavor = _render_questboard_intro(
-                rng.choice(matching_intros),
+                picked_intro,
                 scenario,
                 objective,
                 biome_name,
+                biome_names,
                 main_name,
                 sub_name,
                 threats_text,
                 threat_names,
+                rng,
             ) or flavor
         elif intro and intro.get("name") and rng.random() < 0.35:
             flavor = f"{intro.get('name')}. {flavor}"
 
+        entry_name = str((picked_intro or {}).get("name", "")).strip()
+        if not entry_name:
+            entry_name = f"{objective.get('name', 'Contract')}"
+
         entries.append(
             {
+                "entry_name": entry_name,
                 "scenario_type_id": (scenario.get("ID") or "").strip(),
                 "scenario_type_name": scenario.get("name", "Scenario"),
                 "objective_id": (objective.get("ID") or "").strip(),
@@ -747,13 +780,24 @@ def gather_inputs_questboard(data: Any) -> Dict[str, Any]:
     inputs: Dict[str, Any] = {"mode": "Questboard"}
 
     while True:
-        campaign_key = input("\nCampaign Key (required for Questboard): ").strip()
+        campaign_key = input("\nCampaign Key (required for Questboard) (r=restart q=quit): ").strip()
+        low = campaign_key.lower()
+        if low in ("r", "restart", "home"):
+            continue
+        if low in ("q", "quit", "exit"):
+            raise SystemExit(0)
         if not campaign_key:
             print("Quest Board: campaign key is required.\n")
             continue
+
         entries = _quest_board_entries(data, campaign_key)
         if not entries:
             print("Quest Board: could not parse campaign key or build entries. Try again.\n")
+            continue
+
+        parsed = _parse_campaign_key(campaign_key)
+        if not parsed:
+            print("Quest Board: campaign key is invalid. Try again.\n")
             continue
 
         inputs["campaign_key"] = campaign_key
@@ -787,12 +831,18 @@ def gather_inputs_questboard(data: Any) -> Dict[str, Any]:
             t1 = entry.get("threat_tag_1", "none")
             t2 = entry.get("threat_tag_2", "none")
             threat_text = t1 if (t2 or "none").lower() == "none" else f"{t1}, {t2}"
-            flavor = entry.get("flavor", "")
-            print(f"{idx}) Scenario Type: {scen} | Threats: {threat_text} | Objective: {obj}")
+            title = str(entry.get("entry_name") or obj)
+            flavor = str(entry.get("flavor") or "").strip()
+            print(f"  {idx}. {title}")
+            print(f"     {scen}, {threat_text}, {obj}")
             if flavor:
-                print(f"   {flavor}")
+                print(f"     {flavor}")
 
-        choice = input(f"\nSelect quest [1-{len(entries)}]: ").strip()
+        choice = input(f"Select quest [1-{len(entries)}] (b=back r=restart q=quit): ").strip().lower()
+        if choice in ("b", "back", "r", "restart", "home"):
+            continue
+        if choice in ("q", "quit", "exit"):
+            raise SystemExit(0)
         try:
             pick_idx = int(choice) - 1
         except ValueError:
@@ -811,11 +861,11 @@ def gather_inputs_questboard(data: Any) -> Dict[str, Any]:
         inputs["threat_tag_2"] = pick.get("threat_tag_2", "none")
         inputs["encounter_kind"] = "Defensive Battle" if (inputs.get("scenario_type_id") or "").lower() == "defensive" else "Scenario"
 
-        parsed = _parse_campaign_key(campaign_key)
-        if parsed and parsed.get("biome_id"):
+        if parsed.get("biome_id"):
             inputs["biome_id"] = parsed.get("biome_id", "")
 
         return inputs
+
 # ----------------------------
 # Public entry point
 # ----------------------------
