@@ -82,19 +82,23 @@ def _wrap_paragraphs(text: str, width: int = 92) -> List[str]:
 
 
 def pick_intro_start(intro_starts: List[Dict[str, Any]], main_threat_tags: Set[str]) -> Optional[Dict[str, Any]]:
-    """Pick a campaign intro; prefer intros tagged to the main threat."""
+    """Pick a campaign intro; prefer tag=intro rows, then threat-matched rows within that pool."""
     if not intro_starts:
         return None
 
-    tagged = [i for i in intro_starts if (i.get("tags") or set()) and (set(i.get("tags") or set()) & (main_threat_tags or set()))]
+    intro_rows = [i for i in intro_starts if "intro" in (i.get("tags") or set())]
+    if not intro_rows:
+        intro_rows = intro_starts
+
+    tagged = [i for i in intro_rows if (i.get("tags") or set()) and (set(i.get("tags") or set()) & (main_threat_tags or set()))]
     if tagged:
         return random.choice(tagged)
 
-    untagged = [i for i in intro_starts if not (i.get("tags") or set())]
+    untagged = [i for i in intro_rows if not (i.get("tags") or set())]
     if untagged:
         return random.choice(untagged)
 
-    return random.choice(intro_starts)
+    return random.choice(intro_rows)
 
 
 def _intro_id(entry: Optional[Dict[str, Any]]) -> str:

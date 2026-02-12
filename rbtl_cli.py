@@ -97,6 +97,62 @@ def _campaign_threat_tags(threat_entries: List[Dict[str, Any]], threat_ids: List
     return tags
 
 
+def _norm_token(value: Any) -> str:
+    return str(value or "").strip().lower().replace(" ", "_")
+
+
+def _questboard_intro_candidates(intros: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+    tagged = [i for i in intros if "questboard" in (set(i.get("tags") or set()))]
+    return tagged or intros
+
+
+def _intro_matches_obj(intro: Dict[str, Any], objective: Dict[str, Any]) -> bool:
+    req = {_norm_token(t) for t in (intro.get("obj") or "").split(",") if _norm_token(t)}
+    if not req:
+        return True
+    obj_id = _norm_token(objective.get("ID") or objective.get("id"))
+    obj_name = _norm_token(objective.get("name"))
+    return bool({obj_id, obj_name} & req)
+
+
+def _intro_matches_threat(intro: Dict[str, Any], threat_tokens: set) -> bool:
+    req = {_norm_token(t) for t in (intro.get("threat") or "").split(",") if _norm_token(t)}
+    if not req:
+        return True
+    return bool(req & threat_tokens)
+
+
+def _render_questboard_intro(
+    intro: Dict[str, Any],
+    scenario: Dict[str, Any],
+    objective: Dict[str, Any],
+    biome_name: str,
+    main_name: str,
+    sub_name: str,
+    threats_text: str,
+    threat_names: List[str],
+) -> str:
+    text = str(intro.get("description") or intro.get("name") or "").strip()
+    if not text:
+        return ""
+
+    t1 = threat_names[0] if threat_names else "the threat"
+    t2 = threat_names[1] if len(threat_names) > 1 else t1
+    replacements = {
+        "[scenario]": str(scenario.get("name", "Scenario")),
+        "[objective]": str(objective.get("name", "an urgent task")),
+        "[biome]": biome_name,
+        "[main_pressure]": main_name,
+        "[sub_pressure]": sub_name,
+        "[threats]": threats_text,
+        "[threat1]": t1,
+        "[threat2]": t2,
+    }
+    for token, value in replacements.items():
+        text = text.replace(token, value)
+    return text
+
+
 def _pick_threat_pair(rng: random.Random, tags: List[str]) -> Tuple[str, str]:
     if not tags:
         return "none", "none"
@@ -143,6 +199,16 @@ def _quest_board_entries(data: Any, key: str) -> Optional[List[Dict[str, Any]]]:
             threat_names.append(str(threat.get("name")))
     threat_tags = _campaign_threat_tags(threats, parsed.get("threat_ids", []))
 
+    threat_tokens = set(threat_tags)
+    for tid in parsed.get("threat_ids", []):
+        threat = _find_by_id(threats, tid)
+        if not threat:
+            continue
+        threat_tokens.add(_norm_token(tid))
+        threat_tokens.add(_norm_token(threat.get("name")))
+        for tag in threat.get("tags", set()) or set():
+            threat_tokens.add(_norm_token(tag))
+
     rng = _rng_from_campaign_key(key)
     templates = [
         "A {scenario} request calls for {objective} amid the {biome}, where {main_pressure} is tightening.",
@@ -179,7 +245,23 @@ def _quest_board_entries(data: Any, key: str) -> Optional[List[Dict[str, Any]]]:
             threats=threats_text,
         )
 
-        if intro and intro.get("name") and rng.random() < 0.35:
+        candidate_intros = _questboard_intro_candidates(intros)
+        matching_intros = [
+            i for i in candidate_intros
+            if _intro_matches_obj(i, objective) and _intro_matches_threat(i, threat_tokens)
+        ]
+        if matching_intros:
+            flavor = _render_questboard_intro(
+                rng.choice(matching_intros),
+                scenario,
+                objective,
+                biome_name,
+                main_name,
+                sub_name,
+                threats_text,
+                threat_names,
+            ) or flavor
+        elif intro and intro.get("name") and rng.random() < 0.35:
             flavor = f"{intro.get('name')}. {flavor}"
 
         entries.append(
