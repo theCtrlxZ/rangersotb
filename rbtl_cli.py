@@ -174,6 +174,9 @@ def _render_questboard_intro(
     s1 = _threat_slot(threat_details, 0)
     s2 = _threat_slot(threat_details, 1)
     s3 = _threat_slot(threat_details, 2)
+    # For 4-threat campaigns, expose explicit slot-4 tokens.
+    # If a true 4th threat does not exist, slot 4 defaults to slot 2.
+    s4 = _threat_slot(threat_details, 3) if len(threat_details) >= 4 else s2
     biome_token = biome_name
     if biome_names:
         biome_token = rng.choice(biome_names)
@@ -188,12 +191,15 @@ def _render_questboard_intro(
         "[threat1]": s1["name"],
         "[threat2]": s2["name"],
         "[threat3]": s3["name"],
+        "[threat4]": s4["name"],
         "[enemy1]": s1["enemy"],
         "[enemy2]": s2["enemy"],
         "[enemy3]": s3["enemy"],
+        "[enemy4]": s4["enemy"],
         "[camp1]": s1["camp"],
         "[camp2]": s2["camp"],
         "[camp3]": s3["camp"],
+        "[camp4]": s4["camp"],
     }
     for token, value in replacements.items():
         text = text.replace(token, value)
@@ -250,8 +256,10 @@ def _quest_board_entries(data: Any, key: str) -> Optional[List[Dict[str, Any]]]:
     main_pressure = _find_by_id(pressures, parsed.get("main_pressure_id", ""))
     sub_pressure = _find_by_id(pressures, parsed.get("sub_pressure_id", ""))
     intro = _find_by_id(intros, parsed.get("intro_id", "")) if parsed.get("intro_id") else None
+    parsed_threat_ids = parsed.get("threat_ids", []) or []
     threat_details: List[Dict[str, str]] = []
-    for tid in parsed.get("threat_ids", []):
+    threat_tags_by_slot: List[List[str]] = []
+    for tid in parsed_threat_ids:
         threat = _find_by_id(threats, tid)
         if not threat:
             continue
@@ -266,11 +274,12 @@ def _quest_board_entries(data: Any, key: str) -> Optional[List[Dict[str, Any]]]:
                 "camp": _camp_from_threat(threat),
             }
         )
+        threat_tags_by_slot.append(tags)
     threat_names = [t["name"] for t in threat_details]
-    threat_tags = _campaign_threat_tags(threats, parsed.get("threat_ids", []))
+    threat_tags = _campaign_threat_tags(threats, parsed_threat_ids)
 
     threat_tokens = set(threat_tags)
-    for tid in parsed.get("threat_ids", []):
+    for tid in parsed_threat_ids:
         threat = _find_by_id(threats, tid)
         if not threat:
             continue
@@ -289,89 +298,97 @@ def _quest_board_entries(data: Any, key: str) -> Optional[List[Dict[str, Any]]]:
         "The posting hints at {objective} while whispers of {threats} spread through the {biome}.",
     ]
 
+    # Questboard generation is grouped by threat slot.
+    # Slot pressure mapping: 1 & 3 => main pressure, 2 & 4 => sub pressure.
+    slot_count = min(max(len(threat_details), 1), 4)
+    entries_per_slot = 2
+
     entries: List[Dict[str, Any]] = []
-    for _ in range(6):
-        scen_weights = [_entry_weight(e, settings, "scenariotype") for e in scenario_types]
-        scenario = rng.choices(scenario_types, weights=scen_weights, k=1)[0]
+    for slot_idx in range(slot_count):
+        slot_num = slot_idx + 1
+        slot_is_main = slot_num in (1, 3)
+        slot_threat_tags = threat_tags_by_slot[slot_idx] if slot_idx < len(threat_tags_by_slot) else []
 
-        allowed = objectives_allowed_for_scenario(scenario, objectives_all)
-        if not allowed:
-            allowed = objectives_all
-        obj_weights = [_entry_weight(e, settings, "objective") for e in allowed]
-        objective = rng.choices(allowed, weights=obj_weights, k=1)[0]
+        for _ in range(entries_per_slot):
+            scen_weights = [_entry_weight(e, settings, "scenariotype") for e in scenario_types]
+            scenario = rng.choices(scenario_types, weights=scen_weights, k=1)[0]
 
-        t1, t2 = _pick_threat_pair(rng, threat_tags)
-        threats_text = ", ".join(threat_names) if threat_names else "shadowed forces"
-        biome_name = biome.get("name") if biome else "frontier wilds"
-        main_name = main_pressure.get("name") if main_pressure else "a rising pressure"
-        sub_name = sub_pressure.get("name") if sub_pressure else "a secondary pressure"
+            allowed = objectives_allowed_for_scenario(scenario, objectives_all)
+            if not allowed:
+                allowed = objectives_all
+            obj_weights = [_entry_weight(e, settings, "objective") for e in allowed]
+            objective = rng.choices(allowed, weights=obj_weights, k=1)[0]
 
-        flavor = rng.choice(templates).format(
-            scenario=scenario.get("name", "Scenario"),
-            objective=objective.get("name", "an urgent task"),
-            biome=biome_name,
-            main_pressure=main_name,
-            sub_pressure=sub_name,
-            threats=threats_text,
-        )
+            # Tie each entry to its threat slot first, then fall back safely.
+            t1 = rng.choice(slot_threat_tags) if slot_threat_tags else (rng.choice(threat_tags) if threat_tags else "none")
+            t2 = "none"
+            threats_text = ", ".join(threat_names) if threat_names else "shadowed forces"
+            biome_name = biome.get("name") if biome else "frontier wilds"
+            main_name = main_pressure.get("name") if main_pressure else "a rising pressure"
+            sub_name = sub_pressure.get("name") if sub_pressure else "a secondary pressure"
 
-        candidate_intros = _questboard_intro_candidates(intros)
-        matching_intros = [
-            i for i in candidate_intros
-            if _intro_matches_obj(i, objective) and _intro_matches_threat(i, threat_tokens)
-        ]
-        picked_intro = rng.choice(matching_intros) if matching_intros else None
-        if picked_intro:
-            flavor = _render_questboard_intro(
-                picked_intro,
-                scenario,
-                objective,
-                biome_name,
-                biome_names,
-                main_name,
-                sub_name,
-                threats_text,
-                threat_details,
-                rng,
-            ) or flavor
-        elif intro and intro.get("name") and rng.random() < 0.35:
-            flavor = f"{intro.get('name')}. {flavor}"
+            # Enforce a deterministic mapping for pressure emphasis by threat slot.
+            if not slot_is_main:
+                main_name, sub_name = sub_name, main_name
 
-        entry_name = str((picked_intro or {}).get("name", "")).strip()
-        if not entry_name:
-            entry_name = f"{objective.get('name', 'Contract')}"
+            flavor = rng.choice(templates).format(
+                scenario=scenario.get("name", "Scenario"),
+                objective=objective.get("name", "an urgent task"),
+                biome=biome_name,
+                main_pressure=main_name,
+                sub_pressure=sub_name,
+                threats=threats_text,
+            )
 
-        enemy_types_text = _enemy_text_from_tags([t for t in (t1, t2) if t and t != "none"])
-        entries.append(
-            {
-                "entry_name": entry_name,
-                "scenario_type_id": (scenario.get("ID") or "").strip(),
-                "scenario_type_name": scenario.get("name", "Scenario"),
-                "objective_id": (objective.get("ID") or "").strip(),
-                "objective_name": objective.get("name", "Objective"),
-                "threat_tag_1": t1,
-                "threat_tag_2": t2,
-                "enemy_types": enemy_types_text,
-                "flavor": flavor,
-            }
-        )
+            candidate_intros = _questboard_intro_candidates(intros)
+            matching_intros = [
+                i for i in candidate_intros
+                if _intro_matches_obj(i, objective)
+                and _intro_matches_threat(i, threat_tokens)
+                and (
+                    # If a questboard row has explicit threat-slot tags (e.g. threat1), honor them.
+                    not ({f"threat{n}" for n in (1, 2, 3, 4)} & {str(t).strip().lower() for t in (i.get("tags") or set())})
+                    or f"threat{slot_num}" in {str(t).strip().lower() for t in (i.get("tags") or set())}
+                )
+            ]
+            picked_intro = rng.choice(matching_intros) if matching_intros else None
+            if picked_intro:
+                flavor = _render_questboard_intro(
+                    picked_intro,
+                    scenario,
+                    objective,
+                    biome_name,
+                    biome_names,
+                    main_name,
+                    sub_name,
+                    threats_text,
+                    threat_details,
+                    rng,
+                ) or flavor
+            elif intro and intro.get("name") and rng.random() < 0.35:
+                flavor = f"{intro.get('name')}. {flavor}"
 
-    deduped: List[Dict[str, Any]] = []
-    seen: set = set()
-    for e in entries:
-        sig = (
-            str(e.get("scenario_type_id", "")).lower(),
-            str(e.get("objective_id", "")).lower(),
-            str(e.get("threat_tag_1", "")).lower(),
-            str(e.get("threat_tag_2", "")).lower(),
-            str(e.get("entry_name", "")).lower(),
-        )
-        if sig in seen:
-            continue
-        seen.add(sig)
-        deduped.append(e)
+            entry_name = str((picked_intro or {}).get("name", "")).strip()
+            if not entry_name:
+                entry_name = f"{objective.get('name', 'Contract')}"
 
-    return deduped
+            enemy_types_text = _enemy_text_from_tags([t for t in (t1, t2) if t and t != "none"])
+            entries.append(
+                {
+                    "entry_name": entry_name,
+                    "scenario_type_id": (scenario.get("ID") or "").strip(),
+                    "scenario_type_name": scenario.get("name", "Scenario"),
+                    "objective_id": (objective.get("ID") or "").strip(),
+                    "objective_name": objective.get("name", "Objective"),
+                    "threat_tag_1": t1,
+                    "threat_tag_2": t2,
+                    "enemy_types": enemy_types_text,
+                    "flavor": flavor,
+                    "threat_slot": slot_num,
+                }
+            )
+
+    return entries
 def pick_class_filter_tag(data):
     # Collect tags from companion classes
     tag_to_classes = {}
