@@ -195,127 +195,128 @@
 #QUESTBOARD ENTRIES
 #~~~~~~~~~~~~~~~~~~~~~~~~
 
-Q001|Roadside Ambushes|description=Travelers vanish along the [biome] road, and folk whisper that [threat1] grow bold under the cover of [sub_pressure]. Someone needs to drive them off before trade dries up entirely.|type=fight,moving,raid|obj=eliminate|tag=questboard|rarity=common
+Q001|Break the Vanguard|description=Scouts report [enemy1] assembling beyond the ridge. Strike before their numbers consolidate and scatter their forward push.|type=fight,moving|obj=eliminate|tag=questboard,threat1|rarity=common
 
-Q002|Hidden Tracks|description=Strange signs mark the edges of the [biome], said to be left by [threat1] testing the land during this spell of [sub_pressure]. If ignored, they may claim more than just territory.|type=fight,raid,site,lair|obj=investigate|tag=questboard|rarity=common
+Q002|Cut the Signal Fires|description=Signal pyres lit by [enemy3] burn along the valley. Extinguish them before reinforcements answer the call.|type=raid,site|obj=eliminate|tag=questboard,threat3|rarity=common
 
-Q003|Turf War|description=[Threat1] and [threat2] clash in the [biome], each blaming the other as tensions rise from [sub_pressure]. The stronger side will control the ground unless someone intervenes.|type=fight,raid,siege|obj=leader|tag=questboard|rarity=uncommon
+Q003|Silence the Enforcers|description=Caravans are being pressured by [enemy2] demanding tribute. Remove their muscle and loosen their grip on the trade road.|type=fight,moving|obj=eliminate|tag=questboard,threat2|rarity=common
 
-Q004|Prisoner in the Dark|description=A captive is said to be held somewhere deep in the [biome] by [threat1], taken quietly amid [sub_pressure]. Few believe the prisoner will last long.|type=site,lair,raid|obj=rescue|tag=questboard|rarity=common
+Q004|Disrupt the Watch|description=Rooftop lookouts established by [enemy4] overlook the district. Clear them out and blind their movements for a time.|type=site,raid|obj=eliminate|tag=questboard,threat4|rarity=common
 
-Q005|The Missing Heirloom|description=A valued relic disappeared into the [biome], allegedly seized by [threat1] looking to profit during [sub_pressure]. Recover it before it vanishes into deeper hands.|type=site,lair,raid|obj=fetch|tag=questboard|rarity=common
+Q005|Intercept the Convoy|description=A supply convoy under [enemy1] control moves through the pass. Hit it hard and leave their advance understocked.|type=moving,raid|obj=eliminate|tag=questboard,threat1|rarity=uncommon
 
-Q006|Scouts Gone Silent|description>A patrol sent into the [biome] to watch [threat1] has not returned, last reporting unusual movement tied to [sub_pressure]. Someone must confirm what stirs out there.|type=site,raid,fight|obj=scout|tag=questboard|rarity=common
+Q006|Run Them Down|description=Stolen materials are being hauled off by retreating [enemy3]. Track them and reclaim what they took before they regroup.|type=moving|obj=fetch|tag=questboard,threat3|rarity=uncommon
 
-Q007|A Challenge Issued|description=A champion of [threat1] has issued an open challenge near the [biome], claiming strength born of [sub_pressure]. Pride alone may decide who walks away.|type=moving,fight|obj=duel|tag=questboard|rarity=uncommon
+Q007|Shadow the Courier|description=Coded messages are being carried across the quarter by [enemy2]. Catch the couriers before their plans take root.|type=moving|obj=scout|tag=questboard,threat2|rarity=common
 
-Q008|Rallying the Warband|description=[Threat1] gather openly within the [biome], emboldened by [main_pressure] and led by a rising figure of influence. If left unchecked, their numbers will swell.|type=fight,raid,moving|obj=leader|tag=questboard|rarity=uncommon
+Q008|Close the Back Door|description=Outer streets were quietly mapped by roaming [enemy4] scouts. Hunt them down before safe routes are secured.|type=moving|obj=eliminate|tag=questboard,threat4|rarity=common
 
-Q009|Encroaching Siege|description=Outposts along the [biome] brace as [threat1] advance under the strain of [main_pressure]. If the line breaks, nearby lands may fall next.|type=defensive,siege|obj=hill|tag=questboard|rarity=uncommon
+Q009|Hold the Crossing|description=Pressure from [enemy1] is mounting along the river crossing. Escort the engineers reinforcing the barricades until the work holds.|type=defensive,siege|obj=escort|tag=questboard,threat1|rarity=uncommon
 
-Q010|Ritual at the Threshold|description=Signs of a gathering rite appear in the [biome], driven by [main_pressure] and orchestrated by [threat1]. If completed, their position will be secured beyond simple steel.|type=raid,site|obj=ritual|tag=questboard|rarity=rare
+Q010|Guard the Ritekeeper|description=Disruption is expected from [enemy3] along the marsh road. See the ritualist safely through before interference begins.|type=moving|obj=escort|tag=questboard,threat3|rarity=uncommon
 
-Q011|Break Their Momentum|description=[Threat1] strike swiftly through the [biome], using the chaos of [main_pressure] to expand their hold. Cut down enough of them and their advance may falter.|type=fight,moving,raid|obj=eliminate|tag=questboard|rarity=common
+Q011|Move the Informant|description=A wavering contact has drawn attention from [enemy2]. Escort the informant to a safer quarter before tongues loosen.|type=moving|obj=escort|tag=questboard,threat2|rarity=common
 
-Q012|The Fleeing Commander|description=A key figure of [threat1] maneuvers through the [biome], acting decisively under [main_pressure]. If they escape, their campaign will continue elsewhere.|type=moving,raid|obj=assassinate|tag=questboard|rarity=uncommon
+Q012|Shatter the Circle|description=A gathering of [enemy3] has formed beneath the old stones. Break the ritual formation before it stabilizes.|type=site,lair|obj=ritual|tag=questboard,threat3|rarity=rare
 
-Q013|Shattered Alliance|description=[Threat1] seek to secure dominance in the [biome] as [main_pressure] fractures old pacts. Remove their leader and the coalition may crumble.|type=siege,fight,raid,moving,site|obj=leader|tag=questboard|rarity=rare
+Q013|Unravel the Gathering|description=A quiet initiation led by [enemy4] is underway in the underways. Interrupt the proceedings and send them scrambling.|type=site|obj=ritual|tag=questboard,threat4|rarity=uncommon
 
-Q014|Deep Lair Stirring|description=Something entrenched in the depths of the [biome] awakens under [main_pressure], guarded fiercely by [threat1]. If not confronted now, it may grow beyond reach.|type=lair|obj=leader|tag=questboard|rarity=rare
-Q015|Fence-Line Trouble|description=Farmers along the edge of the [biome] complain that [threat1] have been crossing boundaries more boldly during [sub_pressure]. A sharp lesson might keep the peace.|type=fight,moving,raid|obj=eliminate|tag=questboard|rarity=common
+Q014|Answer the Challenge|description=A public challenge issued by [enemy2] champions is drawing a crowd. Step forward and make their example costly.|type=fight|obj=duel|tag=questboard,threat2|rarity=common
 
-Q016|Unquiet Signs|description=Odd markings and disturbed ground have appeared in the [biome], attributed to [threat1] taking advantage of [sub_pressure]. No one knows what they’re planning.|type=fight,raid,site,lair|obj=investigate|tag=questboard|rarity=common
+Q015|Break Their Standard|description=A champion among [enemy1] is rallying fighters beneath a fresh banner. Face them directly and shake their momentum.|type=fight|obj=duel|tag=questboard,threat1|rarity=uncommon
 
-Q017|Waylaid Messengers|description=Couriers passing through the [biome] report harassment by [threat1], emboldened by [sub_pressure]. Clear the route before word stops flowing altogether.|type=fight,moving,raid|obj=eliminate|tag=questboard|rarity=common
+Q016|Extract the Captives|description=Prisoners taken in a sweep by [enemy3] are being held nearby. Move quickly and pull them free before relocation.|type=site,raid|obj=rescue|tag=questboard,threat3|rarity=uncommon
 
-Q018|Campfire Boasts|description=A loud-mouthed champion of [threat1] has been boasting near the [biome], claiming strength drawn from [sub_pressure]. Some think they can be baited into a proper fight.|type=moving,fight|obj=duel|tag=questboard|rarity=common
+Q017|Cut the Chains|description=Locals seized by [enemy4] are confined in a shuttered warehouse. Get inside, free them, and withdraw before patrols converge.|type=site|obj=rescue|tag=questboard,threat4|rarity=common
 
-Q019|Lost Patrol|description=A small band sent to watch [threat1] in the [biome] has gone missing amid [sub_pressure]. Find them, or at least learn what became of them.|type=site,raid,fight|obj=investigate|tag=questboard|rarity=common
+Q018|Cut Off the Fleeing|description=[enemy1] are retreating with plunder through the hills. Intercept them and reclaim what they’ve taken before they disappear.|type=moving|obj=fetch|tag=questboard,threat1|rarity=uncommon
 
-Q020|Taken for Ransom|description=[Threat1] have seized a minor local figure near the [biome], hoping to profit during [sub_pressure]. It may be easier to take them back than to negotiate.|type=site,lair,raid|obj=rescue|tag=questboard|rarity=common
+Q019|Hunt the Marauders|description=Reports say [enemy3] raiders are moving quickly along the ridge. Track them down and disrupt their escape.|type=moving|obj=eliminate|tag=questboard,threat3|rarity=uncommon
 
-Q021|Scattered Supplies|description=Supplies bound for the frontier were stolen and traced toward the [biome], likely by [threat1] exploiting [sub_pressure]. Recover what you can before it’s divided up.|type=site,lair,raid|obj=fetch|tag=questboard|rarity=common
+Q020|Stop the Messengers|description=[enemy2] couriers have been sighted carrying urgent news. Catch them before the information spreads further.|type=moving|obj=scout|tag=questboard,threat2|rarity=common
 
-Q022|Testing the Line|description=[Threat1] have been probing the outskirts of the [biome], skirmishing lightly under the excuse of [sub_pressure]. A firm response may discourage further attempts.|type=fight,moving|obj=leader|tag=questboard|rarity=common
+Q021|Block the Rear Guard|description=[enemy4] units are withdrawing from the village after a minor strike. Intercept their rear and sow confusion.|type=moving|obj=eliminate|tag=questboard,threat4|rarity=common
 
-Q023|Unclaimed Ground|description=A defensible rise in the [biome] has become contested as [threat1] maneuver during [sub_pressure]. Whoever holds it will dictate the road for weeks.|type=defensive,siege|obj=hill|tag=questboard|rarity=common
+Q022|Protect the Envoy|description=[enemy1] pressure threatens a local diplomat. Escort them safely across the border before word of their movements leaks.|type=moving|obj=escort|tag=questboard,threat1|rarity=uncommon
 
-Q024|Quiet Collection|description=[Threat1] are said to be gathering something from the [biome] while attention is elsewhere due to [sub_pressure]. It might be worth seeing what they value so highly.|type=site,raid,fight|obj=scout|tag=questboard|rarity=common
+Q023|Guard the Pilgrim|description=[enemy3] followers are moving a ritualist along the forest path. Keep them safe until the gathering concludes.|type=moving|obj=escort|tag=questboard,threat3|rarity=uncommon
 
-Q025|A Leader’s Pride|description=A lesser commander of [threat1] has grown ambitious in the [biome], encouraged by [sub_pressure]. Removing them may prevent larger problems later.|type=fight,raid,moving,site|obj=leader|tag=questboard|rarity=common
+Q024|Guide the Messenger|description=[enemy2] scouts are close behind a vital informant. See the messenger to safety before their route is discovered.|type=moving|obj=escort|tag=questboard,threat2|rarity=common
 
-Q026|Broken Truce|description=A fragile understanding between locals and [threat1] has frayed amid [sub_pressure]. Both sides now prepare for a skirmish in the [biome].|type=fight,defensive|obj=eliminate|tag=questboard|rarity=common
+Q025|Disrupt the Ceremony|description=[enemy3] are assembling an arcane circle at dawn. Scatter the participants and prevent the rite from strengthening their hold.|type=site,lair|obj=ritual|tag=questboard,threat3|rarity=rare
 
-Q027|Footsteps in the Marsh|description=Tracks believed to belong to [threat1] circle settlements near the [biome], likely opportunistic moves during [sub_pressure]. Confirm their intent before panic spreads.|type=site,raid,fight|obj=scout|tag=questboard|rarity=common
+Q026|Break the Circle|description=[enemy4] cultists are performing rites in a secluded shrine. Intervene before the ritual empowers them further.|type=site|obj=ritual|tag=questboard,threat4|rarity=uncommon
 
-Q028|Smuggled Artifact|description=A minor artifact has been traded into the hands of [threat1] within the [biome], taking advantage of [sub_pressure]. Retrieve it before it changes hands again.|type=site,lair,raid|obj=fetch|tag=questboard|rarity=common
+Q027|Challenge the Champion|description=A champion among [enemy3] is calling challengers to the field. Step forward and make the fight costly.|type=fight|obj=duel|tag=questboard,threat3|rarity=uncommon
 
-Q029|Harried Caravan|description>A merchant caravan limped back from the [biome], harassed repeatedly by [threat1] amid [sub_pressure]. Escort the next one through safely.|type=moving,site|obj=escort|tag=questboard|rarity=common
+Q028|Face the Contender|description=A rising champion of [enemy1] has provoked defenders in the square. Confront them and disrupt their influence.|type=fight|obj=duel|tag=questboard,threat1|rarity=uncommon
 
-Q030|Strange Gathering|description=A small group of [threat1] has been meeting quietly in the [biome], perhaps experimenting under the cover of [sub_pressure]. Better to interrupt it early.|type=raid,site|obj=ritual|tag=questboard|rarity=common
+Q029|Free the Captives|description=[enemy3] have seized villagers and hidden them in the woods. Move swiftly and release them before they are moved again.|type=site,raid|obj=rescue|tag=questboard,threat3|rarity=uncommon
 
-Q031|Rival Claim|description=[Threat1] and [threat2] both stake claim to a resource in the [biome], tensions sharpened by [sub_pressure]. Remove one leader and the matter may settle.|type=fight,raid,moving,site|obj=leader|tag=questboard|rarity=common
+Q030|Liberate the Hostages|description=Locals captured by [enemy4] are confined in a burned-out keep. Free them before patrols tighten the area.|type=site|obj=rescue|tag=questboard,threat4|rarity=common
 
-Q032|Fleeing Cutpurse|description=A figure tied to [threat1] bolts through the [biome] after a dispute sparked by [sub_pressure]. Catch them before they vanish into friendly lines.|type=moving,raid|obj=chase|tag=questboard|rarity=common
+Q031|Save the Prisoners|description=[enemy1] have taken prisoners from a frontier settlement. Intervene quickly to pull them from harm’s way.|type=site,raid|obj=rescue|tag=questboard,threat1|rarity=uncommon
 
-Q033|Encamped Too Close|description=[Threat1] have set camp uncomfortably near settled land at the edge of the [biome], citing opportunity born of [sub_pressure]. Drive them off before others follow.|type=fight,raid|obj=eliminate|tag=questboard|rarity=common
+Q032|Scattered Patrols|description=[enemy2] are spotted in small bands near the village. Sweep them back to prevent further harassment.|type=fight,moving|obj=eliminate|tag=questboard,threat2|rarity=common
 
-Q034|Watch the Watchers|description=Rumor claims [threat1] are quietly observing movements through the [biome], testing responses during [sub_pressure]. Find out what they’ve learned.|type=site,raid,fight|obj=investigate|tag=questboard|rarity=common
+Q033|Waylaid Caravan|description=A small trade caravan was ambushed by [enemy4]. Recover the goods and hinder further raids.|type=moving,raid|obj=fetch|tag=questboard,threat4|rarity=common
 
-Q035|Stray Arrows|description=Hunters claim [threat1] have been loosing arrows too close to the edge of the [biome], blaming it on [sub_pressure]. A brief skirmish might settle nerves.|type=fight,moving|obj=eliminate|tag=questboard|rarity=common
+Q034|Overrun Outpost|description=[enemy1] have pressed against a frontier watchpoint. Push them back to relieve the settlers.|type=defensive,siege|obj=eliminate|tag=questboard,threat1|rarity=common
 
-Q036|Camp Relocation|description=[Threat1] have shifted their camp deeper into the [biome] during [sub_pressure], unsettling nearby travelers. Someone should make their presence unwelcome.|type=raid,fight|obj=eliminate|tag=questboard|rarity=common
+Q035|Sabotage the Supplies|description=Local supply depots are being targeted by [enemy3]. Disrupt their operations before they can restock.|type=raid,site|obj=eliminate|tag=questboard,threat3|rarity=uncommon
 
-Q037|Missing Livestock|description=A handful of animals wandered off near the [biome], and signs point to [threat1] taking advantage of [sub_pressure]. Track them down and retrieve what remains.|type=site,raid|obj=fetch|tag=questboard|rarity=common
+Q036|Escort the Miners|description=[enemy2] are watching a team of miners moving ore. Keep them safe and ensure work continues.|type=moving|obj=escort|tag=questboard,threat2|rarity=common
 
-Q038|Loose Tongues|description=A lesser figure among [threat1] has been spreading rumors in the [biome], emboldened by [sub_pressure]. A quiet removal would calm things.|type=moving,raid|obj=assassinate|tag=questboard|rarity=common
+Q037|Protect the Scouts|description=A scout party moving through the foothills has drawn attention from [enemy4]. See them safely through.|type=moving|obj=escort|tag=questboard,threat4|rarity=common
 
-Q039|Night Fires|description=Small fires have been spotted flickering across the [biome], likely camps of [threat1] exploiting [sub_pressure]. Confirm their numbers before assumptions grow.|type=site,raid,fight|obj=scout|tag=questboard|rarity=common
+Q038|Guide the Ritualist|description=[enemy1] have begun a small ritual in the woods. Escort the ritualist safely before others notice.|type=moving|obj=escort|tag=questboard,threat1|rarity=uncommon
 
-Q040|Boundary Stones|description=Markers separating land near the [biome] have been moved, with [threat1] blamed during [sub_pressure]. Decide who truly holds the ground.|type=defensive,siege|obj=hill|tag=questboard|rarity=common
+Q039|Interrupt the Chant|description=[enemy3] are performing a minor mystical rite. Break it up to slow their influence.|type=site|obj=ritual|tag=questboard,threat3|rarity=rare
 
-Q041|Lost Courier|description=A lone courier vanished while passing through the [biome], possibly intercepted by [threat1] amid [sub_pressure]. Recover them if they still live.|type=site,raid,lair|obj=rescue|tag=questboard|rarity=common
+Q040|Scatter the Circle|description=An occult gathering of [enemy4] is forming in hidden ruins. Disperse them before the ritual strengthens.|type=site|obj=ritual|tag=questboard,threat4|rarity=uncommon
 
-Q042|Unpaid Debts|description=[Threat1] are said to be collecting old grievances near the [biome], pressing claims during [sub_pressure]. Put an end to their intimidation.|type=fight,raid|obj=eliminate|tag=questboard|rarity=common
+Q041|Duel of Wits|description=A champion among [enemy2] is challenging local defenders. Step forward and impose costs on their ambitions.|type=fight|obj=duel|tag=questboard,threat2|rarity=common
 
-Q043|Wandering Beast|description=A creature associated with [threat1] roams the [biome], displaced by [sub_pressure]. Track it and put it down before it causes more trouble.|type=fight,moving|obj=eliminate|tag=questboard|rarity=common
+Q042|Test the Champion|description=[enemy1] have a new champion seeking recognition. Meet them in combat to blunt their influence.|type=fight|obj=duel|tag=questboard,threat1|rarity=uncommon
 
-Q044|Pilfered Tools|description=Work tools and simple goods have gone missing near the [biome], with suspicion falling on [threat1] during [sub_pressure]. Retrieve what can be salvaged.|type=site,raid|obj=fetch|tag=questboard|rarity=common
+Q043|Free the Villagers|description=[enemy3] have taken a few villagers in a nearby hamlet. Move quickly to release them before relocation.|type=site,raid|obj=rescue|tag=questboard,threat3|rarity=uncommon
 
-Q045|Testing Blades|description=A small band of [threat1] has been sparring openly in the [biome], claiming [sub_pressure] leaves them restless. Break their confidence before it grows.|type=fight,moving|obj=leader|tag=questboard|rarity=common
+Q044|Release the Captives|description=A small band of [enemy4] are holding hostages in a derelict building. Intervene to free them.|type=site|obj=rescue|tag=questboard,threat4|rarity=common
 
-Q046|Faded Signals|description=Signal markers once used to monitor the [biome] have gone missing, likely removed by [threat1] during [sub_pressure]. Discover why they were taken.|type=site,raid,fight|obj=investigate|tag=questboard|rarity=common
+Q045|Recover the Prisoners|description=[enemy1] swept through a frontier settlement, taking captives. Rescue them and prevent further harm.|type=site,raid|obj=rescue|tag=questboard,threat1|rarity=uncommon
 
-Q047|Road Toll|description=[Threat1] have begun demanding small tolls along a path through the [biome], citing necessity born of [sub_pressure]. End the practice swiftly.|type=fight,raid,moving|obj=eliminate|tag=questboard|rarity=common
+Q046|Scout the Outskirts|description=Rumors report [enemy2] are patrolling the outer paths. Investigate and learn their movements.|type=moving|obj=scout|tag=questboard,threat2|rarity=common
 
-Q048|A Reckless Bet|description=Two factions within [threat1] have arranged a reckless contest in the [biome], stirred by [sub_pressure]. Their chosen champion awaits opposition.|type=fight,moving|obj=duel|tag=questboard|rarity=common
+Q047|Investigate Strange Tracks|description=Tracks of [enemy4] appear near the stream. Follow them to understand what’s afoot.|type=site|obj=scout|tag=questboard,threat4|rarity=common
 
-Q049|Unfinished Watch|description=A lookout post near the [biome] was abandoned after minor clashes with [threat1] tied to [sub_pressure]. Reclaim and secure the position.|type=defensive,siege|obj=hill|tag=questboard|rarity=common
+Q048|Observe the Encampment|description=[enemy1] have been gathering supplies in the hills. Survey them before they shift position.|type=site|obj=scout|tag=questboard,threat1|rarity=uncommon
 
-Q050|Break for the Border|description=A courier of [threat1] flees through the [biome], hoping to exploit the distraction of [sub_pressure]. Catch them before they cross into safer ground.|type=moving,raid|obj=chase|tag=questboard|rarity=common
+Q049|Intercept the Messenger|description=A message courier from [enemy3] is passing through the valley. Catch them before the information spreads.|type=moving|obj=scout|tag=questboard,threat3|rarity=uncommon
 
-Q051|Deserter with Secrets|description=A figure from [threat1] has abandoned their post in the [biome], carrying something valuable amid [sub_pressure]. They will not surrender willingly.|type=moving,raid|obj=chase|tag=questboard|rarity=common
+Q050|Lowland Harassment|description=[enemy2] have been raiding farms in the lowlands. Push them back to keep the area secure.|type=raid|obj=eliminate|tag=questboard,threat2|rarity=common
 
-Q052|Stolen and Running|description=A minor asset was seized by [threat1] during [sub_pressure] and is being rushed across the [biome]. Intercept them before it disappears into camp.|type=moving,raid|obj=chase|tag=questboard|rarity=common
+Q051|Forest Ambush|description=Travelers report small [enemy4] bands ambushing the path. Deal with them before more are emboldened.|type=raid,moving|obj=eliminate|tag=questboard,threat4|rarity=common
 
-Q053|The Retreating Scout|description=A scout of [threat1] was spotted mapping the [biome] under [sub_pressure] and now flees with what they’ve learned. Do not let that knowledge spread.|type=moving,raid|obj=chase|tag=questboard|rarity=common
+Q052|Push Back the Vanguard|description=[enemy1] are pressing deeper into the hills. Knock them down a peg before they consolidate.|type=fight,moving|obj=eliminate|tag=questboard,threat1|rarity=uncommon
 
-Q054|Guard the Envoy|description=A nervous intermediary seeks passage through the [biome], fearing interference from [threat1] during [sub_pressure]. See them safely across.|type=moving,site|obj=escort|tag=questboard|rarity=common
+Q053|Rogue Ritual|description=[enemy3] have set up an unsanctioned rite. Disperse them before their power spreads further.|type=site,lair|obj=ritual|tag=questboard,threat3|rarity=rare
 
-Q055|Supply Column|description=Fresh supplies must reach the far side of the [biome], though [threat1] have grown opportunistic amid [sub_pressure]. Ensure the convoy arrives intact.|type=moving,site|obj=escort|tag=questboard|rarity=common
+Q054|Ambushed Convoy|description=[enemy2] are hitting trade wagons. Intercept them and recover the goods.|type=moving,raid|obj=fetch|tag=questboard,threat2|rarity=common
 
-Q056|Reluctant Guide|description=A local tracker agrees to lead a route through the [biome], but [threat1] have taken interest during [sub_pressure]. Keep the guide alive long enough to finish the path.|type=moving,site|obj=escort|tag=questboard|rarity=common
+Q055|Fleeing Raiders|description=[enemy4] are withdrawing after a skirmish. Track them and reclaim stolen items.|type=moving|obj=fetch|tag=questboard,threat4|rarity=common
 
-Q057|Embers in the Clearing|description=A small circle of [threat1] gathers within the [biome], performing rites fueled by [sub_pressure]. Break the ceremony before it hardens into something lasting.|type=raid,site|obj=ritual|tag=questboard|rarity=common
+Q056|Defend the Envoy|description=[enemy1] pressure threatens a diplomat moving through contested lands. Escort them safely.|type=moving|obj=escort|tag=questboard,threat1|rarity=uncommon
 
-Q058|Rite of Claiming|description=[Threat1] prepare a formal claiming ritual in the [biome], encouraged by [main_pressure]. If completed, their hold on the region will grow harder to contest.|type=raid,site|obj=ritual|tag=questboard|rarity=uncommon
+Q057|Guide the Pilgrim|description=[enemy3] are watching a ritualist along the road. Ensure they reach their destination.|type=moving|obj=escort|tag=questboard,threat3|rarity=uncommon
 
-Q059|Blades at Dawn|description=A seasoned warrior of [threat1] waits openly within the [biome], citing honor stirred by [sub_pressure]. They demand single combat to settle a grievance.|type=moving,fight|obj=duel|tag=questboard|rarity=common
+Q058|Duel at Dusk|description=A champion of [enemy2] is provoking a confrontation in the square. Step forward to blunt their influence.|type=fight|obj=duel|tag=questboard,threat2|rarity=common
 
-Q060|Trial of Strength|description=Two rivals within [threat1] argue over leadership in the [biome], emboldened by [sub_pressure]. They welcome an outsider to prove superiority.|type=fight,moving|obj=duel|tag=questboard|rarity=common
+Q059|Face the Champion|description=A rising champion among [enemy1] seeks recognition. Confront them to keep their ambitions in check.|type=fight|obj=duel|tag=questboard,threat1|rarity=uncommon
 
-Q061|Taken in the Night|description=A worker was dragged from the edge of the [biome] by [threat1], likely hoping to leverage fear during [sub_pressure]. Retrieve them before terms are set.|type=site,lair,raid|obj=rescue|tag=questboard|rarity=common
+Q060|Release the Captives|description=[enemy3] have taken prisoners from a remote settlement. Free them before they are moved.|type=site,raid|obj=rescue|tag=questboard,threat3|rarity=uncommon
 
-Q062|Held for Leverage|description=[Threat1] hold a minor official somewhere within the [biome], exploiting tensions born of [sub_pressure]. Free them before negotiations sour further.|type=site,lair,raid|obj=rescue|tag=questboard|rarity=common
+Q061|Free the Hostages|description=[enemy4] are holding locals in a shuttered building. Intervene to release them.|type=site|obj=rescue|tag=questboard,threat4|rarity=common
 
-Q063|Prisoners of Convenience|description=A small group was captured by [threat1] while passing through the [biome], caught in the unrest of [sub_pressure]. Their captors have not yet moved them deeper.|type=site,lair,raid|obj=rescue|tag=questboard|rarity=common
+Q062|Rescue the Townsfolk|description=[enemy1] swept through a settlement, taking captives. Act quickly to free them.|type=site,raid|obj=rescue|tag=questboard,threat1|rarity=uncommon
+
+Q063|Scout the Ridge|description=Small patrols of [enemy2] are reported near the ridge. Investigate and relay their positions.|type=moving|obj=scout|tag=questboard,threat2|rarity=common
