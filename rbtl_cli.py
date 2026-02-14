@@ -218,7 +218,7 @@ def _pick_threat_pair(rng: random.Random, tags: List[str]) -> Tuple[str, str]:
     return t1, t2
 
 
-def _quest_board_entries(data: Any, key: str) -> Optional[List[Dict[str, Any]]]:
+def _quest_board_entries(data: Any, key: str, reroll_salt: str = "") -> Optional[List[Dict[str, Any]]]:
     parsed = _parse_campaign_key(key)
     if not parsed:
         return None
@@ -288,7 +288,8 @@ def _quest_board_entries(data: Any, key: str) -> Optional[List[Dict[str, Any]]]:
         for tag in threat.get("tags", set()) or set():
             threat_tokens.add(_norm_token(tag))
 
-    rng = _rng_from_campaign_key(key)
+    seed_key = key if not reroll_salt else f"{key}|{reroll_salt}"
+    rng = _rng_from_campaign_key(seed_key)
     templates = [
         "A {scenario} request calls for {objective} amid the {biome}, where {main_pressure} is tightening.",
         "Locals plead for {objective} in the {biome}; rumor says {main_pressure} and {sub_pressure} are worsening.",
@@ -858,6 +859,7 @@ def gather_inputs_questboard(data: Any) -> Dict[str, Any]:
     settings: Dict[str, str] = dget(data, "settings", {}) or {}
     inputs: Dict[str, Any] = {"mode": "Questboard"}
 
+    reroll_counter = 0
     while True:
         campaign_key = input("\nCampaign Key (required for Questboard) (r=restart q=quit): ").strip()
         low = campaign_key.lower()
@@ -869,7 +871,7 @@ def gather_inputs_questboard(data: Any) -> Dict[str, Any]:
             print("Quest Board: campaign key is required.\n")
             continue
 
-        entries = _quest_board_entries(data, campaign_key)
+        entries = _quest_board_entries(data, campaign_key, reroll_salt=str(reroll_counter))
         if not entries:
             print("Quest Board: could not parse campaign key or build entries. Try again.\n")
             continue
@@ -917,7 +919,10 @@ def gather_inputs_questboard(data: Any) -> Dict[str, Any]:
             if flavor:
                 print(f"     {flavor}")
 
-        choice = input(f"Select quest [1-{len(entries)}] (b=back r=restart q=quit): ").strip().lower()
+        choice = input(f"Select quest [1-{len(entries)}] (x=reroll b=back r=restart q=quit): ").strip().lower()
+        if choice in ("x", "reroll"):
+            reroll_counter += 1
+            continue
         if choice in ("b", "back", "r", "restart", "home"):
             continue
         if choice in ("q", "quit", "exit"):
