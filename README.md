@@ -1,19 +1,19 @@
-# Rangers of the Borderlands
+# Bloodoath Tactics
 
-A database-driven, GM-less tabletop wargame/RPG toolkit. The system uses plain .txt “content packs” (units, events, items, spells, rooms, campaign pressures, etc.) plus lightweight Python randomizers to generate ready-to-play briefings: scenarios/encounters, campaign setups, companions, and loot/shops.
+A database-driven, GM-less tabletop wargame/RPG toolkit. The system uses plain .txt “content packs” (units, events, items, spells, rooms, campaign pressures, etc.) plus lightweight Python randomizers to generate ready-to-play briefings: scenarios/encounters, campaign setups, allies, and loot/shops.
 
 The goal is simple: make it fast to get to the table, and easy to homebrew by editing text files rather than wrestling with spreadsheets or a heavy app.
 
 What you can generate:
 
 Scenario / Encounter briefings
-Tactical setups and prompts for action (via generate_scenario.py + rbtl_core.py).
+Tactical setups and prompts for action (via rbtl_main_scenario.py + rbtl_core.py).
 
 Campaign setups
 A higher-level context roll (biome + pressures + threats), plus campaign-facing structure (via rbtl_main_campaign.py + rbtl_campaign.py).
 
-Companions
-Quick allies/NPCs with classes/backgrounds (via rbtl_main_companions.py + rbtl_companions.py).
+Allies
+Quick companion NPCs with classes/backgrounds (via rbtl_main_allies.py + rbtl_allies.py).
 
 Loot / Shops
 Loot drops and settlement shopping lists (via rbtl_main_loot.py + rbtl_loot.py).
@@ -38,7 +38,7 @@ Scenario / Encounter
 
 Campaign
 
-Companions
+Allies
 
 Loot / Shop
 
@@ -87,7 +87,7 @@ Stable architecture: rbtl_data.py owns data loading/paths; core logic stays IO-l
 
 Table-ready output: generators produce something you can print or paste straight into a session doc.
 
-Modular generators: scenario, campaign, companions, and loot can be used together or independently.
+Modular generators: scenario, campaign, allies, and loot can be used together or independently.
 
 # Troubleshooting
 
