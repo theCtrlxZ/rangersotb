@@ -17,7 +17,7 @@ from rbtl_campaign import (
     threat_weight_with_settings,
     violates_not,
 )
-from rbtl_companions import generate_companions
+from rbtl_allies import generate_allies
 from rbtl_core import generate_scenario
 from rbtl_data import load_data_bundle
 from rbtl_loot import generate_shop
@@ -143,7 +143,7 @@ def _inject_questboard(campaign_text: str, entries: List[Dict[str, Any]]) -> str
     return campaign_text[:pos] + "\n" + block + campaign_text[pos:]
 
 
-def _companion_count_for_settlement(settlement_type: str) -> int:
+def _ally_count_for_settlement(settlement_type: str) -> int:
     return {
         "hamlet": 4,
         "village": 6,
@@ -283,15 +283,15 @@ def _run_complete_campaign(project_root: str, data: Any) -> None:
             )
             _write_in_dir(out_dir, f"{coord}-shop.txt", shop_text)
 
-            _, companions_text = generate_companions(
+            _, allies_text = generate_allies(
                 data,
                 {
-                    "count": _companion_count_for_settlement(stype),
+                    "count": _ally_count_for_settlement(stype),
                     "merchant_level": _merchant_level_for_settlement(stype),
                     "allow_background_trait_rolls": True,
                 },
             )
-            _write_in_dir(out_dir, f"{coord}-companions.txt", companions_text)
+            _write_in_dir(out_dir, f"{coord}-allies.txt", allies_text)
 
         print(f"Wrote complete campaign package in: {out_dir}\n")
         return

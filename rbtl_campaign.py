@@ -1297,7 +1297,7 @@ def format_campaign_briefing(
     intro_title = ""
     intro_desc = ""
 
-    lines.append("RANGERS AT THE BORDERLANDS — CAMPAIGN BRIEFING")
+    lines.append("CAMPAIGN BRIEFING")
     lines.append("=" * 60)
     lines.append("")
     # Intro (optional)

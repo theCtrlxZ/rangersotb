@@ -286,9 +286,9 @@ class DataPaths:
     # NEW: Rooms (delves/lairs)
     rooms_path: str
 
-    companion_names_path: str
-    companion_classes_path: str
-    companion_backgrounds_path: str
+    ally_names_path: str
+    ally_classes_path: str
+    ally_backgrounds_path: str
 
     # Campaign generator lists
     biomes_path: str
@@ -313,9 +313,9 @@ class DataBundle:
     spells: List[Dict[str, Any]]
     rooms: List[Dict[str, Any]]
 
-    companion_names: List[Dict[str, Any]]
-    companion_classes: List[Dict[str, Any]]
-    companion_backgrounds: List[Dict[str, Any]]
+    ally_names: List[Dict[str, Any]]
+    ally_classes: List[Dict[str, Any]]
+    ally_backgrounds: List[Dict[str, Any]]
 
     # Campaign generator lists
     biomes: List[Dict[str, Any]]
@@ -352,9 +352,9 @@ def build_paths(project_root: str, data_folder: str = "data") -> DataPaths:
 
         rooms_path=os.path.join(data_dir, "rooms.txt"),
 
-        companion_names_path=os.path.join(data_dir, "names.txt"),
-        companion_classes_path=os.path.join(data_dir, "classes.txt"),
-        companion_backgrounds_path=os.path.join(data_dir, "backgrounds.txt"),
+        ally_names_path=os.path.join(data_dir, "names.txt"),
+        ally_classes_path=os.path.join(data_dir, "classes.txt"),
+        ally_backgrounds_path=os.path.join(data_dir, "backgrounds.txt"),
 
         # Campaign generator lists
         biomes_path=os.path.join(data_dir, "biomes.txt"),
@@ -380,9 +380,9 @@ def load_data_bundle(project_root: str, data_folder: str = "data") -> DataBundle
 
     rooms = load_pipe_file(paths.rooms_path) if os.path.exists(paths.rooms_path) else []
 
-    companion_names = load_pipe_file(paths.companion_names_path)
-    companion_classes = load_pipe_file(paths.companion_classes_path)
-    companion_backgrounds = load_pipe_file(paths.companion_backgrounds_path)
+    ally_names = load_pipe_file(paths.ally_names_path)
+    ally_classes = load_pipe_file(paths.ally_classes_path)
+    ally_backgrounds = load_pipe_file(paths.ally_backgrounds_path)
 
     # Campaign generator lists
     biomes = load_pipe_file(paths.biomes_path)
@@ -407,9 +407,9 @@ def load_data_bundle(project_root: str, data_folder: str = "data") -> DataBundle
         spells=spells,
         rooms=rooms,
 
-        companion_names=companion_names,
-        companion_classes=companion_classes,
-        companion_backgrounds=companion_backgrounds,
+        ally_names=ally_names,
+        ally_classes=ally_classes,
+        ally_backgrounds=ally_backgrounds,
 
         biomes=biomes,
         campaign_pressures=campaign_pressures,

@@ -391,9 +391,9 @@ def _quest_board_entries(data: Any, key: str, reroll_salt: str = "") -> Optional
 
     return entries
 def pick_class_filter_tag(data):
-    # Collect tags from companion classes
+    # Collect tags from ally classes
     tag_to_classes = {}
-    for c in data.companion_classes:
+    for c in data.ally_classes:
         tags = {t.lower() for t in (c.get("tags") or set()) if str(t).strip()}
         for t in tags:
             tag_to_classes.setdefault(t, []).append(c.get("name", "Unknown"))
@@ -593,7 +593,7 @@ def gather_inputs_quick(data: Any) -> Dict[str, Any]:
     inputs: Dict[str, Any] = {"mode": "Quick"}
 
     # QUICK: prompt players + difficulty only (allies from settings)
-    inputs["players"] = int(prompt_int_nav("Players (Rangers)", s_get_int(settings, "default.players", 2)))
+    inputs["players"] = int(prompt_int_nav("Players (Heroes)", s_get_int(settings, "default.players", 2)))
     inputs["allied_combatants"] = s_get_int(settings, "default.allied_combatants", 2)
 
     default_diff = s_get_str(settings, "default.difficulty", "Normal")
@@ -691,7 +691,7 @@ def gather_inputs_custom(data: Any, campaign_biome_id: str = "") -> Dict[str, An
         # ---- Players ----
         if step == "players":
             cur = int(inputs.get("players", s_get_int(settings, "default.players", 2)))
-            val = prompt_int_nav("Players (Rangers)", cur)
+            val = prompt_int_nav("Players (Heroes)", cur)
 
             if val == BACK:
                 i = max(0, i - 1); continue
@@ -883,7 +883,7 @@ def gather_inputs_questboard(data: Any) -> Dict[str, Any]:
 
         inputs["campaign_key"] = campaign_key
 
-        players = prompt_int_nav("Players (Rangers)", s_get_int(settings, "default.players", 2))
+        players = prompt_int_nav("Players (Heroes)", s_get_int(settings, "default.players", 2))
         if players in (BACK, RESTART, QUIT):
             if players == QUIT:
                 raise SystemExit(0)

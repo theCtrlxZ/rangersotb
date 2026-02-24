@@ -4,7 +4,7 @@
 Single entry-point to launch any generator from one menu.
 
 What this hub does
-- Provides a unified menu for Scenario/Encounter, Campaign, Companions, and Loot/Shop.
+- Provides a unified menu for Scenario/Encounter, Campaign, allies, and Loot/Shop.
 - Forces a consistent working directory (project root) so relative paths to ./data and ./output behave.
 - Keeps the hub alive if a generator crashes.
 - Writes full tracebacks to ./output/hub_errors.log for debugging.
@@ -12,14 +12,14 @@ What this hub does
 Optional CLI shortcuts
   python rbtl_hub.py --mode scenario
   python rbtl_hub.py --mode campaign
-  python rbtl_hub.py --mode companions
+  python rbtl_hub.py --mode allies
   python rbtl_hub.py --mode loot
   python rbtl_hub.py --validate
   python rbtl_hub.py --seed 12345
 
 Notes
 - Scenario uses a shared DataBundle loaded once by the hub.
-- Campaign / Companions / Loot delegate to existing *main* modules (keeping their UX).
+- Campaign / allies / Loot delegate to existing *main* modules (keeping their UX).
 """
 
 from __future__ import annotations
@@ -139,8 +139,8 @@ def run_campaign(_: Optional[DataBundle], __: str) -> None:
     _run_main("rbtl_main_campaign")
 
 
-def run_companions(_: Optional[DataBundle], __: str) -> None:
-    _run_main("rbtl_main_companions")
+def run_allies(_: Optional[DataBundle], __: str) -> None:
+    _run_main("rbtl_main_allies")
 
 
 def run_loot_shop(_: Optional[DataBundle], __: str) -> None:
@@ -276,7 +276,7 @@ class _Entry:
 ENTRIES: list[_Entry] = [
     _Entry("Campaign", run_campaign),
     _Entry("Scenario / Encounter", lambda d, root: run_scenario(d, root), needs_data=True),
-    _Entry("Companions", run_companions),
+    _Entry("allies", run_allies),
     _Entry("Shop / Loot", run_loot_shop),
 ]
 
@@ -289,8 +289,8 @@ def _run_mode(mode: str, data: Optional[DataBundle], project_root: str) -> None:
         run_scenario(data, project_root)
     elif mode == "campaign":
         run_campaign(data, project_root)
-    elif mode in ("companions", "companion"):
-        run_companions(data, project_root)
+    elif mode in ("allies", "ally"):
+        run_allies(data, project_root)
     elif mode in ("loot", "shop", "loot/shop"):
         run_loot_shop(data, project_root)
     else:
@@ -299,7 +299,7 @@ def _run_mode(mode: str, data: Optional[DataBundle], project_root: str) -> None:
 
 def _parse_args() -> argparse.Namespace:
     p = argparse.ArgumentParser(add_help=True)
-    p.add_argument("--mode", type=str, default="", help="Run one generator then exit (scenario, campaign, companions, loot)")
+    p.add_argument("--mode", type=str, default="", help="Run one generator then exit (scenario, campaign, allies, loot)")
     p.add_argument("--seed", type=int, default=None, help="Seed Python RNG for reproducible rolls")
     p.add_argument("--validate", action="store_true", help="Validate data/*.txt then exit")
     return p.parse_args()
