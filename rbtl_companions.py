@@ -678,7 +678,7 @@ def _item_stats_detail_line(item: Any) -> str:
 def format_companion(c: Dict[str, Any]) -> str:
     lines: List[str] = []
     lines.append(f"Name: {c['name']}")
-    lines.append(f"Class: {c['class']['name']}")
+    lines.append(f"Hero Class: {c['class']['name']}")
     if c["class"].get("description"):
         lines.append(str(c["class"]["description"]).strip())
 
@@ -732,7 +732,7 @@ def format_companion(c: Dict[str, Any]) -> str:
                 lines.append(f"- {name}")
 
     lines.append("")
-    lines.append(f"Recruitment Cost: {c.get('rp', 0)} RP")
+    lines.append(f"Ally Recruitment Cost: {c.get('rp', 0)} RP")
     return "\n".join(lines)
 
 
@@ -854,6 +854,6 @@ def generate_companions(data: DataBundle, inputs: Dict[str, Any]) -> Tuple[str, 
     text = body + "\n" + "\n".join(gloss) + "\n" + "\n".join(dbg)
 
     stamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-    filename = f"companions_{stamp}.txt"
+    filename = f"allies_{stamp}.txt"
     return filename, text
 

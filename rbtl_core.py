@@ -105,7 +105,7 @@ RARITY_WEIGHTS = {"common": 60, "uncommon": 25, "rare": 10, "legendary": 5}
 
 # BBEG never random (only forced by minlead / scenario type)
 LEADERSHIP_WEIGHTS = [("None", 50), ("Lieutenant", 35), ("Boss", 15)]
-STAT_KEYS = ["Move", "Fight", "Shoot", "Armor", "Will", "Health"]
+STAT_KEYS = ["Fight", "Shoot", "Move", "Magic", "Will", "Evasion", "Health", "Armor"]
 
 COMPLETION_XP = 15
 GOLD_PER_XP = 3
@@ -263,7 +263,7 @@ def parse_statline(stat_str: str) -> Dict[str, int]:
 
 def statline_to_string(stats: Dict[str, int]) -> str:
     def fmt(k: str, v: int) -> str:
-        if k in ("Fight", "Shoot", "Will"):
+        if k in ("Fight", "Shoot", "Magic", "Will"):
             sign = "+" if v >= 0 else ""
             return f"{k}{sign}{v}"
         return f"{k}{v}"

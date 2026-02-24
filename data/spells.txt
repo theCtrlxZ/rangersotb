@@ -1,66 +1,61 @@
-#Ranger/Hero Abilities
-001|Blend into the Shadows|description=This ability may be used if an evil figure is about to make a move that would take it into combat with the caster. Instead, determine the evil figure's action as though the caster were not on the table.|tag=hero|rarity=common
-002|Dash|description=The caster may use this ability when e is activated. For the rest of the turn, he receives +2 Move. Alternatively, the caster may use a move action to leap up to his Move distance in any direction, including vertically.|tag=hero|rarity=common
-003|Deadly Shot|description=The caster may use this ability if he rolled a natural 18 or 19 during a shooting action. Treat this roll as a Critical Hit.|tag=hero|rarity=common
-004|Deadly Strike|description=The caster may use this ability if he rolled a natural 18 or 19 during a fight. Treat this roll as a Critical Hit.|tag=hero|rarity=common
-005|Distraction|description=The caster may use this ability whenever an evil creature is called upon to make a move towards the Target Point. The player may instead move this creature anywhere he wishes following the standard rules for movement, provided this move does not cause the creature direct harm or force it to make Swimming Rolls.|tag=hero|rarity=common
-006|Dive for Cover|description=The caster may add +10 to his Fight Roll when rolling against a shooting attack. He must declare he is using this ability before he rolls.|tag=hero|rarity=common
-007|Evade|description=The caster may use this ability if he activates while in combat. The caster may make a free 1" move to leave the combat. No figure may force combat during this move. After this move, the caster completes his activation as normal.|tag=hero|rarity=common
-008|Focus|description=The caster may add +8 to any one Skill Roll. He must declare he is using this ability before he rolls.|tag=hero|rarity=common
-009|Frenzied Attack|description=The caster may add +5 to one Fight Roll. He must declare he is using this ability before he rolls.|tag=hero|rarity=common
-010|Halt Undead|description=All undead creatures within 10" and line of sight of the caster must make a Will Roll (TN20). If they fail, they lose their next activation.|tag=hero|rarity=common
-011|Hand of Fate|description=The caster ay re-roll one die.|tag=hero|rarity=common
-012|Inner Strength|description=The aster may add +5 to one Will Roll. This ability can be used after the roll has been made.|tag=hero|rarity=common
-013|Parry|description=This bility may be used in combat after a caster and his opponent have made their Fight Rolls. The caster may add +10 to his roll. If he wins the combat, however, he does no damage. He may step back or push his opponent back as normal.|tag=hero|rarity=common
-014|Powerful Blow|description=The hero may add +3 damage to any hand-to-hand attack that has already dealt at least 1 point of damage.|tag=hero|rarity=common
-015|Roll with the Punch|description=This ability may be used if a caster loses a fight in hand-to-hand combat. Halve the amount of damage taken by the caster, rounding up.|tag=hero|rarity=common
-016|Shove|description=If the caster wins n hand-to-hand combat, he may choose to push his opponent back up to 4" instead of the normal 1".|tag=hero|rarity=common
-017|Steady Aim|description=The hero may dd +5 Shoot for one Shooting Roll. This must be declared before the roll is made.|tag=hero|rarity=common
+#Hero / Class Abilities
+001|Chivalry|description=Reaction: when an adjacent ally is attacked, you may become the new target.|tag=hero,knight|rarity=common
+002|Hold the Line|description=Passive: enemies engaged with you pay +2" to disengage and cannot Dash.|tag=hero,knight|rarity=common
+003|Defensive Guard|description=Action: gain +2 Armor until next activation; you cannot move this turn.|tag=hero,knight|rarity=common
+004|Taunt|description=Action (4"): target makes Will check; on failure it must prioritize attacking you next activation.|tag=hero,knight|rarity=common
+005|Shield Bash|description=Action melee hit: target rolls d20+Health vs 12 or becomes Staggered.|tag=hero,knight|rarity=common
+006|Power Strike|description=Action melee attack at -2 Fight, +2 damage.|tag=hero,warrior|rarity=common
+007|Cleave|description=Action: on hit, deal half damage (rounded down) to enemies adjacent to target.|tag=hero,warrior|rarity=common
+008|Relentless|description=Passive: when you drop a target to 0, move 2" or make a basic attack at -2 Fight.|tag=hero,warrior|rarity=common
+009|Backstab|description=Passive: rear-arc attack vs unengaged enemy deals +3 damage.|tag=hero,shadow|rarity=common
+010|Poisoned Shot|description=Action ranged attack; on hit apply Poisoned and immediate +2 poison damage on failed Health check.|tag=hero,shadow|rarity=common
+011|Marked Prey|description=Action ranged hit: target is Marked until next round; allies moving toward it gain +1 Move.|tag=hero,warden|rarity=common
+012|Pinning Shot|description=Action ranged hit: target cannot Dash next activation and suffers Move-1.|tag=hero,warden|rarity=common
+013|Snipe|description=Charged action (no movement): +2 Shoot, +2 damage, ignores cover and equipment DR.|tag=hero,warden|rarity=common
+014|Cloudstone|description=Create 2" terrain piece within 6" (light cover, elevation, HP5); alternate throw mode deals 4 damage and Move-1.|tag=hero,geomancer|rarity=uncommon
+015|Earth Slam|description=Adjacent enemies roll d20+Strength vs 12 or are pushed 2"; area becomes difficult terrain (2").|tag=hero,geomancer|rarity=uncommon
+016|Trade Blows|description=Before melee attack, lose up to 3 HP to gain equal +Fight for that attack.|tag=hero,blackguard|rarity=uncommon
+017|Unbound Fury|description=Once/encounter for 3 rounds: +1 Fight; each time you take damage, next melee gains +1 damage (max +3).|tag=hero,blackguard|rarity=rare
+018|Twin Verdict|description=Core action: make two attacks (melee+melee or melee+hand crossbow within 3"); cumulative -1 Fight per extra attack.|tag=hero,inquisitor|rarity=uncommon
+019|Disrupt|description=Reaction: if enemy within 2" casts/channels, make immediate melee hit; on hit, spell fails.|tag=hero,inquisitor|rarity=uncommon
+020|Steel Focus|description=Passive: while engaged with only one enemy and no others within 3", gain +1 Fight and +1 Evasion.|tag=hero,inquisitor|rarity=uncommon
 
-#Spells
-018|Burning Light|description=Make a +3 attack against all undead creatures within 8" and line of sight of the caster.|tag=spells,weapon_spell|rarity=common
-019|Burning Mark|description=The caster may place a glowing rune anywhere within 6". As soon as any evil creature moves within 2" of this rune, it explodes. All evil creatures within 2" of the rune suffer a +5 magic shooting attack.|tag=spells,weapon_spell|rarity=common
-020|Enchanted Steel|description=The caster imbues one melee weapon with magic power. For the rest of the scenario, the weapon counts as a magic weapon with +1 Fight.|tag=spells,weapon_spell|rarity=common
-021|Heal|description=This spell may target any figure within 6" including the caster. The target figure regains up to 5 points of lost Health.|tag=spells,weapon_spell|rarity=common
-022|Hold Creature|description=The target creature must make an immediate Will Roll (TN16). If it fails, it may not force combat for the remainder of the turn, and it loses its next activation. This spell has no effect on large creatures or undead.|tag=spells|rarity=common
-023|Magic Bolt|description=The aster may make a +5 magic shooting attack against one figure within line of sight. This attack ignores penalties for cover and intervening terrain.|tag=spells,weapon_spell|rarity=common
-024|Shield of Light|description=This spell may be cast on any figure within 8" and line of sight. All shooting attacks against this figure are at -3 for the rest of the game.|tag=spells|rarity=common
-025|Smoke|description=The caster may place a thick cloud of smoke, 3" in diameter, anywhere within 3". The smoke blocks all line of sight but does not inhibit movement.|tag=spells|rarity=common
-026|Strong Heart|description=This spell may be cast against any figure within 8" and line of sight. The next time this figure must make a Will Roll it does so with a +5 modifier. The time after that, it receives +4, and so on, down to +0 when the spell's effect ends.|tag=spells|rarity=common
-027|Translate|description=A caster may cast this spell in place of making any Read Runes Skill Roll. The caster automatically passes the Skill Roll with the highest result possible.|tag=spells|rarity=common
+#Modular / Elemental Spells
+021|Fire Bolt|description=Bolt (single target): damage-focused fire strike. Charged version gains higher damage and applies Burning on hit.|tag=spells,fire,bolt|rarity=common
+022|Ice Ball|description=Ball (2" quick / 4-6" charged): area control spell applying Frozen on hit.|tag=spells,ice,ball|rarity=common
+023|Lightning Beam|description=Beam (5" quick / 12" charged): anti-armor line attack; bypasses Armor and may chain to units within 1".|tag=spells,lightning,beam|rarity=uncommon
+024|Earth Wall|description=Wall (3" quick / 6" charged): terrain-denial barrier with knockback pressure.|tag=spells,earth,wall|rarity=common
+025|Resist Flame|description=Quick Resist template granting protection from Fire until next activation.|tag=spells,fire,resist|rarity=common
+026|Charged Shield|description=Charged Shield template granting stronger protection at cast resolution.|tag=spells,shield|rarity=common
+027|Static Orb|description=Orb template trap; larger when charged, applies Livewire in area.|tag=spells,lightning,orb|rarity=uncommon
+028|Glacial Breath|description=Charged cone spell that applies Frozen and area slowdown.|tag=spells,ice,breath|rarity=common
+029|Holy Bolt|description=Single-target holy damage with bonus effectiveness versus undead and shapeshifters.|tag=spells,holy|rarity=common
+030|Dark Pulse|description=Single-target dark damage that supports sacrifice-driven priest play.|tag=spells,dark|rarity=common
+031|Cure|description=Holy support spell restoring 4 HP; charged version also removes one minor status.|tag=spells,holy,support|rarity=common
+032|Drain|description=Dark support spell: deal 3 dark damage and heal self for 3.|tag=spells,dark,support|rarity=common
+033|Cleanse|description=Remove one status from an ally.|tag=spells,holy,support|rarity=common
+034|Dark Purge|description=Remove statuses from enemy and deal scaling damage per status removed.|tag=spells,dark,support|rarity=uncommon
+035|Resurrection|description=Charged, once/encounter: Holy returns ally at low HP; Dark returns empowered ally that collapses after 2 rounds.|tag=spells,holy,dark,major|rarity=rare
 
-#Core Skills
-028|Acrobatics|description=A measure of the figure's ability to control his own body in difficult situations, such as jumping, walking along narrow paths, and swinging from ropes. It does not include climbing, which is its own skill.|tag=skill|rarity=common
-029|Ancient Lore|description=Knowledge of myth, legend, and ancient history, including all that is known about the Shadow Deep and the Borderlands.|tag=skill,core|rarity=common
-030|Armory|description=The study of weaponry, including how to make and repair weapons, how to improvise weapons in the field, and how to identify magic weapons. If a figure has an Armory Skill of +4 or more, they are always treated as armed with a dagger, even if unarmed.|tag=skill,core|rarity=common
-031|Climb|description=Measures the figure's ability to climb difficult surfaces.|tag=skill,core|rarity=common
-032|Leadership|description=The skill of leading others, it also includes diplomacy. A figure may add his Leadership Skill to his total Recruitment Points before each mission.|tag=skill,core|rarity=common
-033|Navigation|description=Using the natural world to determine direction and location and to keep from getting lost.|tag=skill,core|rarity=common
-034|Perception|description=The gernal awareness of one's surroundings, including noticing small, but important details.|tag=skill,core|rarity=common
-035|Pick Lock|description=Encompasses knowledge of all kinds of lock and locking mechanisms, including doors, chests, and even secret doors.|tag=skill,core|rarity=common
-036|Read Runes|description=The knowledge of ancient written languages, including the languages of magic.|tag=skill,core|rarity=common
-037|Stealth|description=Moving silently to avoid detection and skill in choosing and maintaining hiding places.|tag=skill,core|rarity=common
-038|Strength|description=The training in the application of strength to achieve maximum results, useful for lifting, breaking down doors, and escaping from bonds.|tag=skill,core|rarity=common
-039|Survival|description=Includes oraging for food and herbs, hunting, cooking, basic first-aid, and knowledge of the dangers inherent in specific types of terrain.|tag=skill,core|rarity=common
-040|Swim|description=Movement through water, or any water-like substance.|tag=skill,core|rarity=common
-041|Tracking|description=The ability to read the signs of the land to gain information about those that have preceded them, such as their direction of travel, distance ahead, and if they are wounded or carrying prisoners. Also includes knowledge of how to throw off pursuers.|tag=skill,core|rarity=common
-042|Traps|description=Knowledge of traps, including how to set them and how to disable them.|tag=skill,core|rarity=common
+#Core Skills (new list)
+036|Strength|description=Lift, push, and physical exertion checks.|tag=skill,core|rarity=common
+037|Athletics|description=Swim, run, climb, and acrobatics checks.|tag=skill,core|rarity=common
+038|Influence|description=Persuasion, negotiation, and intimidation checks.|tag=skill,core|rarity=common
+039|Command|description=Leadership checks, hireling allotment, and morale support.|tag=skill,core|rarity=common
+040|Subterfuge|description=Stealth, theft, lockpicking, and trap interaction checks.|tag=skill,core|rarity=common
+041|Tracking|description=Trail reading, lead pursuit, and hiding tracks.|tag=skill,core|rarity=common
+042|Perception|description=Awareness and ambush prevention checks.|tag=skill,core|rarity=common
+043|Craft|description=Blacksmithing, armory work, item creation, and herbal prep.|tag=skill,core|rarity=common
+044|Arcana|description=Magical application knowledge and source understanding.|tag=skill,core|rarity=common
+045|Lore|description=Ancient history and rune knowledge checks.|tag=skill,core|rarity=common
+046|Survival|description=Scouting, sheltering, hunting, and wilderness provisioning.|tag=skill,core|rarity=common
 
 #Statuses
-043|Cannot Carry|description=This companion cannot carry items nor can they normally carry treasure tokens, interact with other types of tokens, or carry out special scenario actions unless specifically allowed by the scenario.|tag=skill|rarity=common
-044|Limited Rolls|description=This companion can only perform some Skill Rolls. Please see the companion's class, background, or traits for more information.|tag=skill|rarity=common
-045|Bloodhound|description=Whenever a figure makes a Tracking Roll with this hound within 2" he receives a +2 bonus to the roll (this includes rolls made before the start of a scenario).|tag=skill|rarity=common
-046|Undead|description=Not fully dead, but not fully alive. These beings of dark magic or science can be hurt with healing spells or potions.|tag=skill|rarity=common
-047|Amphibious|description=These creatures can move on water the same was walking on land. They automatically pass all swimming checks.|tag=skill|rarity=rare
-048|Missile Maximum|description=This creature resists ranged damage. Any damage by ranged missile attack is reduced to 2.|tag=skill|rarity=legendary
-049|Will Sap|description=When this creature is on the table, all heroes suffer -2 Will.|tag=skill|rarity=legendary
-050|Flying|description=The ability to fly through the air. Creatures with this trait ignore all terrain penalties for movement.|tag=skill|rarity=common
-051|Horrific|description=Anyone who wishes to move into combat with this creature must pass a Will Roll (TN10). If they fail, they stop 2" away from the intended target.|tag=skill|rarity=rare
-052|Appeaseable|description=A hero may use an action to make a Will Roll or Leadership Roll (TN20). If successful, it has found a way to give the creature peace and allow it to depart this existence.|tag=skill|rarity=legendary
-053|Inspiring|description=+2 to all friendly units within 6"|tag=skill|rarity=uncommon
-054|Rustable|description=Any weapons and armor with this status lose 1 durability when receiving cold damage.|tag=skill|rarity=uncommon
-055|Flammable|description=Any weapons and armor with this status lose 1 durability when receiving fire damage.|tag=skill|rarity=uncommon
-
-
-
-
+047|Burning|description=Physical status (DC 8 Move): take 2 end-turn damage, +1 fire damage taken.|tag=status,physical|rarity=common
+048|Frozen|description=Physical status (DC 8 Strength): Move-2 and +1 ice damage taken.|tag=status,physical|rarity=common
+049|Livewire|description=Physical status (DC 10 Will): 1 end-turn damage, shocks nearby movers within 1".|tag=status,physical|rarity=common
+050|Petrified|description=Physical status (DC 12 Will): cannot move or act until removed.|tag=status,physical|rarity=rare
+051|Exposed|description=Physical status (DC 8 Move): attackers gain +1 Fight/Shoot/Magic and +1 damage.|tag=status,physical|rarity=common
+052|Silence|description=Mental status (DC 10 Will): cannot cast spells.|tag=status,mental|rarity=common
+053|Staggered|description=Physical status (1 round): -1 Fight, -2 Shoot, -1 Magic, -1 Move.|tag=status,physical|rarity=common
+054|Suppressed|description=Mental status (DC 8 Will): no reactions, cannot Charge/Channel, Will-1.|tag=status,mental|rarity=common
