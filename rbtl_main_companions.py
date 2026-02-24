@@ -41,7 +41,7 @@ def run():
 
     while True:
         mode = prompt_choice_nav(
-            "Companion Generator",
+            "Ally Generator",
             ["Quick", "Custom", "Quit"],
             default_idx=0
         )
@@ -50,7 +50,7 @@ def run():
         if mode == RESTART:
             continue
 
-        count = prompt_int_nav("How many companions?", default=6)
+        count = prompt_int_nav("How many allies?", default=6)
         if count in (BACK, RESTART, QUIT):
             if count == BACK:
                 continue
@@ -82,7 +82,7 @@ def run():
         # Custom: tag -> class
         tag_options = ["Random"] + collect_class_tags(data.companion_classes)
         picked_tag = prompt_choice_nav(
-            "Pick a class tag (filters ONLY the class roll)",
+            "Pick a hero class tag (filters ONLY the hero class roll)",
             tag_options,
             default_idx=0
         )
@@ -100,7 +100,7 @@ def run():
 
         class_options = ["Random"] + [c.get("name", "Unknown") for c in pool]
         picked_class = prompt_choice_nav(
-            "Pick a specific class (optional)",
+            "Pick a specific hero class (optional)",
             class_options,
             default_idx=0
         )

@@ -1,109 +1,12 @@
-001|Townsfolk|description=Common people who tend to have deep pockets.|gear=10 gold marks|tag=minor|rarity=common
-
-002|Noble|description=At their side hangs a fine sword, passed down by their family|gear=Heirloom Blade|tag=minor,physical|rarity=common
-
-003|Outsider|description=They tend to be survivors, relying on their own talents over any advantages of birth.|skill=Strength+1|tag=minor,physical|rarity=common
-
-004|Zealot|description=They are often lucky, as if someone is watching over them.|stat_mod=Shoot+1|tag=minor,physical|rarity=common
-
-005|Mystic|description=Regardless of origin, they are determined, but hampered by the intense focus on magic.|stat_mod=Will+1|tag=minor,magic|rarity=common
-
-006|Scholar|description=Valuable in situations requiring obscure knowledge.|stat_mod=Armor+1|tag=minor,physical|rarity=common
-
-007|Soldier|description=They mutter old war tales in their sleep. The memories run as deep as their scars.|skill=XP+5|tag=minor,physical|rarity=common
-
-008|Drifter|description=Not all who wander are lost.|stat_mod=Armor+1|tag=minor,physical|rarity=common
-
-009|Monk|description=Devout in their discipline of the physical and spiritual world.|stat_mod=Armor+1|tag=minor,physical|rarity=common
-
-010|Knave|description=A local scoundrel whose unscrupulous nature gets the job done.|stat_mod=Armor+1|tag=minor,physical|rarity=common
-
-011|Frontier|description=Experienced in the wilderness, they tend to be resourceful and skilled.|stat_mod=Armor+1|tag=minor,physical|rarity=common
-
-012|Mercenary|description=The only reminder of their time as a mercenary is an old, tattered cloak|gear=Scout's Cloak|tag=minor,physical|rarity=common
-
-013|Cursed|description=The Fey-blood are burdened by fate to lead short, unhappy lives.|skill=Unlucky|tag=minor,physical|rarity=uncommon
-
-014|Blessed|description=This odd little trinket has always brought them luck.|gear=Talisman|tag=minor,physical|rarity=uncommon
-
-015|Fey-blood|description=The faeries and elves that make up the ice-heart court occasionally venture among humanity. Making a deal with the fey can grant wishes, but the price is often a child with an eerie ancestry.|stat_mod=Will+1|tag=minor,physical|rarity=rare
-
-016|Gifted|description=Born with abilities that the rest of the world doesn't understand.|roll:spells:tag=spells:count=1|tag=minor,magic|rarity=rare
-
-017|Blacksmith|description=Raised amid smoke, sweat, and ringing steel, they know quality when they feel it.|gear=Smith's Hammer|tag=minor,physical|rarity=common|skill_mod=Armory+1
-
-018|Ratcatcher|description=Life in the gutters taught them how to move quietly and survive filth others fear.|skill_mod=Stealth+1|stat_mod=Health-2|tag=minor,physical|rarity=common
-
-019|Grave Digger|description=They are unbothered by death, having spent too much time around it.|stat_mod=Will+1|tag=minor,physical|rarity=common
-
-020|Wayfinder|description=They rarely become lost, even in unfamiliar lands.|skill=Navigation|tag=minor,physical|rarity=common
-
-021|Squire|description=Not a knight, but the lessons still linger in muscle and mind.|stat_mod=Armor+1|skill=XP+2|tag=minor,physical|rarity=common
-
-022|Pickpocket|description=Quick hands and quicker exits kept them alive longer than honesty ever could.|gear=Lockpicks|tag=minor,physical|rarity=common
-
-023|Pilgrim|description=Long roads and quiet prayers have hardened their resolve, if not their body.|stat_mod=Will+1|stat_mod=Armor+1|tag=minor,physical|rarity=common
-
-#024|Beast Handler|description=Animals trust them more than people do, and with good reason.|tag=minor,physical|rarity=uncommon
-
-025|Survivor|description=They still wake tasting salt and terror, but drowning taught them how not to die.|stat_mod=Health+2|skill=Unlucky|tag=minor,physical|rarity=uncommon
-
-026|Apprentice|description=Years of menial labor and harsh correction taught them the basics the hard way.|stat_mod=Will+1|tag=minor,magic|rarity=common
-
-027|Sailor|description=Salt-stained clothes and steady footing mark a life spent at sea.|gear=Rope:count=2|tag=minor,physical|rarity=common
-
-028|Deserter|description=They fled a losing war and learned that survival sometimes demands cowardice.|stat_mod=Armor+2|skill=XP-3|tag=minor,physical|rarity=uncommon
-
-029|Hunter|description=They know how to wait, watch, and strike only when the moment is right.|stat_mod=Shoot+1|tag=minor,physical|rarity=common
-
-030|Relic Bearer|description=A sacred object was thrust upon them, along with responsibilities they never wanted.|gear=Holy Relic|skill=Will-1|tag=minor,magic|rarity=rare
-
-031|Dungeon Delver|description=They have crawled through enough darkness to know when the walls are lying.|stat_mod=Armor+2|tag=minor,physical|rarity=common
-
-032|Pit Fighter|description=They survived brutal, public fights where mercy was never expected.|stat_mod=Strength+1|tag=minor,physical|rarity=uncommon
-
-033|Oathbreaker|description=They abandoned a sacred vow and gained freedom at the cost of peace.|stat_mod=Strength+1,Will-2|tag=minor,physical|rarity=rare
-
-034|City Watch|description=Years of breaking up fights taught them how to take a hit and keep standing.|stat_mod=Armor+2|tag=minor,physical|rarity=common
-
-035|Feral|description=They were raised beyond the edge of civilization and never fully returned.|stat_mod=Strength+2|skill=Will-1|tag=minor,physical|rarity=uncommon
-
-036|Oracle-Touched|description=They sometimes glimpse things best left unseen, and it has changed them.|stat_mod=Will+3|skill=Unlucky|tag=minor,magic|rarity=rare
-
-037|Laborer|description=Long days of backbreaking work have left them tough and enduring.|stat_mod=Strength+1|tag=minor,physical|rarity=common
-
-038|Failed Hero|description=Once chosen for greatness, they survived long enough to be forgotten.|skill=XP+8|skill=Unlucky|tag=minor,physical|rarity=rare
-
-039|Borderlander|description=They grew up where maps fade and danger begins.|stat_mod=Armor+2|tag=minor,physical|rarity=common
-
-040|Grim Veteran|description=They have seen enough death that fear rarely takes hold.|stat_mod=Will+1|tag=minor,physical|rarity=uncommon
-
-041|Treasure Seeker|description=Gold has a way of calling to them, louder than caution ever could.|gear=Treasure Map Fragment|tag=minor,physical|rarity=common
-
-042|Plague Survivor|description=They lived when many did not, and no one quite trusts that kind of luck.|stat_mod=Will+2|skill=Unlucky|tag=minor,physical|rarity=rare
-
-043|Gladiator|description=They learned to kill for applause and live for the next match.|stat_mod=Strength+2|skill=Will-1|tag=minor,physical|rarity=common
-
-044|Runaway Cultist|description=They escaped something terrible, but the whispers followed them out.|roll:spells:tag=spells:count=1|stat_mod=Fight-1|tag=minor,magic|rarity=rare
-
-045|Witch-Hunted|description=Burn scars and broken ties mark someone the world once tried to erase.|stat_mod=Will+2,Armor+1|tag=minor,magic|rarity=uncommon
-
-046|Reluctant Heir|description=They carry a name that opens doors, and paints targets.|gear=Signet Ring|stat_mod=Will-2|tag=minor,physical|rarity=rare
-
-047|Street Urchin|description=They learned early how to slip away unnoticed and survive on scraps.|skill_mod=Stealth+1|tag=minor,physical|rarity=common
-
-048|Caravan Guard|description=Paid to stand watch on long roads where danger comes suddenly.|stat_mod=Armor+1|tag=minor,physical|rarity=common
-
-049|Herbalist|description=They know which plants heal, and which ones quietly kill.|roll:item:tag=herb:count=2|tag=minor,magic|rarity=uncommon
-
-050|Pilgrim|description=A long journey of faith has hardened both body and resolve.|stat_mod=Will+1|tag=minor,physical|rarity=common
-
-051|Craftsman|description=They take pride in well-made tools and careful work.|skill_mod=Armory+1|tag=minor,physical|rarity=common
-
-052|Scout|description=Trained to move ahead of others, mapping danger before it strikes.|skill_mod=Perception+1|tag=minor,physical|rarity=common
-
-053|Smuggler|description=They know hidden routes, false bottoms, and when to keep quiet.|skill_mod=Perception+1|stat_mod=Will+1|tag=minor,physical|rarity=uncommon
-
-054|Oathbound|description=They live by a promise that cannot be easily broken.|stat_mod=Will+1,Strength+2|tag=minor,physical|rarity=rare
-
-055|Traveling Merchant|description=They've made it this far on their own. "The road ahead is perilous, may I join you?"|roll:item:rarity=common:count=3|tag=minor,physical|rarity=common
+001|Noble Scion|description=Raised in courts and command tents, accustomed to authority and social leverage.|skill_mod=Influence+2,Command+1|tag=minor,social|rarity=common
+002|Frontier Scout|description=A wilderness specialist used to tracking danger before danger finds the group.|skill_mod=Tracking+2,Survival+1,Perception+1|tag=minor,physical|rarity=common
+003|Street Urchin|description=A survivor of alleys and rooftops with sharp instincts and light footsteps.|skill_mod=Subterfuge+2,Athletics+1|tag=minor,physical|rarity=common
+004|Temple Acolyte|description=Disciplined in prayer and ritual with a steady mind under supernatural pressure.|stat_mod=Will+1|skill_mod=Lore+1,Influence+1|tag=minor,magic|rarity=common
+005|Arcane Apprentice|description=Trained in practical spellcraft and magical theory under a demanding mentor.|stat_mod=Magic+1|skill_mod=Arcana+2,Lore+1|tag=minor,magic|rarity=common
+006|Mercenary Veteran|description=Seasoned by campaigns and paid contracts, built for hard fights and hard roads.|stat_mod=Health+2|skill_mod=Strength+1,Athletics+1|tag=minor,physical|rarity=common
+007|Relic Hunter|description=Used to dangerous ruins, ancient symbols, and improvised problem solving.|skill_mod=Lore+2,Perception+1,Craft+1|tag=minor,physical|rarity=uncommon
+008|Cult Defector|description=Escaped forbidden rites but still carries unsettling occult knowledge.|stat_mod=Will+1|skill_mod=Arcana+1,Subterfuge+1|roll:spells:tag=spells:count=1|tag=minor,magic|rarity=uncommon
+009|Caravan Guard|description=Protective road-warrior familiar with ambushes, escorts, and command discipline.|stat_mod=Armor+1|skill_mod=Command+1,Tracking+1|tag=minor,physical|rarity=common
+010|Guild Artisan|description=Craft-trained professional with methodical habits and practical workshop talent.|skill_mod=Craft+2,Influence+1|tag=minor,social|rarity=common
+011|Oathsworn|description=A vow-bound fighter fueled by resolve and moral certainty.|stat_mod=Will+1,Health+1|skill_mod=Command+1,Strength+1|tag=minor,physical|rarity=uncommon
+012|Witch-Touched|description=Marked by strange encounters that sharpen magical awareness but invite risk.|stat_mod=Magic+1,Evasion-1|skill_mod=Arcana+1,Perception+1|tag=minor,magic|rarity=rare

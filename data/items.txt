@@ -155,3 +155,25 @@ M012|Bandages|description=Provides basic healing in dire circumstances.|rarity=c
 
 
 
+
+#Weapon Materials (new progression)
+WM001|Bronze Weapon|description=Baseline martial weapon material.|stat_mod=Damage+6|tag=material,weapon|rarity=common|cat=material|price=40
+WM002|Wooden Weapon|description=Light weapon focus material.|stat_mod=Damage+4|skill_mod=Arcana+1|tag=material,weapon|rarity=common|cat=material|price=35
+WM003|Iron Weapon|description=Durable but rustable weapon material.|stat_mod=Damage+7|roll:spells:tag=skill:count=1|tag=material,weapon,rustable|rarity=uncommon|cat=material|price=60
+WM004|Steel Weapon|description=Reliable advanced weapon material.|stat_mod=Damage+8|tag=material,weapon|rarity=rare|cat=material|price=90
+WM005|Mithril Weapon|description=Masterwork material: high damage and mobility-friendly.|stat_mod=Damage+10,Move+1,Fight+1|skill_mod=Perception+1|tag=material,weapon|rarity=legendary|cat=material|price=180
+
+#Armor Materials (new progression)
+AM001|Bronze Armor Material|description=Standard plating with practical craft value.|skill_mod=Craft+1|tag=material,armor|rarity=common|cat=material|price=40
+AM002|Leather Armor Material|description=Flexible armor material favored by subtle operators.|skill_mod=Subterfuge+1,Influence+1,Command-1|tag=material,armor|rarity=uncommon|cat=material|price=55
+AM003|Steel Armor Material|description=Hardened shell with command presence.|stat_mod=Health+5|skill_mod=Subterfuge-2,Command+2|tag=material,armor|rarity=rare|cat=material|price=90
+AM004|Shadoweave Armor Material|description=Darkwoven cloth that prioritizes movement and stealth.|stat_mod=Move+1|skill_mod=Subterfuge+3,Influence-1|tag=material,armor|rarity=rare|cat=material|price=120
+AM005|Mithril Armor Material|description=Elite armor blend with agility and evasive support.|stat_mod=Move+1,Evasion+1|skill_mod=Subterfuge+2|tag=material,armor|rarity=legendary|cat=material|price=180
+
+#Hybrid Ammo
+RA001|Barbed Arrow|description=Ammo mod: +1 damage versus Light Armor targets.|tag=ammo,ranged|rarity=common|cat=consumable|slot=none|uses=1|price=15
+RA002|Fire Arrow|description=Ammo mod: adds fire damage and applies Burning on hit.|tag=ammo,ranged,fire|rarity=common|cat=consumable|slot=none|uses=1|price=20
+RA003|Ice Arrow|description=Ammo mod: adds ice damage and applies Frozen on hit.|tag=ammo,ranged,ice|rarity=common|cat=consumable|slot=none|uses=1|price=20
+RA004|Lightning Arrow|description=Ammo mod: adds lightning damage and applies Livewire on hit.|tag=ammo,ranged,lightning|rarity=uncommon|cat=consumable|slot=none|uses=1|price=25
+RA005|Earth Arrow|description=Ammo mod: adds earth damage and applies Petrified on hit.|tag=ammo,ranged,earth|rarity=rare|cat=consumable|slot=none|uses=1|price=30
+RA006|Smoke Arrow|description=Creates a 2-3" smoke zone granting cover and obscuring line of sight.|tag=ammo,ranged,utility|rarity=common|cat=consumable|slot=none|uses=1|price=20
