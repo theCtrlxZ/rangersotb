@@ -8,7 +8,7 @@ from __future__ import annotations
 import random
 from typing import Any, Dict, List, Optional, Set, Tuple
 
-from rbtl_data import s_get_float, s_get_list
+from bare_data import s_get_float, s_get_list
 
 
 # ============================================================
