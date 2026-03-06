@@ -6,7 +6,7 @@ import copy
 from datetime import datetime
 from typing import Any, Dict, List, Optional, Set, Tuple
 
-from rbtl_data import (
+from bare_data import (
     DataBundle,
     parse_int_maybe,
     parse_tags,
@@ -16,7 +16,7 @@ from rbtl_data import (
     s_get_int,
     s_get_list,
 )
-from rbtl_shared import (
+from bare_shared import (
     DIFF_IDX,
     DIFFICULTY_ORDER,
     eligible_enemy_unit,
@@ -35,13 +35,13 @@ from rbtl_shared import (
 # ============================================================
 #
 # [IO / DATA LOADING]
-# 1) ONLY rbtl_data.py may touch the filesystem for game data:
+# 1) ONLY bare_data.py may touch the filesystem for game data:
 #    - load_pipe_file(...)
 #    - load_settings(...)
 #    - open("data/*.txt")
 #    - DATA_DIR / PROJECT_ROOT path construction for data files
 #
-# 2) rbtl_core.py and rbtl_cli.py must be IO-free for data.
+# 2) bare_core.py and bare_cli.py must be IO-free for data.
 #    They may:
 #      - read DataBundle fields
 #      - generate strings
@@ -75,7 +75,7 @@ from rbtl_shared import (
 #
 # [OUTPUT IO]
 # 9) Writing output files is allowed ONLY in the tiny _main_ script,
-#    not in rbtl_core.py (preferred).
+#    not in bare_core.py (preferred).
 #
 # [SEARCH / AUDIT]
 # 10) To audit for violations, search the repo for:
@@ -84,15 +84,15 @@ from rbtl_shared import (
 #     - "open("
 #     - "DATA_DIR"
 #     - "PROJECT_ROOT"
-#     and ensure data IO only appears in rbtl_data.py and mains.
+#     and ensure data IO only appears in bare_data.py and mains.
 #
 # RULE: Core modules do not read /data directly.
-# If you need a dataset, add it to DataBundle in rbtl_data.py and pass it in.
+# If you need a dataset, add it to DataBundle in bare_data.py and pass it in.
 # ============================================================
 # bare_core.py
 # ============================================================
 # Blades at Realm’s Edge — Core Scenario Generator (IO-FREE)
-# - Consumes: DataBundle (from rbtl_data.load_data_bundle)
+# - Consumes: DataBundle (from bare_data.load_data_bundle)
 # - Produces: (suggested_filename, briefing_text)
 # - No filesystem reads, no output writes, no PROJECT_ROOT/DATA_DIR globals
 # ============================================================
@@ -202,7 +202,7 @@ def _campaign_biome_id_from_key(raw_key: str) -> str:
     parts = [p for p in key.split("-") if p != ""]
     if len(parts) < 8:
         return ""
-    if parts[0] not in {"BARE", "RBTL"} or parts[1] != "CAMP":
+    if parts[0] not in {"BARE", "bare"} or parts[1] != "CAMP":
         return ""
     return parts[3]
 
