@@ -30,7 +30,7 @@ import re
 from datetime import datetime
 from typing import Any, Dict, List, Optional, Set, Tuple
 
-from rbtl_data import DataBundle, parse_int_maybe, parse_tags
+from bare_data import DataBundle, parse_int_maybe, parse_tags
 
 # ============================================================
 # CONFIG
