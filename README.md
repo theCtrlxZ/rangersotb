@@ -1,6 +1,6 @@
-# Bloodoath Tactics
+# Blades at Realm’s Edge
 
-A database-driven, GM-less tabletop wargame/RPG toolkit. The system uses plain .txt “content packs” (units, events, items, spells, rooms, campaign pressures, etc.) plus lightweight Python randomizers to generate ready-to-play briefings: scenarios/encounters, campaign setups, allies, and loot/shops.
+A database-driven, GM-less Coop/PvE tabletop wargame/RPG toolkit. The system uses plain .txt “content packs” (units, events, items, spells, rooms, campaign pressures, etc.) plus lightweight Python randomizers to generate ready-to-play briefings: scenarios/encounters, campaign setups, allies, and loot/shops.
 
 The goal is simple: make it fast to get to the table, and easy to homebrew by editing text files rather than wrestling with spreadsheets or a heavy app.
 
