@@ -4,11 +4,11 @@ import random
 import re
 from typing import Any, Dict, List, Optional, Tuple
 
-import rbtl_campaign as rbtl_campaign
-print("Using bare_campaign from:", rbtl_campaign.__file__)
+import bare_campaign as bare_campaign
+print("Using bare_campaign from:", bare_campaign.__file__)
 
-from rbtl_cli import BACK, QUIT, RESTART, _parse_campaign_key, _quest_board_entries, prompt_choice_nav, prompt_int_nav
-from rbtl_campaign import (
+from bare_cli import BACK, QUIT, RESTART, _parse_campaign_key, _quest_board_entries, prompt_choice_nav, prompt_int_nav
+from bare_campaign import (
     adjusted_threat_count,
     available_threat_tags_from_pool,
     eligible_threat_candidates,
@@ -17,10 +17,10 @@ from rbtl_campaign import (
     threat_weight_with_settings,
     violates_not,
 )
-from rbtl_allies import generate_allies
-from rbtl_core import generate_scenario
-from rbtl_data import load_data_bundle
-from rbtl_loot import generate_shop
+from bare_allies import generate_allies
+from bare_core import generate_scenario
+from bare_data import load_data_bundle
+from bare_loot import generate_shop
 
 
 def write_output(project_root: str, filename: str, text: str) -> str:
