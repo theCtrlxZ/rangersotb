@@ -1,9 +1,9 @@
 # bare_main_allies.py
 import os
 
-from rbtl_data import load_data_bundle
-from rbtl_cli import prompt_choice_nav, prompt_int_nav, BACK, RESTART, QUIT
-from rbtl_allies import generate_allies
+from bare_data import load_data_bundle
+from bare_cli import prompt_choice_nav, prompt_int_nav, BACK, RESTART, QUIT
+from bare_allies import generate_allies
 
 
 def write_output(project_root: str, filename: str, text: str) -> str:
